@@ -1,0 +1,121 @@
+# Packaging rules for OctoPrint plugins
+
+rules:
+  - id: PKG-0001
+    message: >
+      Plugin uses the legacy `octoprint_setuptools.create_plugin_setup_parameters()`
+      in `setup.py` and likely still relies on the old packaging method.
+    languages: [python]
+    severity: MEDIUM
+    pattern: octoprint_setuptools.create_plugin_setup_parameters(...)
+    metadata:
+      type: packaging
+      suggestion: >
+        Migrate your plugin to pyproject.toml packaging.
+        See https://docs.octoprint.org/en/dev/plugins/migration_pyproject_toml.html.
+  - id: PKG-0002
+    message: >
+      `setup.cfg` contains `universal = 1`, which produces wheels for both Python 2
+      and 3. Python 2 reached end-of-life in January 2020 and OctoPrint dropped
+      Python 2 support in version 1.4.0.
+    languages: [generic]
+    severity: MEDIUM
+    pattern-regex: 'universal\s*=\s*1'
+    paths:
+      include:
+        - setup.cfg
+    metadata:
+      type: packaging
+      suggestion: >
+        Remove the `[bdist_wheel]` section with `universal = 1` from `setup.cfg`,
+        or delete `setup.cfg` entirely if it contains nothing else.
+  - id: PKG-0003
+    message: >
+      `pyproject.toml` is missing a `[build-system]` section. Without it, pip cannot
+      determine how to build the package.
+    languages: [generic]
+    severity: MEDIUM
+    patterns:
+      - pattern-regex: "(?s)\\A.*\\z"
+      - pattern-not-regex: '\[build-system\]'
+    paths:
+      include:
+        - pyproject.toml
+    metadata:
+      type: packaging
+      suggestion: |
+        Add a `[build-system]` section to `pyproject.toml`:
+        ```toml
+        [build-system]
+        requires = ["setuptools>=68"]
+        build-backend = "setuptools.build_meta"
+        ```
+  - id: PKG-0004
+    message: >
+      `pyproject.toml` is missing a `[project]` section. Package metadata such as
+      name, version, description, and dependencies should be declared there
+      (PEP 621).
+    languages: [generic]
+    severity: MEDIUM
+    patterns:
+      - pattern-regex: "(?s)\\A.*\\z"
+      - pattern-not-regex: '\[project\]'
+    paths:
+      include:
+        - pyproject.toml
+    metadata:
+      type: packaging
+      suggestion: |
+        Add a `[project]` section to `pyproject.toml` with at minimum:
+        ```toml
+        [project]
+        name = "OctoPrint-YourPlugin"
+        version = "1.0.0"
+        description = "Your plugin description"
+        authors = [
+            { name = "Your name", email = "Your email" },
+        ]
+        requires-python = ">=3.9"
+        dependencies = []
+        ```
+  - id: PKG-0005
+    message: >
+      `pyproject.toml` does not declare an OctoPrint plugin entry-point. Without
+      `[project.entry-points."octoprint.plugin"]`, OctoPrint cannot discover or
+      load the plugin.
+    languages: [generic]
+    severity: MEDIUM
+    patterns:
+      - pattern-regex: "(?s)\\A.*\\z"
+      - pattern-not-regex: 'octoprint\.plugin'
+    paths:
+      include:
+        - pyproject.toml
+    metadata:
+      type: packaging
+      suggestion: |
+        Add the entry-point to `pyproject.toml`:
+        ```toml
+        [project.entry-points."octoprint.plugin"]
+        your_plugin_id = "octoprint_your_plugin"
+        ```
+  - id: PKG-0006
+    message: >
+      `pyproject.toml` does not declare `requires-python`. This field prevents
+      installation on incompatible Python versions.
+    languages: [generic]
+    severity: MEDIUM
+    patterns:
+      - pattern-regex: "(?s)\\A.*\\z"
+      - pattern-not-regex: 'requires-python'
+    paths:
+      include:
+        - pyproject.toml
+    metadata:
+      type: packaging
+      suggestion: |
+        Add `requires-python` to the `[project]` section:
+        ```toml
+        [project]
+        requires-python = ">=3.9"
+        ```

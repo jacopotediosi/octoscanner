@@ -1,0 +1,69 @@
+# OctoPrint security rules
+
+# TODO:
+# - Add since attribute
+# - Plugin implements `BlueprintPlugin.csrf_exempt`
+# - Plugin does not implement `BlueprintPlugin.is_blueprint_csrf_protected`
+# - Plugin does implement `BlueprintPlugin.is_blueprint_csrf_protected` as `False`
+# - Plugin does implement `BlueprintPlugin.is_blueprint_protected` as `False`
+# - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` check (?)
+# - Pnotify XSS (?)
+# - Plugin implements custom route defined by `route_hook` w/o authentication (?)
+# - `data-bind="html"` in jinja templates (?)
+# - `{{var}}` without sanitization in jinja templates (?)
+
+rules:
+  - id: SEC-0001
+    message: >
+      Plugin implements `SimpleApiPlugin` but does not override `is_api_protected()`.
+      Until OctoPrint 2.1.0, the default implementation returns `False`, allowing
+      unauthenticated access to `SimpleApi` endpoints.
+    languages: [python]
+    severity: CRITICAL
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.SimpleApiPlugin, ...):
+                  ...
+          - pattern: |
+              class $CLASS(..., SimpleApiPlugin, ...):
+                  ...
+      - pattern-not: |
+          class $CLASS(...):
+              ...
+              def is_api_protected(self, ...):
+                  ...
+              ...
+    metadata:
+      type: security
+      suggestion: >
+        Override `is_api_protected()` to explicitly return `True`. Note that this only
+        controls authentication; you should also verify permissions explicitly in
+        each API handler (e.g. `Permissions.PLUGIN_MYPLUGIN_ACCESS`).
+  - id: SEC-0002
+    message: >
+      Plugin implements `is_api_protected()` but explicitly returns `False`, leaving
+      `SimpleApi` endpoints accessible without authentication.
+    languages: [python]
+    severity: CRITICAL
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.SimpleApiPlugin, ...):
+                  ...
+                  def is_api_protected(self, ...):
+                      ...
+                      return False
+                  ...
+          - pattern: |
+              class $CLASS(..., SimpleApiPlugin, ...):
+                  ...
+                  def is_api_protected(self, ...):
+                      ...
+                      return False
+                  ...
+    metadata:
+      type: security
+      suggestion: >
+        Ensure this is intentional. Consider returning `True` and adding explicit
+        permission checks in each API handler.

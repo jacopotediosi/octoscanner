@@ -1,0 +1,34 @@
+# Editors
+.idea
+.vscode
+
+# Thumbnails
+.DS_Store
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.eggs
+dist
+build
+
+# Virtual environments
+venv*
+
+# Testing
+.pytest_cache
+test-results
+coverage_report
+
+# Linters / type checkers
+.mypy_cache
+.ruff_cache
+
+# JS
+node_modules
+*.map
+
+# OctoPrint sources
+octoprint_src/
