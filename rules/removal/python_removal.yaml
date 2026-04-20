@@ -6768,32 +6768,6 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.User.is_admin`.
     _symbol: octoprint.access.users.User.is_admin
 - id: REM-0520
-  message: '`octoprint.access.users.User.is_anonymous` has been removed.'
-  languages:
-  - python
-  severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.is_anonymous
-  - pattern: user.is_anonymous
-  metadata:
-    type: removal
-    since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.User.is_anonymous`.
-    _symbol: octoprint.access.users.User.is_anonymous
-- id: REM-0521
-  message: '`octoprint.access.users.User.is_authenticated` has been removed.'
-  languages:
-  - python
-  severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.is_authenticated
-  - pattern: user.is_authenticated
-  metadata:
-    type: removal
-    since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.User.is_authenticated`.
-    _symbol: octoprint.access.users.User.is_authenticated
-- id: REM-0522
   message: '`octoprint.access.users.User.is_user` was deprecated since 1.4.0 and has
     been removed.'
   languages:

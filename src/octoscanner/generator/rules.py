@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import fnmatch
+import functools
 import re
 from collections.abc import Iterable
+from pathlib import Path
 from typing import TypeVar
 
 import yaml
@@ -151,6 +154,52 @@ def symbol_sig_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> 
         elif item.since is not None and Version(item.since) < Version(existing):
             sigs[sig] = item.since
     return sigs
+
+
+# ---------------------------------------------------------------------------
+# Ignored symbols
+# ---------------------------------------------------------------------------
+
+
+@functools.cache
+def _load_ignored_symbols() -> dict[str, list[str]]:
+    """Load ignored symbols from the configuration file.
+
+    Returns:
+        dict[str, list[str]]: Mapping of rule type to list of FQN patterns.
+    """
+    patterns_file = Path(__file__).parent / "ignored_symbols.yaml"
+
+    if not patterns_file.exists():
+        return {}
+
+    with open(patterns_file) as f:
+        return yaml.safe_load(f) or {}
+
+
+def is_ignored_symbol(fqn: str, rule_type: str) -> bool:
+    """Check if a fully qualified name matches any ignored pattern.
+
+    Supports wildcards:
+      - ``*`` matches any single path component
+      - ``**`` matches any number of path components
+
+    Args:
+        fqn (str): The fully qualified name to check.
+        rule_type (str): The rule type to check against (e.g. ``"removal"``).
+
+    Returns:
+        bool: True if the FQN matches any ignored pattern.
+    """
+    patterns = _load_ignored_symbols().get(rule_type, [])
+
+    for pattern in patterns:
+        # Convert ** to placeholder, * to single-component match, then ** to multi-component
+        glob_pattern = pattern.replace("**", "\x00").replace("*", "[^.]*").replace("\x00", "*")
+        if fnmatch.fnmatch(fqn, glob_pattern):
+            return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -324,7 +373,8 @@ def build_symbol_rule(
 ) -> dict | None:
     """Build a Semgrep rule for a symbol.
 
-    Returns ``None`` if the symbol cannot produce a valid pattern.
+    Returns ``None`` if the symbol cannot produce a valid pattern or if
+    the symbol is in the ignored symbols list.
 
     Args:
         rule_id (str): Unique rule identifier (e.g. ``"DEP-0001"``).
@@ -343,7 +393,7 @@ def build_symbol_rule(
 
     Returns:
         dict | None: A Semgrep rule dict, or ``None`` if no valid pattern
-        can be built.
+        can be built or the symbol is ignored.
 
     Examples:
         >>> receivers = get_receivers_map({"UserManager": []})
@@ -370,8 +420,16 @@ def build_symbol_rule(
                       'since': '1.8.0',
                       '_symbol': 'octoprint.access.users.UserManager.getApiKey'}}
     """
-    # Compute signature for _symbol metadata
-    metadata["_symbol"] = build_fqn(name, class_name, module_path)
+    # Compute fqn
+    fqn = build_fqn(name, class_name, module_path)
+
+    # Check if this symbol should be ignored
+    rule_type = metadata.get("type")
+    if rule_type is not None and is_ignored_symbol(fqn, rule_type):
+        return None
+
+    # Add fqn to _symbol metadata
+    metadata["_symbol"] = fqn
 
     # Get receivers
     receivers = receivers_map.get(class_name)

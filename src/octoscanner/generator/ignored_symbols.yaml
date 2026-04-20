@@ -1,0 +1,20 @@
+# Symbols to ignore during rule generation.
+#
+# Symbols matching these patterns will not generate Semgrep rules.
+# Useful for excluding known false positives that cannot be easily resolved
+# in another way.
+#
+# Format: list of fully qualified symbol names per rule type.
+# Supports wildcards: * matches any single component, ** matches any path.
+#
+# Examples:
+#   - "octoprint.module.Class.member"      # Exact match
+#   - "octoprint.module.*.member"          # Any class in module
+#   - "octoprint.**.is_authenticated"      # Any is_authenticated anywhere
+
+removal:
+  # flask_login.UserMixin provides these members.
+  # OctoPrint's User class inherits from UserMixin, so below symbols are not removed
+  # even when OctoPrint stops overriding them explicitly.
+  - "octoprint.access.users.User.is_anonymous"
+  - "octoprint.access.users.User.is_authenticated"
