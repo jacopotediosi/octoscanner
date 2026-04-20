@@ -18,10 +18,11 @@ def scan(
     plugin_paths: list[Path],
     rule_files: list[Path],
     octoprint_version: Version,
-    semgrep_args: list[str] | None = None,
+    extra_args: list[str] | None = None,
+    use_opengrep: bool = False,
 ) -> list[tuple[Path, ScanResult]]:
-    """Scan plugin directories by running Semgrep once and mapping results."""
-    semgrep_results = _run_semgrep(plugin_paths, rule_files, semgrep_args)
+    """Scan plugin directories by running Semgrep/Opengrep once and mapping results."""
+    semgrep_results = _run_semgrep(plugin_paths, rule_files, extra_args, use_opengrep)
 
     # Pre-compute plugin_paths_set
     plugin_paths_set = {plugin_path.resolve(): plugin_path for plugin_path in plugin_paths}
@@ -55,20 +56,38 @@ def _run_semgrep(
     targets: list[Path],
     rule_files: list[Path],
     extra_args: list[str] | None = None,
+    use_opengrep: bool = False,
 ) -> list[dict]:
-    """Run semgrep with the given rule files and return the JSON results list."""
+    """Run semgrep/opengrep with the given rule files and return the JSON results list."""
+    tool_name = "Opengrep" if use_opengrep else "Semgrep"
+
     configs = [arg for rf in rule_files for arg in ("--config", str(rf))]
-    cmd = [
-        "semgrep",
-        "scan",
-        *configs,
-        "--json",
-        "--metrics=off",
-        "--no-rewrite-rule-ids",
-        "--quiet",
-        *(extra_args or []),
-        *[str(target) for target in targets],
-    ]
+    targets_str = [str(target) for target in targets]
+
+    if use_opengrep:
+        cmd = [
+            "opengrep",
+            "scan",
+            *configs,
+            "--json",
+            "--no-rewrite-rule-ids",
+            "--quiet",
+            *(extra_args or []),
+            *targets_str,
+        ]
+    else:
+        cmd = [
+            "semgrep",
+            "scan",
+            *configs,
+            "--json",
+            "--metrics=off",
+            "--no-rewrite-rule-ids",
+            "--quiet",
+            *(extra_args or []),
+            *targets_str,
+        ]
+
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode not in (0, 1):
         print(result.stderr, file=sys.stderr)
@@ -76,7 +95,7 @@ def _run_semgrep(
     try:
         data = json.loads(result.stdout)
     except json.JSONDecodeError:
-        print("Semgrep returned invalid JSON", file=sys.stderr)
+        print(f"{tool_name} returned invalid JSON", file=sys.stderr)
         return []
     return data.get("results", [])
 

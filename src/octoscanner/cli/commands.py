@@ -65,19 +65,20 @@ def cmd_scan(args: argparse.Namespace) -> None:
     target_version = Version(args.version)
     rule_files = _resolve_rule_types(args.rule_type)
 
-    semgrep_args = []
+    extra_args = []
     for pattern in args.exclude:
-        semgrep_args += ["--exclude", pattern]
+        extra_args += ["--exclude", pattern]
     if args.no_git_ignore:
-        semgrep_args.append("--no-git-ignore")
+        extra_args.append("--no-git-ignore")
     for rule_id in args.exclude_rule:
-        semgrep_args += ["--exclude-rule", rule_id]
+        extra_args += ["--exclude-rule", rule_id]
 
     results = scan(
         plugin_paths=plugin_paths,
         rule_files=rule_files,
         octoprint_version=target_version,
-        semgrep_args=semgrep_args,
+        extra_args=extra_args,
+        use_opengrep=args.use_opengrep,
     )
 
     if args.format == "json":

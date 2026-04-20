@@ -117,6 +117,11 @@ def main(argv: list[str] | None = None) -> None:
         metavar="RULE_ID",
         help="Skip this rule ID (e.g. --exclude-rule DEP-0001 --exclude-rule REM-0001)",
     )
+    scan_parser.add_argument(
+        "--use-opengrep",
+        action="store_true",
+        help="Use opengrep instead of semgrep (must be installed separately)",
+    )
 
     args = parser.parse_args(argv)
 
