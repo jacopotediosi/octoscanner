@@ -275,7 +275,7 @@ def format_scan_results_text(
         table.add_column("Rule ID")
         table.add_column("Message")
         for rule_id, count in rule_counter.most_common():
-            table.add_row(str(count), rule_id, rule_info[rule_id])
+            table.add_row(str(count), rule_id, _style_code_fragments(rule_info[rule_id]))
 
         return Panel(
             table,
