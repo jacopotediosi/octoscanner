@@ -267,6 +267,7 @@ def format_scan_results_text(
         if not rule_counter:
             return None
 
+        total_rules = len(rule_counter)
         total_matches = sum(rule_counter.values())
         total_plugins = len(scan_results)
 
@@ -280,7 +281,7 @@ def format_scan_results_text(
         return Panel(
             table,
             title=Text(
-                f"Rule Statistics ({total_matches} total matches on {plugins_with_matches}/{total_plugins} plugins)",
+                f"Rule Statistics ({total_rules} rules matched {total_matches} times on {plugins_with_matches}/{total_plugins} plugins)",
                 style=_get_style("header"),
             ),
         )
