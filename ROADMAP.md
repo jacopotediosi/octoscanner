@@ -3,6 +3,7 @@
 ## Publishing
 
 - [x] Write README.md
+    - [ ] Describe the current rulesets
 - [ ] Generate and manually review/fix all rules
 - [x] Check for Snyk / Semgrep warnings
 - [ ] Implement Octoscanner versioning and show version in cli/json scan results

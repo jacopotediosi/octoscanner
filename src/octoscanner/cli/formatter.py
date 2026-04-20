@@ -20,15 +20,15 @@ from ..models import Finding, ScanResult
 
 FINDING_SECTIONS = (
     # (header title, ScanResult attr, style keys)
-    ("Removed", "removed", ("error", "header")),
+    ("Removal", "removal", ("error", "header")),
     ("Security", "security", ("error", "header")),
-    ("Deprecated", "deprecated", ("warning", "header")),
+    ("Deprecation", "deprecation", ("warning", "header")),
     ("Packaging", "packaging", ("warning", "header")),
 )
 
 SINCE_LABELS = {
-    "removed": "Removed in",
-    "deprecated": "Deprecated since",
+    "removal": "Removed in",
+    "deprecation": "Deprecated since",
 }
 
 BACKTICK_RE = re.compile(r"```(.*?)```|`([^`]+)`", re.DOTALL)

@@ -37,11 +37,11 @@ class ScanResult:
     findings: list[Finding] = field(default_factory=list)
 
     @property
-    def removed(self) -> list[Finding]:
+    def removal(self) -> list[Finding]:
         return [f for f in self.findings if f.rule.type == RuleType.REMOVAL]
 
     @property
-    def deprecated(self) -> list[Finding]:
+    def deprecation(self) -> list[Finding]:
         return [f for f in self.findings if f.rule.type == RuleType.DEPRECATION]
 
     @property
