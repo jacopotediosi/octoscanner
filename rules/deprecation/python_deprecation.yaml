@@ -13,7 +13,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.get_int` instead.
-    _symbol: octoprint.plugin.PluginSettings.getInt
+    _ref: octoprint.plugin.PluginSettings.getInt
 - id: DEP-0024
   message: '`octoprint.plugin.PluginSettings.getFloat` has been renamed to get_float.'
   languages:
@@ -26,7 +26,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.get_float` instead.
-    _symbol: octoprint.plugin.PluginSettings.getFloat
+    _ref: octoprint.plugin.PluginSettings.getFloat
 - id: DEP-0025
   message: '`octoprint.plugin.PluginSettings.getBoolean` has been renamed to get_boolean.'
   languages:
@@ -39,7 +39,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.get_boolean` instead.
-    _symbol: octoprint.plugin.PluginSettings.getBoolean
+    _ref: octoprint.plugin.PluginSettings.getBoolean
 - id: DEP-0026
   message: '`octoprint.plugin.PluginSettings.setInt` has been renamed to set_int.'
   languages:
@@ -52,7 +52,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.set_int` instead.
-    _symbol: octoprint.plugin.PluginSettings.setInt
+    _ref: octoprint.plugin.PluginSettings.setInt
 - id: DEP-0027
   message: '`octoprint.plugin.PluginSettings.setFloat` has been renamed to set_float.'
   languages:
@@ -65,7 +65,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.set_float` instead.
-    _symbol: octoprint.plugin.PluginSettings.setFloat
+    _ref: octoprint.plugin.PluginSettings.setFloat
 - id: DEP-0028
   message: '`octoprint.plugin.PluginSettings.setBoolean` has been renamed to set_boolean.'
   languages:
@@ -78,7 +78,7 @@ rules:
     type: deprecation
     since: 1.4.0
     suggestion: Use `octoprint.plugin.PluginSettings.set_boolean` instead.
-    _symbol: octoprint.plugin.PluginSettings.setBoolean
+    _ref: octoprint.plugin.PluginSettings.setBoolean
 - id: DEP-0047
   message: '`octoprint.util.thaw_immutabledict` has been renamed back to thaw_frozendict.'
   languages:
@@ -91,7 +91,7 @@ rules:
     type: deprecation
     since: 1.8.0
     suggestion: Remove usage of `octoprint.util.thaw_immutabledict`.
-    _symbol: octoprint.util.thaw_immutabledict
+    _ref: octoprint.util.thaw_immutabledict
 - id: DEP-0049
   message: '`octoprint.server.util.flask.get_remote_address` is no longer required
     and deprecated, you can just use flask.request.remote_addr instead.'
@@ -105,7 +105,7 @@ rules:
     type: deprecation
     since: 1.10.0
     suggestion: Use `flask.request.remote_addr` instead.
-    _symbol: octoprint.server.util.flask.get_remote_address
+    _ref: octoprint.server.util.flask.get_remote_address
 - id: DEP-0050
   message: '`octoprint.filemanager.FileManager.list_files` has been deprecated in
     favor of list_storage_entries.'
@@ -119,7 +119,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.filemanager.FileManager.list_storage_entries` instead.
-    _symbol: octoprint.filemanager.FileManager.list_files
+    _ref: octoprint.filemanager.FileManager.list_files
 - id: DEP-0051
   message: '`octoprint.filemanager.FileManager.get_file` has been deprecated in favor
     of get_storage_entry.'
@@ -133,7 +133,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.filemanager.FileManager.get_storage_entry` instead.
-    _symbol: octoprint.filemanager.FileManager.get_file
+    _ref: octoprint.filemanager.FileManager.get_file
 - id: DEP-0052
   message: '`octoprint.filemanager.FileManager.add_link` has been deprecated and will
     be removed in a future version.'
@@ -147,7 +147,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.FileManager.add_link`.
-    _symbol: octoprint.filemanager.FileManager.add_link
+    _ref: octoprint.filemanager.FileManager.add_link
 - id: DEP-0053
   message: '`octoprint.filemanager.FileManager.remove_link` has been deprecated and
     will be removed in a future version.'
@@ -161,7 +161,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.FileManager.remove_link`.
-    _symbol: octoprint.filemanager.FileManager.remove_link
+    _ref: octoprint.filemanager.FileManager.remove_link
 - id: DEP-0054
   message: '`octoprint.filemanager.storage.common.StorageInterface.last_modified`
     has been deprecated in favor of get_lastmodified.'
@@ -174,7 +174,7 @@ rules:
     since: 2.0.0
     suggestion: Use `octoprint.filemanager.storage.common.StorageInterface.get_lastmodified`
       instead.
-    _symbol: octoprint.filemanager.storage.common.StorageInterface.last_modified
+    _ref: octoprint.filemanager.storage.common.StorageInterface.last_modified
 - id: DEP-0055
   message: '`octoprint.filemanager.storage.common.StorageInterface.get_file` has been
     deprecated in favor of get_storage_entry.'
@@ -187,7 +187,7 @@ rules:
     since: 2.0.0
     suggestion: Use `octoprint.filemanager.storage.common.StorageInterface.get_storage_entry`
       instead.
-    _symbol: octoprint.filemanager.storage.common.StorageInterface.get_file
+    _ref: octoprint.filemanager.storage.common.StorageInterface.get_file
 - id: DEP-0056
   message: '`octoprint.filemanager.storage.common.StorageInterface.list_files` has
     been deprecated in favor of list_storage_entries.'
@@ -200,7 +200,7 @@ rules:
     since: 2.0.0
     suggestion: Use `octoprint.filemanager.storage.common.StorageInterface.list_storage_entries`
       instead.
-    _symbol: octoprint.filemanager.storage.common.StorageInterface.list_files
+    _ref: octoprint.filemanager.storage.common.StorageInterface.list_files
 - id: DEP-0057
   message: '`octoprint.filemanager.storage.common.StorageInterface.add_link` has been
     deprecated and will be removed in a future version.'
@@ -212,7 +212,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.common.StorageInterface.add_link`.
-    _symbol: octoprint.filemanager.storage.common.StorageInterface.add_link
+    _ref: octoprint.filemanager.storage.common.StorageInterface.add_link
 - id: DEP-0058
   message: '`octoprint.filemanager.storage.common.StorageInterface.remove_link` has
     been deprecated and will be removed in a future version.'
@@ -224,7 +224,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.common.StorageInterface.remove_link`.
-    _symbol: octoprint.filemanager.storage.common.StorageInterface.remove_link
+    _ref: octoprint.filemanager.storage.common.StorageInterface.remove_link
 - id: DEP-0059
   message: '`octoprint.plugin.core.PluginInfo.blacklisted` is deprecated in favor
     of blocklisted.'
@@ -240,7 +240,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.plugin.core.PluginInfo.blocklisted` instead.
-    _symbol: octoprint.plugin.core.PluginInfo.blacklisted
+    _ref: octoprint.plugin.core.PluginInfo.blacklisted
 - id: DEP-0060
   message: get_connection_option has been deprecated and will be removed in a future
     version. Please use ConnectedPrinter.all() in combination with get_connection_option
@@ -257,7 +257,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `ConnectedPrinter.all()` instead.
-    _symbol: octoprint.printer.PrinterMixin.get_connection_options
+    _ref: octoprint.printer.PrinterMixin.get_connection_options
 - id: DEP-0061
   message: '`octoprint.printer.PrinterMixin.select_file` has been deprecated and will
     be removed in a future version. Please use set_job instead.'
@@ -273,7 +273,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.set_job` instead.
-    _symbol: octoprint.printer.PrinterMixin.select_file
+    _ref: octoprint.printer.PrinterMixin.select_file
 - id: DEP-0062
   message: '`octoprint.printer.PrinterMixin.unselect_file` has been deprecated and
     will be removed in a future version. Please use set_job instead.'
@@ -289,7 +289,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.set_job` instead.
-    _symbol: octoprint.printer.PrinterMixin.unselect_file
+    _ref: octoprint.printer.PrinterMixin.unselect_file
 - id: DEP-0063
   message: '`octoprint.printer.PrinterMixin.fake_ack` has been renamed to repair_communication.
     This compatibility layer will be removed in a future version. Please use repair_communication
@@ -306,7 +306,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.repair_communication` instead.
-    _symbol: octoprint.printer.PrinterMixin.fake_ack
+    _ref: octoprint.printer.PrinterMixin.fake_ack
 - id: DEP-0064
   message: '`octoprint.printer.PrinterMixin.get_transport` is non-functional. There
     is currently no alternative implementation. This compatibility layer will be removed
@@ -323,7 +323,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.printer.PrinterMixin.get_transport`.
-    _symbol: octoprint.printer.PrinterMixin.get_transport
+    _ref: octoprint.printer.PrinterMixin.get_transport
 - id: DEP-0065
   message: '`octoprint.printer.PrinterMixin._comm` is no longer available here after
     some heavy refactoring, and was private to begin with. It should never have been
@@ -340,7 +340,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.printer.PrinterMixin._comm`.
-    _symbol: octoprint.printer.PrinterMixin._comm
+    _ref: octoprint.printer.PrinterMixin._comm
 - id: DEP-0066
   message: '`octoprint.printer.PrinterMixin.get_current_connection` has been replaced
     by connection_state. This compatibility layer will be removed in a future version.'
@@ -356,7 +356,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.connection_state` instead.
-    _symbol: octoprint.printer.PrinterMixin.get_current_connection
+    _ref: octoprint.printer.PrinterMixin.get_current_connection
 - id: DEP-0067
   message: '`octoprint.printer.PrinterMixin.is_sd_ready` has been deprecated and will
     be removed in a future version. Please use is_storage_mounted instead.'
@@ -372,7 +372,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.is_storage_mounted` instead.
-    _symbol: octoprint.printer.PrinterMixin.is_sd_ready
+    _ref: octoprint.printer.PrinterMixin.is_sd_ready
 - id: DEP-0068
   message: '`octoprint.printer.PrinterMixin.init_sd_card` has been deprecated and
     will be removed in a future version. Please use mount_storage instead.'
@@ -388,7 +388,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.mount_storage` instead.
-    _symbol: octoprint.printer.PrinterMixin.init_sd_card
+    _ref: octoprint.printer.PrinterMixin.init_sd_card
 - id: DEP-0069
   message: '`octoprint.printer.PrinterMixin.release_sd_card` has been deprecated and
     will be removed in a future version. Please use unmount_storage instead.'
@@ -404,7 +404,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.PrinterMixin.unmount_storage` instead.
-    _symbol: octoprint.printer.PrinterMixin.release_sd_card
+    _ref: octoprint.printer.PrinterMixin.release_sd_card
 - id: DEP-0070
   message: '`octoprint.printer.PrinterMixin.can_modify_file` has been deprecated and
     will be removed in 3.0.0. Please directly compare the job parameters and printing
@@ -421,7 +421,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.printer.PrinterMixin.can_modify_file`.
-    _symbol: octoprint.printer.PrinterMixin.can_modify_file
+    _ref: octoprint.printer.PrinterMixin.can_modify_file
 - id: DEP-0071
   message: '`octoprint.printer.PrinterMixin.is_current_file` has been deprecated and
     will be removed in 3.0.0. Please directly compare the job parameters instead.'
@@ -437,7 +437,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.printer.PrinterMixin.is_current_file`.
-    _symbol: octoprint.printer.PrinterMixin.is_current_file
+    _ref: octoprint.printer.PrinterMixin.is_current_file
 - id: DEP-0072
   message: '`octoprint.printer.standard.Printer.get_sd_files` has been deprecated
     and will be removed in a future version. Please use the PrinterStorage instead.'
@@ -453,7 +453,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
-    _symbol: octoprint.printer.standard.Printer.get_sd_files
+    _ref: octoprint.printer.standard.Printer.get_sd_files
 - id: DEP-0073
   message: '`octoprint.printer.standard.Printer.add_sd_file` has been deprecated and
     will be removed in a future version. Please use the PrinterStorage instead.'
@@ -469,7 +469,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
-    _symbol: octoprint.printer.standard.Printer.add_sd_file
+    _ref: octoprint.printer.standard.Printer.add_sd_file
 - id: DEP-0074
   message: '`octoprint.printer.standard.Printer.delete_sd_file` has been deprecated
     and will be removed in a future version. Please use the PrinterStorage instead.'
@@ -485,7 +485,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
-    _symbol: octoprint.printer.standard.Printer.delete_sd_file
+    _ref: octoprint.printer.standard.Printer.delete_sd_file
 - id: DEP-0075
   message: '`octoprint.printer.standard.Printer.refresh_sd_files` has been deprecated
     and will be removed in a future version. Please use the PrinterStorage instead.'
@@ -501,7 +501,7 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
-    _symbol: octoprint.printer.standard.Printer.refresh_sd_files
+    _ref: octoprint.printer.standard.Printer.refresh_sd_files
 - id: DEP-0076
   message: '`octoprint.util.comm.octoprint.util.comm` has been moved into the bundled
     plugin ''serial_connector'' and direct access should be considered deprecated.'
@@ -516,4 +516,4 @@ rules:
     type: deprecation
     since: 2.0.0
     suggestion: Remove usage of `octoprint.util.comm`.
-    _symbol: octoprint.util.comm.octoprint.util.comm
+    _ref: octoprint.util.comm.octoprint.util.comm

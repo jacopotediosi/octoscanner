@@ -243,7 +243,7 @@ class GriffeDeprecationExtension(griffe.Extension):
     """
 
     def __init__(self) -> None:
-        self.deprecations: list[Deprecation] = []
+        self.deprecations = []
 
     def on_module_members(self, *, node: ast.Module, agent: griffe.Visitor, **kwargs) -> None:
         visitor = _DeprecationASTVisitor(agent.current.path)

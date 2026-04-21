@@ -24,7 +24,7 @@ variable names from three sources:
 
 from __future__ import annotations
 
-_CLASS_TO_MIXIN_ATTR: dict[str, str] = {
+_CLASS_TO_MIXIN_ATTR = {
     "PrinterInterface": "_printer",
     "PrinterMixin": "_printer",
     "PrinterProfileManager": "_printer_profile_manager",
@@ -47,7 +47,7 @@ classes may share the same variable (e.g. ``PrinterInterface`` and
 ``PrinterMixin`` both map to ``_printer``)."""
 
 
-_EXTRA_RECEIVERS: dict[str, list[str]] = {
+_EXTRA_RECEIVERS = {
     "User": ["current_user", "user"],
     "SessionUser": ["current_user", "user"],
     "AnonymousUser": ["current_user"],

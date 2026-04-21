@@ -12,7 +12,7 @@ from ..models import Deprecation, PipelineState, RuleFile
 from ..python_receivers import get_receivers_map
 from ..rules import (
     build_fqn,
-    build_symbol_rule,
+    build_python_symbol_rule,
     next_rule_id,
     pattern_sig_from_rule,
 )
@@ -119,7 +119,7 @@ def _make_rule(dep: Deprecation, rule_id: str, receivers_map: dict[str, list[str
          'metadata': {'type': 'deprecation',
                       'since': '1.8.0',
                       'suggestion': 'Use `octoprint.access.User.apikey` instead.',
-                      '_symbol': 'User.getApiKey'}}
+                      '_ref': 'User.getApiKey'}}
     """
     # Qualify symbol name with fully qualified name (e.g. "use foo instead" -> "use `module.Class.foo` instead") in message
     message = dep.message
@@ -133,7 +133,7 @@ def _make_rule(dep: Deprecation, rule_id: str, receivers_map: dict[str, list[str
         if not message.startswith("`"):
             message = message.replace(dep.name, qualified, 1)
 
-    return build_symbol_rule(
+    return build_python_symbol_rule(
         rule_id,
         dep.name,
         dep.kind,
@@ -219,9 +219,10 @@ class PythonDeprecationProcessor(Processor):
     title = "Generating python deprecation rules"
 
     def run(self, state: PipelineState) -> list[str]:
+        output_lines = []
+
         dep_rules = state.rules[RuleFile.python_deprecation]
         rem_rules = state.rules[RuleFile.python_removal]
-        output_lines: list[str] = []
 
         total_new = 0
         for version in state.versions:

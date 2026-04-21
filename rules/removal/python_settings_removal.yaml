@@ -1,0 +1,422 @@
+# OctoPrint removal rules
+
+rules:
+- id: STG-0001
+  message: The `accessControl.enabled` settings path has been removed in OctoPrint
+    1.5.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["accessControl", "enabled", ...])
+  - pattern: $X.global_get_boolean(["accessControl", "enabled", ...])
+  - pattern: $X.global_get_float(["accessControl", "enabled", ...])
+  - pattern: $X.global_get_int(["accessControl", "enabled", ...])
+  - pattern: $X.global_set(["accessControl", "enabled", ...], ...)
+  - pattern: $X.global_set_boolean(["accessControl", "enabled", ...], ...)
+  - pattern: $X.global_set_float(["accessControl", "enabled", ...], ...)
+  - pattern: $X.global_set_int(["accessControl", "enabled", ...], ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Remove usage of settings paths under `accessControl.enabled`.
+    _ref: accessControl.enabled
+- id: STG-0002
+  message: The `devel.virtualPrinter` settings path has been removed in OctoPrint
+    1.5.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["devel", "virtualPrinter", ...])
+  - pattern: $X.global_get_boolean(["devel", "virtualPrinter", ...])
+  - pattern: $X.global_get_float(["devel", "virtualPrinter", ...])
+  - pattern: $X.global_get_int(["devel", "virtualPrinter", ...])
+  - pattern: $X.global_set(["devel", "virtualPrinter", ...], ...)
+  - pattern: $X.global_set_boolean(["devel", "virtualPrinter", ...], ...)
+  - pattern: $X.global_set_float(["devel", "virtualPrinter", ...], ...)
+  - pattern: $X.global_set_int(["devel", "virtualPrinter", ...], ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Remove usage of settings paths under `devel.virtualPrinter`.
+    _ref: devel.virtualPrinter
+- id: STG-0003
+  message: The `gcodeViewer` settings path has been removed in OctoPrint 1.5.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["gcodeViewer", ...])
+  - pattern: $X.global_get_boolean(["gcodeViewer", ...])
+  - pattern: $X.global_get_float(["gcodeViewer", ...])
+  - pattern: $X.global_get_int(["gcodeViewer", ...])
+  - pattern: $X.global_set(["gcodeViewer", ...], ...)
+  - pattern: $X.global_set_boolean(["gcodeViewer", ...], ...)
+  - pattern: $X.global_set_float(["gcodeViewer", ...], ...)
+  - pattern: $X.global_set_int(["gcodeViewer", ...], ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Remove usage of settings paths under `gcodeViewer`.
+    _ref: gcodeViewer
+- id: STG-0005
+  message: The `printerParameters.defaultExtrusionLength` settings path has been removed
+    in OctoPrint 1.8.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["printerParameters", "defaultExtrusionLength", ...])
+  - pattern: $X.global_get_boolean(["printerParameters", "defaultExtrusionLength",
+      ...])
+  - pattern: $X.global_get_float(["printerParameters", "defaultExtrusionLength", ...])
+  - pattern: $X.global_get_int(["printerParameters", "defaultExtrusionLength", ...])
+  - pattern: $X.global_set(["printerParameters", "defaultExtrusionLength", ...], ...)
+  - pattern: $X.global_set_boolean(["printerParameters", "defaultExtrusionLength",
+      ...], ...)
+  - pattern: $X.global_set_float(["printerParameters", "defaultExtrusionLength", ...],
+      ...)
+  - pattern: $X.global_set_int(["printerParameters", "defaultExtrusionLength", ...],
+      ...)
+  metadata:
+    type: removal
+    since: 1.8.0
+    suggestion: Remove usage of settings paths under `printerParameters.defaultExtrusionLength`.
+    _ref: printerParameters.defaultExtrusionLength
+- id: STG-0006
+  message: The `webcam.cacheBuster` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "cacheBuster", ...])
+  - pattern: $X.global_get_boolean(["webcam", "cacheBuster", ...])
+  - pattern: $X.global_get_float(["webcam", "cacheBuster", ...])
+  - pattern: $X.global_get_int(["webcam", "cacheBuster", ...])
+  - pattern: $X.global_set(["webcam", "cacheBuster", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "cacheBuster", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "cacheBuster", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "cacheBuster", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.cacheBuster`.
+    _ref: webcam.cacheBuster
+- id: STG-0007
+  message: The `webcam.flipH` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "flipH", ...])
+  - pattern: $X.global_get_boolean(["webcam", "flipH", ...])
+  - pattern: $X.global_get_float(["webcam", "flipH", ...])
+  - pattern: $X.global_get_int(["webcam", "flipH", ...])
+  - pattern: $X.global_set(["webcam", "flipH", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "flipH", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "flipH", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "flipH", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.flipH`.
+    _ref: webcam.flipH
+- id: STG-0008
+  message: The `webcam.flipV` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "flipV", ...])
+  - pattern: $X.global_get_boolean(["webcam", "flipV", ...])
+  - pattern: $X.global_get_float(["webcam", "flipV", ...])
+  - pattern: $X.global_get_int(["webcam", "flipV", ...])
+  - pattern: $X.global_set(["webcam", "flipV", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "flipV", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "flipV", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "flipV", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.flipV`.
+    _ref: webcam.flipV
+- id: STG-0009
+  message: The `webcam.rotate90` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "rotate90", ...])
+  - pattern: $X.global_get_boolean(["webcam", "rotate90", ...])
+  - pattern: $X.global_get_float(["webcam", "rotate90", ...])
+  - pattern: $X.global_get_int(["webcam", "rotate90", ...])
+  - pattern: $X.global_set(["webcam", "rotate90", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "rotate90", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "rotate90", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "rotate90", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.rotate90`.
+    _ref: webcam.rotate90
+- id: STG-0010
+  message: The `webcam.snapshot` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "snapshot", ...])
+  - pattern: $X.global_get_boolean(["webcam", "snapshot", ...])
+  - pattern: $X.global_get_float(["webcam", "snapshot", ...])
+  - pattern: $X.global_get_int(["webcam", "snapshot", ...])
+  - pattern: $X.global_set(["webcam", "snapshot", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "snapshot", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "snapshot", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "snapshot", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.snapshot`.
+    _ref: webcam.snapshot
+- id: STG-0011
+  message: The `webcam.snapshotSslValidation` settings path has been removed in OctoPrint
+    1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "snapshotSslValidation", ...])
+  - pattern: $X.global_get_boolean(["webcam", "snapshotSslValidation", ...])
+  - pattern: $X.global_get_float(["webcam", "snapshotSslValidation", ...])
+  - pattern: $X.global_get_int(["webcam", "snapshotSslValidation", ...])
+  - pattern: $X.global_set(["webcam", "snapshotSslValidation", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "snapshotSslValidation", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "snapshotSslValidation", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "snapshotSslValidation", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.snapshotSslValidation`.
+    _ref: webcam.snapshotSslValidation
+- id: STG-0012
+  message: The `webcam.snapshotTimeout` settings path has been removed in OctoPrint
+    1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "snapshotTimeout", ...])
+  - pattern: $X.global_get_boolean(["webcam", "snapshotTimeout", ...])
+  - pattern: $X.global_get_float(["webcam", "snapshotTimeout", ...])
+  - pattern: $X.global_get_int(["webcam", "snapshotTimeout", ...])
+  - pattern: $X.global_set(["webcam", "snapshotTimeout", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "snapshotTimeout", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "snapshotTimeout", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "snapshotTimeout", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.snapshotTimeout`.
+    _ref: webcam.snapshotTimeout
+- id: STG-0013
+  message: The `webcam.stream` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "stream", ...])
+  - pattern: $X.global_get_boolean(["webcam", "stream", ...])
+  - pattern: $X.global_get_float(["webcam", "stream", ...])
+  - pattern: $X.global_get_int(["webcam", "stream", ...])
+  - pattern: $X.global_set(["webcam", "stream", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "stream", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "stream", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "stream", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.stream`.
+    _ref: webcam.stream
+- id: STG-0014
+  message: The `webcam.streamRatio` settings path has been removed in OctoPrint 1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "streamRatio", ...])
+  - pattern: $X.global_get_boolean(["webcam", "streamRatio", ...])
+  - pattern: $X.global_get_float(["webcam", "streamRatio", ...])
+  - pattern: $X.global_get_int(["webcam", "streamRatio", ...])
+  - pattern: $X.global_set(["webcam", "streamRatio", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "streamRatio", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "streamRatio", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "streamRatio", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.streamRatio`.
+    _ref: webcam.streamRatio
+- id: STG-0015
+  message: The `webcam.streamTimeout` settings path has been removed in OctoPrint
+    1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "streamTimeout", ...])
+  - pattern: $X.global_get_boolean(["webcam", "streamTimeout", ...])
+  - pattern: $X.global_get_float(["webcam", "streamTimeout", ...])
+  - pattern: $X.global_get_int(["webcam", "streamTimeout", ...])
+  - pattern: $X.global_set(["webcam", "streamTimeout", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "streamTimeout", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "streamTimeout", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "streamTimeout", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.streamTimeout`.
+    _ref: webcam.streamTimeout
+- id: STG-0016
+  message: The `webcam.streamWebrtcIceServers` settings path has been removed in OctoPrint
+    1.9.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["webcam", "streamWebrtcIceServers", ...])
+  - pattern: $X.global_get_boolean(["webcam", "streamWebrtcIceServers", ...])
+  - pattern: $X.global_get_float(["webcam", "streamWebrtcIceServers", ...])
+  - pattern: $X.global_get_int(["webcam", "streamWebrtcIceServers", ...])
+  - pattern: $X.global_set(["webcam", "streamWebrtcIceServers", ...], ...)
+  - pattern: $X.global_set_boolean(["webcam", "streamWebrtcIceServers", ...], ...)
+  - pattern: $X.global_set_float(["webcam", "streamWebrtcIceServers", ...], ...)
+  - pattern: $X.global_set_int(["webcam", "streamWebrtcIceServers", ...], ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Remove usage of settings paths under `webcam.streamWebrtcIceServers`.
+    _ref: webcam.streamWebrtcIceServers
+- id: STG-0017
+  message: The `server.incompleteStartup` settings path has been removed in OctoPrint
+    1.10.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["server", "incompleteStartup", ...])
+  - pattern: $X.global_get_boolean(["server", "incompleteStartup", ...])
+  - pattern: $X.global_get_float(["server", "incompleteStartup", ...])
+  - pattern: $X.global_get_int(["server", "incompleteStartup", ...])
+  - pattern: $X.global_set(["server", "incompleteStartup", ...], ...)
+  - pattern: $X.global_set_boolean(["server", "incompleteStartup", ...], ...)
+  - pattern: $X.global_set_float(["server", "incompleteStartup", ...], ...)
+  - pattern: $X.global_set_int(["server", "incompleteStartup", ...], ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Remove usage of settings paths under `server.incompleteStartup`.
+    _ref: server.incompleteStartup
+- id: STG-0018
+  message: The `server.reverseProxy.trustedDownstream` settings path has been removed
+    in OctoPrint 1.11.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["server", "reverseProxy", "trustedDownstream", ...])
+  - pattern: $X.global_get_boolean(["server", "reverseProxy", "trustedDownstream",
+      ...])
+  - pattern: $X.global_get_float(["server", "reverseProxy", "trustedDownstream", ...])
+  - pattern: $X.global_get_int(["server", "reverseProxy", "trustedDownstream", ...])
+  - pattern: $X.global_set(["server", "reverseProxy", "trustedDownstream", ...], ...)
+  - pattern: $X.global_set_boolean(["server", "reverseProxy", "trustedDownstream",
+      ...], ...)
+  - pattern: $X.global_set_float(["server", "reverseProxy", "trustedDownstream", ...],
+      ...)
+  - pattern: $X.global_set_int(["server", "reverseProxy", "trustedDownstream", ...],
+      ...)
+  metadata:
+    type: removal
+    since: 1.11.0
+    suggestion: Remove usage of settings paths under `server.reverseProxy.trustedDownstream`.
+    _ref: server.reverseProxy.trustedDownstream
+- id: STG-0019
+  message: The `accessControl.trustRemoteUser` settings path has been removed in OctoPrint
+    2.0.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["accessControl", "trustRemoteUser", ...])
+  - pattern: $X.global_get_boolean(["accessControl", "trustRemoteUser", ...])
+  - pattern: $X.global_get_float(["accessControl", "trustRemoteUser", ...])
+  - pattern: $X.global_get_int(["accessControl", "trustRemoteUser", ...])
+  - pattern: $X.global_set(["accessControl", "trustRemoteUser", ...], ...)
+  - pattern: $X.global_set_boolean(["accessControl", "trustRemoteUser", ...], ...)
+  - pattern: $X.global_set_float(["accessControl", "trustRemoteUser", ...], ...)
+  - pattern: $X.global_set_int(["accessControl", "trustRemoteUser", ...], ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Remove usage of settings paths under `accessControl.trustRemoteUser`.
+    _ref: accessControl.trustRemoteUser
+- id: STG-0020
+  message: The `feature.autoUppercaseBlacklist` settings path has been removed in
+    OctoPrint 2.0.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["feature", "autoUppercaseBlacklist", ...])
+  - pattern: $X.global_get_boolean(["feature", "autoUppercaseBlacklist", ...])
+  - pattern: $X.global_get_float(["feature", "autoUppercaseBlacklist", ...])
+  - pattern: $X.global_get_int(["feature", "autoUppercaseBlacklist", ...])
+  - pattern: $X.global_set(["feature", "autoUppercaseBlacklist", ...], ...)
+  - pattern: $X.global_set_boolean(["feature", "autoUppercaseBlacklist", ...], ...)
+  - pattern: $X.global_set_float(["feature", "autoUppercaseBlacklist", ...], ...)
+  - pattern: $X.global_set_int(["feature", "autoUppercaseBlacklist", ...], ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Remove usage of settings paths under `feature.autoUppercaseBlacklist`.
+    _ref: feature.autoUppercaseBlacklist
+- id: STG-0021
+  message: The `serial` settings path has been removed in OctoPrint 2.0.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["serial", ...])
+  - pattern: $X.global_get_boolean(["serial", ...])
+  - pattern: $X.global_get_float(["serial", ...])
+  - pattern: $X.global_get_int(["serial", ...])
+  - pattern: $X.global_set(["serial", ...], ...)
+  - pattern: $X.global_set_boolean(["serial", ...], ...)
+  - pattern: $X.global_set_float(["serial", ...], ...)
+  - pattern: $X.global_set_int(["serial", ...], ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Remove usage of settings paths under `serial`.
+    _ref: serial
+- id: STG-0022
+  message: The `server.pluginBlacklist` settings path has been removed in OctoPrint
+    2.0.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - pattern: $X.global_get(["server", "pluginBlacklist", ...])
+  - pattern: $X.global_get_boolean(["server", "pluginBlacklist", ...])
+  - pattern: $X.global_get_float(["server", "pluginBlacklist", ...])
+  - pattern: $X.global_get_int(["server", "pluginBlacklist", ...])
+  - pattern: $X.global_set(["server", "pluginBlacklist", ...], ...)
+  - pattern: $X.global_set_boolean(["server", "pluginBlacklist", ...], ...)
+  - pattern: $X.global_set_float(["server", "pluginBlacklist", ...], ...)
+  - pattern: $X.global_set_int(["server", "pluginBlacklist", ...], ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Remove usage of settings paths under `server.pluginBlacklist`.
+    _ref: server.pluginBlacklist

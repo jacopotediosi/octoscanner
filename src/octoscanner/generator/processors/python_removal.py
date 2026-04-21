@@ -15,10 +15,10 @@ from ..python_receivers import get_receivers_map
 from ..python_utils import ancestry_depth, griffe_mod_path, griffe_to_symbolkind, is_subclass_of
 from ..rules import (
     build_fqn,
-    build_symbol_rule,
+    build_python_symbol_rule,
     next_rule_id,
     pattern_sig_from_rule,
-    symbol_sig_earliest_since_map,
+    ref_earliest_since_map,
 )
 from .base import Processor, format_summary
 
@@ -441,7 +441,7 @@ def _make_rule(
          'metadata': {'type': 'removal',
                       'since': '1.8.0',
                       'suggestion': 'Remove usage of `octoprint.access.User.getApiKey`.',
-                      '_symbol': 'User.getApiKey'}}
+                      '_ref': 'User.getApiKey'}}
     """
     # Build message and suggestion based on symbol kind
     if rem.kind == SymbolKind.MODULE:
@@ -463,7 +463,7 @@ def _make_rule(
             message = f"`{fqn}` has been removed."
         suggestion = f"Remove usage of `{fqn}`."
 
-    return build_symbol_rule(
+    return build_python_symbol_rule(
         rule_id,
         rem.name,
         rem.kind,
@@ -480,7 +480,7 @@ def _generate_rules(
     removals: list[Removal],
     existing_removal_rules: list[dict],
     class_hierarchy: dict[str, list[str]],
-    deprecated_sigs_since_map: dict[str, str | None],
+    deprecated_refs_since_map: dict[str, str | None],
 ) -> tuple[list[dict], int]:
     """Generate new removal rules, deduplicating against existing rules.
 
@@ -490,8 +490,8 @@ def _generate_rules(
             to deduplicate against.
         class_hierarchy (dict[str, list[str]]): Class -> base-names
             mapping for receiver inheritance.
-        deprecated_sigs_since_map (dict[str, str | None]):
-            Symbol-signature -> ``since`` mapping for existing deprecation rules.
+        deprecated_refs_since_map (dict[str, str | None]):
+            Ref -> ``since`` mapping for existing deprecation rules.
             Used to enrich removal messages with "deprecated since X" context.
 
     Returns:
@@ -506,10 +506,10 @@ def _generate_rules(
         ... ]
         >>> existing_rem = []
         >>> hierarchy = {"ApiUser": ["User"]}
-        >>> dep_sigs = {"octoprint.access.User.getApiKey": "1.9.0"}
+        >>> dep_refs = {"octoprint.access.User.getApiKey": "1.9.0"}
         >>> new_rules, skipped = _generate_rules(
         ...     removals, existing_rem,
-        ...     hierarchy, deprecated_sigs_since_map=dep_sigs,
+        ...     hierarchy, deprecated_refs_since_map=dep_refs,
         ... )
         >>> len(new_rules)
         1
@@ -554,9 +554,9 @@ def _generate_rules(
             if not receivers and rem.class_name in removed_classes:
                 continue
 
-        sym_sig = build_fqn(rem.name, rem.class_name, rem.module_path)
-        was_deprecated = sym_sig in deprecated_sigs_since_map
-        dep_since = deprecated_sigs_since_map.get(sym_sig) if was_deprecated else None
+        ref = build_fqn(rem.name, rem.class_name, rem.module_path)
+        was_deprecated = ref in deprecated_refs_since_map
+        dep_since = deprecated_refs_since_map.get(ref) if was_deprecated else None
         rule = _make_rule(rem, f"REM-{next_id:04d}", receivers_map, was_deprecated, dep_since)
 
         if rule is None:
@@ -581,8 +581,9 @@ class PythonRemovalProcessor(Processor):
     title = "Generating python removal rules"
 
     def run(self, state: PipelineState) -> list[str]:
+        output_lines = []
+
         rem_rules = state.rules[RuleFile.python_removal]
-        output_lines: list[str] = []
 
         total_new = 0
         for v_old, v_new in zip(state.versions, state.versions[1:]):
@@ -600,9 +601,7 @@ class PythonRemovalProcessor(Processor):
                 removals=removals,
                 existing_removal_rules=rem_rules,
                 class_hierarchy=state.python_analysis_results[v_new].class_hierarchy,
-                deprecated_sigs_since_map=symbol_sig_earliest_since_map(
-                    state.python_analysis_results[v_old].deprecations
-                ),
+                deprecated_refs_since_map=ref_earliest_since_map(state.python_analysis_results[v_old].deprecations),
             )
             if new_rules:
                 rem_rules.extend(new_rules)

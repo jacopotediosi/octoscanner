@@ -1,10 +1,11 @@
-# Symbols to ignore during rule generation.
+# Refs to ignore during rule generation.
 #
-# Symbols matching these patterns will not generate Semgrep rules.
+# Refs matching these patterns will not generate Semgrep rules.
 # Useful for excluding known false positives that cannot be easily resolved
 # in another way.
 #
-# Format: list of fully qualified symbol names per rule type.
+# Format: list of refs (FQNs for Python symbols, dotted paths for settings,
+# etc.) per rule type.
 # Supports wildcards: * matches any single component, ** matches any path.
 #
 # Examples:

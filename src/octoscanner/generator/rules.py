@@ -45,7 +45,8 @@ def _clean_message(message: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Symbol signatures
+# ---------------------------------------------------------------------------
+# Rule refs
 # ---------------------------------------------------------------------------
 
 
@@ -77,21 +78,21 @@ def build_fqn(name: str, class_name: str | None, module_path: str | None) -> str
     return name
 
 
-def symbol_sig_from_rule(rule: dict) -> str:
-    """Get the symbol signature stored in a rule's metadata.
+def ref_from_rule(rule: dict) -> str:
+    """Get the ref stored in a rule's metadata.
 
     Args:
-        rule (dict): A Semgrep rule dict with ``metadata._symbol``.
+        rule (dict): A Semgrep rule dict with ``metadata._ref``.
 
     Returns:
-        str: The qualified name signature.
+        str: The ref (FQN for Python symbols, dotted path for settings, etc.).
 
     Examples:
-        >>> rule = {"metadata": {"_symbol": "User.getApiKey"}}
-        >>> symbol_sig_from_rule(rule)
+        >>> rule = {"metadata": {"_ref": "User.getApiKey"}}
+        >>> ref_from_rule(rule)
         'User.getApiKey'
     """
-    return rule["metadata"]["_symbol"]
+    return rule["metadata"]["_ref"]
 
 
 def pattern_sig_from_rule(rule: dict) -> str | tuple[str, ...]:
@@ -122,8 +123,8 @@ def pattern_sig_from_rule(rule: dict) -> str | tuple[str, ...]:
     return ""
 
 
-def symbol_sig_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> dict[str, str | None]:
-    """Build a map of symbol signature -> earliest ``since`` version.
+def ref_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> dict[str, str | None]:
+    """Build a map of ref -> earliest ``since`` version.
 
     Keeps the earliest ``since`` when the same symbol is deprecated or removed
     multiple times across OctoPrint versions.
@@ -133,42 +134,42 @@ def symbol_sig_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> 
             (typically merged from multiple OctoPrint versions).
 
     Returns:
-        dict[str, str | None]: Dict mapping qualified name signatures to the
-        earliest ``since`` version string, or ``None`` if no version is known.
+        dict[str, str | None]: Dict mapping refs (FQNs) to the earliest
+        ``since`` version string, or ``None`` if no version is known.
 
     Examples:
         >>> deps = [
         ...     Deprecation("foo", SymbolKind.FUNCTION, "msg", "1.8.0", "Cls", "mod", 1),
         ...     Deprecation("foo", SymbolKind.FUNCTION, "msg", "1.6.0", "Cls", "mod", 1),
         ... ]
-        >>> sigs = symbol_sig_earliest_since_map(deps)
-        >>> sigs["mod.Cls.foo"]
+        >>> refs = ref_earliest_since_map(deps)
+        >>> refs["mod.Cls.foo"]
         '1.6.0'
     """
-    sigs = {}
+    refs = {}
     for item in items:
-        sig = build_fqn(item.name, item.class_name, item.module_path)
-        existing = sigs.get(sig)
+        ref = build_fqn(item.name, item.class_name, item.module_path)
+        existing = refs.get(ref)
         if existing is None:
-            sigs[sig] = item.since
+            refs[ref] = item.since
         elif item.since is not None and Version(item.since) < Version(existing):
-            sigs[sig] = item.since
-    return sigs
+            refs[ref] = item.since
+    return refs
 
 
 # ---------------------------------------------------------------------------
-# Ignored symbols
+# Ignored refs
 # ---------------------------------------------------------------------------
 
 
 @functools.cache
-def _load_ignored_symbols() -> dict[str, list[str]]:
-    """Load ignored symbols from the configuration file.
+def _load_ignored_refs() -> dict[str, list[str]]:
+    """Load ignored refs from the configuration file `ignored_refs.yaml`.
 
     Returns:
-        dict[str, list[str]]: Mapping of rule type to list of FQN patterns.
+        dict[str, list[str]]: Mapping of rule type to list of ref patterns.
     """
-    patterns_file = Path(__file__).parent / "ignored_symbols.yaml"
+    patterns_file = Path(__file__).parent / "ignored_refs.yaml"
 
     if not patterns_file.exists():
         return {}
@@ -177,26 +178,26 @@ def _load_ignored_symbols() -> dict[str, list[str]]:
         return yaml.safe_load(f) or {}
 
 
-def is_ignored_symbol(fqn: str, rule_type: str) -> bool:
-    """Check if a fully qualified name matches any ignored pattern.
+def is_ignored_ref(ref: str, rule_type: str) -> bool:
+    """Check if a ref matches any ignored pattern for the given rule type.
 
     Supports wildcards:
       - ``*`` matches any single path component
       - ``**`` matches any number of path components
 
     Args:
-        fqn (str): The fully qualified name to check.
+        ref (str): The ref to check (FQN, dotted settings path, etc.).
         rule_type (str): The rule type to check against (e.g. ``"removal"``).
 
     Returns:
-        bool: True if the FQN matches any ignored pattern.
+        bool: True if the ref matches any ignored pattern.
     """
-    patterns = _load_ignored_symbols().get(rule_type, [])
+    patterns = _load_ignored_refs().get(rule_type, [])
 
     for pattern in patterns:
         # Convert ** to placeholder, * to single-component match, then ** to multi-component
         glob_pattern = pattern.replace("**", "\x00").replace("*", "[^.]*").replace("\x00", "*")
-        if fnmatch.fnmatch(fqn, glob_pattern):
+        if fnmatch.fnmatch(ref, glob_pattern):
             return True
 
     return False
@@ -207,14 +208,14 @@ def is_ignored_symbol(fqn: str, rule_type: str) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def symbol_patterns(
+def python_symbol_patterns(
     name: str,
     kind: SymbolKind,
     class_name: str | None = None,
     module_path: str | None = None,
     receivers: list[str] | None = None,
 ) -> list[dict]:
-    """Generate Semgrep patterns for a symbol based on its ``kind``.
+    """Generate Semgrep patterns for a Python symbol based on its ``kind``.
 
     Handles all symbol types:
     - MODULE: import statements (``import X``, ``from parent import X``, ``from X import $Y``)
@@ -234,17 +235,17 @@ def symbol_patterns(
         list[dict]: List of Semgrep pattern dicts, or empty list if invalid.
 
     Examples:
-        >>> symbol_patterns("octoprint.server.api", SymbolKind.MODULE)
+        >>> python_symbol_patterns("octoprint.server.api", SymbolKind.MODULE)
         [{'pattern': 'import octoprint.server.api'}, {'pattern': 'from octoprint.server import api'}, {'pattern': 'from octoprint.server.api import $X'}]
-        >>> symbol_patterns("User", SymbolKind.CLASS, module_path="octoprint.access")
+        >>> python_symbol_patterns("User", SymbolKind.CLASS, module_path="octoprint.access")
         [{'pattern': 'from octoprint.access import User'}, {'pattern': 'octoprint.access.User'}]
-        >>> symbol_patterns("start", SymbolKind.FUNCTION, class_name="Printer", receivers=["_printer", "printer"])
+        >>> python_symbol_patterns("start", SymbolKind.FUNCTION, class_name="Printer", receivers=["_printer", "printer"])
         [{'pattern': '$X._printer.start'}, {'pattern': 'printer.start'}]
-        >>> symbol_patterns("apikey", SymbolKind.ATTRIBUTE, class_name="User", receivers=["user"])
+        >>> python_symbol_patterns("apikey", SymbolKind.ATTRIBUTE, class_name="User", receivers=["user"])
         [{'pattern': 'user.apikey'}]
-        >>> symbol_patterns("user_permission", SymbolKind.ATTRIBUTE, module_path="octoprint.server")
+        >>> python_symbol_patterns("user_permission", SymbolKind.ATTRIBUTE, module_path="octoprint.server")
         [{'pattern': 'octoprint.server.user_permission'}, {'pattern': 'from octoprint.server import user_permission'}]
-        >>> symbol_patterns("some_func", SymbolKind.FUNCTION, module_path="octoprint.util")
+        >>> python_symbol_patterns("some_func", SymbolKind.FUNCTION, module_path="octoprint.util")
         [{'pattern': 'octoprint.util.some_func'}, {'pattern': 'from octoprint.util import some_func'}]
     """
     # MODULE: import statements (import X, from parent import X, from X import $Y)
@@ -316,22 +317,40 @@ def patterns_field(patterns: list[dict]) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def build_rule(rule_id: str, message: str, patterns: list[dict], metadata: dict, severity: str) -> dict:
+def build_rule(
+    rule_id: str,
+    ref: str,
+    message: str,
+    patterns: list[dict],
+    metadata: dict,
+    severity: str,
+) -> dict | None:
     """Assemble a complete Semgrep rule dict.
+
+    Returns ``None`` if ``ref`` matches an entry in ``ignored_refs.yaml``
+    for the rule type declared in ``metadata["type"]``.
+
+    The ``ref`` argument is stored under ``metadata._ref`` and used as
+    the unique identity of the rule (FQN for Python symbols, dotted path for
+    settings paths, etc.).
 
     Args:
         rule_id (str): Unique rule identifier (e.g. ``"DEP-0001"``).
+        ref (str): Ref identifying what the rule targets. Stored under
+            ``metadata._ref``.
         message (str): Human-readable message for the Semgrep finding.
         patterns (list[dict]): List of Semgrep pattern dicts.
         metadata (dict): Dict of metadata fields.
         severity (str): Semgrep severity.
 
     Returns:
-        dict: A complete Semgrep rule dict.
+        dict | None: A complete Semgrep rule dict, or ``None`` if the ref
+        is in the ignored refs list for the given rule type.
 
     Examples:
         >>> rule = build_rule(
         ...     rule_id="DEP-0001",
+        ...     ref="octoprint.util.foo",
         ...     message="Deprecated API.",
         ...     patterns=[{"pattern": "import foo"}],
         ...     metadata={"type": "deprecation", "since": "1.8.0"},
@@ -343,11 +362,17 @@ def build_rule(rule_id: str, message: str, patterns: list[dict], metadata: dict,
          'languages': ['python'],
          'severity': 'MEDIUM',
          'pattern': 'import foo',
-         'metadata': {'type': 'deprecation', 'since': '1.8.0'}}
+         'metadata': {'type': 'deprecation',
+                      'since': '1.8.0',
+                      '_ref': 'octoprint.util.foo'}}
     """
-    # Clean suggestion if present
+    rule_type = metadata.get("type")
+    if rule_type is not None and is_ignored_ref(ref, rule_type):
+        return None
+
+    metadata = metadata.copy()
+    metadata["_ref"] = ref
     if "suggestion" in metadata:
-        metadata = metadata.copy()
         metadata["suggestion"] = _clean_message(metadata["suggestion"])
 
     return {
@@ -360,7 +385,7 @@ def build_rule(rule_id: str, message: str, patterns: list[dict], metadata: dict,
     }
 
 
-def build_symbol_rule(
+def build_python_symbol_rule(
     rule_id: str,
     name: str,
     kind: SymbolKind,
@@ -371,10 +396,10 @@ def build_symbol_rule(
     metadata: dict,
     severity: str,
 ) -> dict | None:
-    """Build a Semgrep rule for a symbol.
+    """Build a Semgrep rule for a Python symbol.
 
     Returns ``None`` if the symbol cannot produce a valid pattern or if
-    the symbol is in the ignored symbols list.
+    its ref is in the ignored refs list.
 
     Args:
         rule_id (str): Unique rule identifier (e.g. ``"DEP-0001"``).
@@ -388,16 +413,15 @@ def build_symbol_rule(
             mapping from ``get_receivers_map``.
         message (str): Human-readable message for the Semgrep finding.
         metadata (dict): Dict of metadata fields (``type``, ``since``, etc.).
-            A ``_symbol`` key is added automatically.
         severity (str): Semgrep severity.
 
     Returns:
         dict | None: A Semgrep rule dict, or ``None`` if no valid pattern
-        can be built or the symbol is ignored.
+        can be built or the ref is in the ignored refs list.
 
     Examples:
         >>> receivers = get_receivers_map({"UserManager": []})
-        >>> rule = build_symbol_rule(
+        >>> rule = build_python_symbol_rule(
         ...     rule_id="DEP-0001",
         ...     name="getApiKey",
         ...     kind=SymbolKind.FUNCTION,
@@ -418,29 +442,20 @@ def build_symbol_rule(
                             {'pattern': 'userManager.getApiKey'}],
          'metadata': {'type': 'deprecation',
                       'since': '1.8.0',
-                      '_symbol': 'octoprint.access.users.UserManager.getApiKey'}}
+                      '_ref': 'octoprint.access.users.UserManager.getApiKey'}}
     """
-    # Compute fqn
-    fqn = build_fqn(name, class_name, module_path)
-
-    # Check if this symbol should be ignored
-    rule_type = metadata.get("type")
-    if rule_type is not None and is_ignored_symbol(fqn, rule_type):
-        return None
-
-    # Add fqn to _symbol metadata
-    metadata["_symbol"] = fqn
-
-    # Get receivers
-    receivers = receivers_map.get(class_name)
-
-    # Generate patterns
-    patterns = symbol_patterns(name, kind, class_name, module_path, receivers)
+    patterns = python_symbol_patterns(name, kind, class_name, module_path, receivers_map.get(class_name))
     if not patterns:
         return None
 
-    # Build rule
-    return build_rule(rule_id, message, patterns, metadata, severity)
+    return build_rule(
+        rule_id=rule_id,
+        ref=build_fqn(name, class_name, module_path),
+        message=message,
+        patterns=patterns,
+        metadata=metadata,
+        severity=severity,
+    )
 
 
 def next_rule_id(existing_rules: list[dict], prefix: str) -> int:

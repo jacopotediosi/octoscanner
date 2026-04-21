@@ -3,7 +3,7 @@
 ## Publishing
 
 - [x] Write README.md
-    - [ ] Describe the current rulesets
+    - [ ] Describe the current rulesets and what's yet to do
 - [ ] Generate and manually review/fix all rules
 - [x] Check for Snyk / Semgrep warnings
 - [ ] Implement Octoscanner versioning and show version in cli/json scan results
@@ -23,11 +23,9 @@
         - [x] Import path changes
         - [x] Class/method/attribute renames (both private and non-private)
         - [ ] Removed HTTP APIs
-        - [ ] Removed settings paths, e.g. `global_get(["serial", ...])` returns `None` in 2.0.0 (serial migrated to
-              `plugins.serial_connector`), `["feature", "autoUppercaseBlacklist"]` has been renamed to `autoUppercaseBlocklist`,
-              `["server", "pluginBlacklist"]` has been renamed to `pluginBlocklist`. Sample patterns:
-              `$X.global_get(["serial", ...])`, `$X.global_get(["feature", "autoUppercaseBlacklist"])` (Semgrep
-              supports matching literal strings in lists).
+        - [x] Removed settings paths, e.g. `global_get(["serial", ...])` returns `None` in 2.0.0 (serial migrated to
+              `plugins.serial_connector`)
+            - [ ] Detect settings paths for built-in plugins (under `global_get(["plugins"])`)
         - [ ] Breaking signature changes: to detect `PrinterInterface.connect` in
               `/tmp/OctoPrint-Telegram/.../cmd_con.py:365` which changed signature in 2.0.0 (parameters renamed:
               `port` -> `connector`, `baudrate` -> `parameters`). This is a signature change, not a removal, and

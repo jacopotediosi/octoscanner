@@ -35,6 +35,7 @@ class RuleFile(StrEnum):
 
     python_deprecation = "deprecation/python_deprecation.yaml"
     python_removal = "removal/python_removal.yaml"
+    python_settings_removal = "removal/python_settings_removal.yaml"
 
     @property
     def rules_type(self) -> str:
@@ -56,11 +57,14 @@ class PythonAnalysisResult:
         class_hierarchy (dict[str, list[str]]): Class name -> list of base
             class names.
         griffe_module (griffe.Module): The loaded Griffe module tree.
+        settings_paths (set[tuple[str, ...]]): All leaf settings paths extracted
+            from the configuration schema, e.g. ``{("serial", "port"), ...}``.
     """
 
     deprecations: list[Deprecation]
     class_hierarchy: dict[str, list[str]]
     griffe_module: griffe.Module
+    settings_paths: set[tuple[str, ...]]
 
 
 @dataclass

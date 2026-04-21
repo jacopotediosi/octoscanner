@@ -11,6 +11,7 @@ from ...models import PythonAnalysisResult
 from ..base import Analyzer
 from .deprecation_extension import GriffeDeprecationExtension
 from .griffe_walker import walk_griffe
+from .settings_extractor import extract_settings_paths
 
 if TYPE_CHECKING:
     from ...models import PipelineState
@@ -60,7 +61,15 @@ def _python_analyze(source_dir: Path, version: str) -> PythonAnalysisResult:
         if dep.since is None:
             dep.since = version
 
-    return PythonAnalysisResult(deprecations=deprecations, class_hierarchy=class_hierarchy, griffe_module=griffe_module)
+    # Populate settings paths
+    settings_paths = extract_settings_paths(griffe_module)
+
+    return PythonAnalysisResult(
+        deprecations=deprecations,
+        class_hierarchy=class_hierarchy,
+        griffe_module=griffe_module,
+        settings_paths=settings_paths,
+    )
 
 
 class PythonAnalyzer(Analyzer):
@@ -92,6 +101,9 @@ class PythonAnalyzer(Analyzer):
         for version, result in state.python_analysis_results.items():
             dep_count = len(result.deprecations)
             class_count = len(result.class_hierarchy)
-            output_lines.append(f"  {version}: {class_count} classes, {dep_count} deprecations")
+            settings_paths_count = len(result.settings_paths)
+            output_lines.append(
+                f"  {version}: {class_count} classes, {dep_count} deprecations, {settings_paths_count} settings paths"
+            )
 
         return output_lines
