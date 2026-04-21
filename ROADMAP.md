@@ -6,7 +6,7 @@
     - [ ] Describe the current rulesets and what's yet to do
 - [ ] Generate and manually review/fix all rules
 - [x] Check for Snyk / Semgrep warnings
-- [ ] Implement Octoscanner versioning and show version in cli/json scan results
+- [ ] Implement Octoscanner (and rules) versioning and show versions in cli/json scan results
 - [ ] Publish first release
 - [ ] Evaluate splitting rules and downloader/generator into a separate project
 

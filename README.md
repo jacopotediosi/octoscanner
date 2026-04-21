@@ -45,9 +45,6 @@ octoscanner scan /path/to/my_plugin
 # Scan multiple plugins
 octoscanner scan /path/to/plugin1 /path/to/plugin2
 
-# Scan if plugin has issues with a specific OctoPrint version
-octoscanner scan /path/to/my_plugin -v 1.10.0
-
 # Filter by rule type
 octoscanner scan /path/to/my_plugin -r deprecation -r removal
 ```

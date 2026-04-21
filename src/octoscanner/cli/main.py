@@ -4,7 +4,6 @@ import argparse
 import sys
 from pathlib import Path
 
-from .. import OCTOPRINT_DEV_VERSION
 from .commands import cmd_download_octoprint, cmd_generate, cmd_scan
 
 
@@ -72,12 +71,6 @@ def main(argv: list[str] | None = None) -> None:
     scan_parser = sub.add_parser("scan", help="Scan a plugin directory")
     scan_parser.set_defaults(func=cmd_scan)
     scan_parser.add_argument("plugin_paths", nargs="+", type=Path, help="Path(s) to the plugin folder(s)")
-    scan_parser.add_argument(
-        "--version",
-        "-v",
-        default=OCTOPRINT_DEV_VERSION,
-        help=f"Target OctoPrint version (default: {OCTOPRINT_DEV_VERSION})",
-    )
     scan_parser.add_argument(
         "--rule-type",
         "-r",

@@ -317,7 +317,7 @@ def format_scan_results_text(
 
     outer_panel = Panel(
         Group(*spaced_panels),
-        title=Text(f"OctoScanner - OctoPrint target version: {args.version}", style=_get_style("header")),
+        title=Text("OctoScanner", style=_get_style("header")),
     )
     console.print()
     console.print(outer_panel)
@@ -330,8 +330,7 @@ def format_scan_results_json(
 ) -> None:
     """Format scan results as JSON.
 
-    Outputs a JSON object containing OctoPrint target version, per-plugin findings,
-    and aggregated rule statistics.
+    Outputs a JSON object containing per-plugin findings and aggregated rule statistics.
 
     Args:
         scan_results (list[tuple[Path, ScanResult]]): List of (plugin_path, scan_result) tuples to format.
@@ -374,7 +373,6 @@ def format_scan_results_json(
     ]
 
     data = {
-        "octoprint_version": args.version,
         "plugins": plugins_data,
         "rule_statistics": rule_stats,
     }

@@ -62,7 +62,6 @@ def cmd_scan(args: argparse.Namespace) -> None:
         if not plugin_path.is_dir():
             raise FileNotFoundError(f"{plugin_path} is not a directory")
 
-    target_version = Version(args.version)
     rule_files = _resolve_rule_types(args.rule_type)
 
     extra_args = []
@@ -76,7 +75,6 @@ def cmd_scan(args: argparse.Namespace) -> None:
     results = scan(
         plugin_paths=plugin_paths,
         rule_files=rule_files,
-        octoprint_version=target_version,
         extra_args=extra_args,
         use_opengrep=args.use_opengrep,
     )

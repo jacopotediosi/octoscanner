@@ -17,7 +17,6 @@ SNIPPET_CONTEXT_LINES = 1
 def scan(
     plugin_paths: list[Path],
     rule_files: list[Path],
-    octoprint_version: Version,
     extra_args: list[str] | None = None,
     use_opengrep: bool = False,
 ) -> list[tuple[Path, ScanResult]]:
@@ -35,7 +34,7 @@ def scan(
         plugin_path = _find_plugin_path_by_file_path(semgrep_result_abs_path, plugin_paths_set)
         if plugin_path is None:
             continue
-        finding = _semgrep_json_to_finding(semgrep_result, plugin_path, octoprint_version)
+        finding = _semgrep_json_to_finding(semgrep_result, plugin_path)
         if finding is not None:
             findings_by_plugin_path[plugin_path].append(finding)
 
@@ -118,13 +117,10 @@ def _find_plugin_path_by_file_path(file_path: Path, plugin_paths_set: dict[Path,
 def _semgrep_json_to_finding(
     semgrep_result: dict,
     plugin_path: Path,
-    octoprint_target_version: Version,
 ) -> Finding | None:
     """Convert a single Semgrep JSON result into a Finding object."""
     rule = _parse_rule(semgrep_result)
     if rule is None:
-        return None
-    if rule.since is not None and rule.since > octoprint_target_version:
         return None
 
     abs_path = semgrep_result.get("path", "")
