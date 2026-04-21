@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from .analyzers.python import PythonAnalysisResult
+import griffe
 
 
 class SymbolKind(StrEnum):
@@ -47,6 +45,22 @@ class RuleFile(StrEnum):
     def filename(self) -> str:
         """Return the filename within the subdirectory."""
         return self.value.split("/")[1]
+
+
+@dataclass
+class PythonAnalysisResult:
+    """Python analysis result for a single OctoPrint version.
+
+    Attributes:
+        deprecations (list[Deprecation]): All detected deprecations.
+        class_hierarchy (dict[str, list[str]]): Class name -> list of base
+            class names.
+        griffe_module (griffe.Module): The loaded Griffe module tree.
+    """
+
+    deprecations: list[Deprecation]
+    class_hierarchy: dict[str, list[str]]
+    griffe_module: griffe.Module
 
 
 @dataclass

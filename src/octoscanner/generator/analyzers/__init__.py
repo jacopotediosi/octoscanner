@@ -5,11 +5,11 @@ Analyzers run first in the generator pipeline, producing analysis results
 """
 
 from .base import Analyzer
-from .python import PythonAnalysisResult, PythonAnalyzer
+from .python import PythonAnalyzer
 
 ANALYZERS: list[Analyzer] = [
     PythonAnalyzer(),
 ]
 """Ordered list of pipeline analyzers, executed sequentially."""
 
-__all__ = ["ANALYZERS", "PythonAnalysisResult"]
+__all__ = ["ANALYZERS"]
