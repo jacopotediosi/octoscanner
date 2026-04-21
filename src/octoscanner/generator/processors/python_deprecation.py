@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 
 from ..models import Deprecation, PipelineState, RuleFile
-from ..receivers import get_receivers_map
+from ..python_receivers import get_receivers_map
 from ..rules import (
     build_fqn,
     build_symbol_rule,

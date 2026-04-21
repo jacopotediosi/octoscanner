@@ -11,8 +11,8 @@ from __future__ import annotations
 import griffe
 
 from ..models import PipelineState, Removal, RuleFile, SymbolKind
+from ..python_receivers import get_receivers_map
 from ..python_utils import ancestry_depth, griffe_mod_path, griffe_to_symbolkind, is_subclass_of
-from ..receivers import get_receivers_map
 from ..rules import (
     build_fqn,
     build_symbol_rule,
