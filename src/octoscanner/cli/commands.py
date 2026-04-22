@@ -62,7 +62,7 @@ def cmd_scan(args: argparse.Namespace) -> None:
         if not plugin_path.is_dir():
             raise FileNotFoundError(f"{plugin_path} is not a directory")
 
-    rule_files = _resolve_rule_types(args.rule_type)
+    rule_files = _resolve_rules(args.rules)
 
     extra_args = []
     for pattern in args.exclude:
@@ -93,32 +93,57 @@ def cmd_scan(args: argparse.Namespace) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _resolve_rule_types(rule_types: list[str] | None) -> list[Path]:
-    """Resolve rule type names to YAML file paths inside `RULES_DIR`.
+def _resolve_rules(rules: list[str] | None) -> list[Path]:
+    """Resolve rule selectors to YAML file or directory paths inside `RULES_DIR`.
+
+    Each selector can be either a subdirectory name (e.g. ``"removal"``) or a
+    relative path to a subdirectory or YAML file under `RULES_DIR` (e.g.
+    ``"removal/python_removal.yaml"``).
 
     Args:
-        rule_types: List of rule types (e.g. ``["deprecation", "removal"]``),
-            or ``None`` to load all rules.
+        rules: List of rule selectors, or ``None`` to load all rules.
 
     Returns:
-        List of resolved paths to YAML rule files.
+        List of resolved paths (files or directories) under `RULES_DIR`.
 
     Raises:
         FileNotFoundError: If ``RULES_DIR`` doesn't exist.
-        ValueError: If a rule type doesn't correspond to a valid subfolder.
+        ValueError: If a selector doesn't resolve to a valid subfolder or file.
+
+    Examples:
+        >>> _resolve_rules(None)  # all rules
+        [Path('rules')]
+
+        >>> _resolve_rules(["removal"])  # rules/removal/ directory
+        [Path('rules/removal')]
+
+        >>> _resolve_rules(["removal/python_removal.yaml"])  # single file
+        [Path('rules/removal/python_removal.yaml')]
+
+        >>> _resolve_rules(["removal", "deprecation/python_deprecation.yaml"])  # mixed
+        [Path('rules/removal'), Path('rules/deprecation/python_deprecation.yaml')]
     """
     if not RULES_DIR.is_dir():
         raise FileNotFoundError(f"Rules directory not found: {RULES_DIR}")
-    if not rule_types:
-        return sorted(RULES_DIR.glob("**/*.yaml"))
+    if not rules:
+        return [RULES_DIR]
 
     rule_paths = []
 
-    for rule_type in rule_types:
-        rule_type_subdir = RULES_DIR / rule_type
-        if not rule_type_subdir.is_dir():
-            available = [d.name for d in RULES_DIR.iterdir() if d.is_dir()]
-            raise ValueError(f"Unknown rule type: {rule_type}. Available: {', '.join(sorted(available))}.")
-        rule_paths.extend(sorted(rule_type_subdir.glob("*.yaml")))
+    for selector in rules:
+        target = (RULES_DIR / selector).resolve()
+        rules_root = RULES_DIR.resolve()
+        if rules_root not in target.parents and target != rules_root:
+            raise ValueError(f"Rule selector must stay within {RULES_DIR}: {selector}")
+
+        if target.is_dir() or (target.is_file() and target.suffix == ".yaml"):
+            rule_paths.append(target)
+        else:
+            available_dirs = sorted(d.name for d in RULES_DIR.iterdir() if d.is_dir())
+            raise ValueError(
+                f"Unknown rule selector: {selector}. "
+                f"Expected a subdirectory or YAML file under {RULES_DIR} "
+                f"(available subdirectories: {', '.join(available_dirs)})."
+            )
 
     return rule_paths

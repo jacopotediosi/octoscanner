@@ -45,8 +45,8 @@ octoscanner scan /path/to/my_plugin
 # Scan multiple plugins
 octoscanner scan /path/to/plugin1 /path/to/plugin2
 
-# Filter by rule type
-octoscanner scan /path/to/my_plugin -r deprecation -r removal
+# Filter by rule category or specific rule file
+octoscanner scan /path/to/my_plugin -r deprecation -r removal/python_removal.yaml
 ```
 
 #### Ignore false positives

@@ -72,12 +72,15 @@ def main(argv: list[str] | None = None) -> None:
     scan_parser.set_defaults(func=cmd_scan)
     scan_parser.add_argument("plugin_paths", nargs="+", type=Path, help="Path(s) to the plugin folder(s)")
     scan_parser.add_argument(
-        "--rule-type",
+        "--rules",
         "-r",
         action="append",
         default=None,
-        metavar="TYPE",
-        help="Scan only for these rule types (e.g. -r deprecation -r removal)",
+        metavar="PATH",
+        help=(
+            "Scan only with these rules. Accepts subdirectories or YAML files under the rules directory "
+            "(e.g. -r removal -r deprecation/python_deprecation.yaml)"
+        ),
     )
     scan_parser.add_argument(
         "--format",
