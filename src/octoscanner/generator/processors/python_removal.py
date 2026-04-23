@@ -11,7 +11,7 @@ from __future__ import annotations
 import griffe
 
 from ..models import PipelineState, Removal, RuleFile, SymbolKind
-from ..python_receivers import get_receivers_map
+from ..python_receivers import format_plugin_self_hint, get_receivers_map
 from ..python_utils import ancestry_depth, griffe_mod_path, griffe_to_symbolkind, is_subclass_of
 from ..rules import (
     build_fqn,
@@ -443,25 +443,36 @@ def _make_rule(
                       'suggestion': 'Remove usage of `octoprint.access.User.getApiKey`.',
                       '_ref': 'User.getApiKey'}}
     """
-    # Build message and suggestion based on symbol kind
+    # Pick the message parts based on the symbol kind.
     if rem.kind == SymbolKind.MODULE:
-        message = f"Module `{rem.name}` has been removed."
-        suggestion = f"Remove imports of `{rem.name}`."
+        target, label, suggestion_verb = rem.name, "Module ", "Remove imports of"
     elif rem.kind == SymbolKind.CLASS:
-        fqn = build_fqn(rem.name, class_name=None, module_path=rem.module_path)
-        message = f"Class `{fqn}` has been removed."
-        suggestion = f"Remove usage of `{fqn}`."
+        target, label, suggestion_verb = (
+            build_fqn(rem.name, class_name=None, module_path=rem.module_path),
+            "Class ",
+            "Remove usage of",
+        )
     else:
-        fqn = build_fqn(rem.name, rem.class_name, rem.module_path)
-        if was_deprecated:
-            message = (
-                f"`{fqn}` was deprecated since {dep_since} and has been removed."
-                if dep_since
-                else f"`{fqn}` was previously deprecated and has been removed."
-            )
-        else:
-            message = f"`{fqn}` has been removed."
-        suggestion = f"Remove usage of `{fqn}`."
+        target, label, suggestion_verb = build_fqn(rem.name, rem.class_name, rem.module_path), "", "Remove usage of"
+
+    # Build the plugin-side "self" hint (e.g. "self._printer.fake_ack") when the
+    # enclosing class is a well-known OctoPrint class injected into plugins.
+    self_hint = format_plugin_self_hint(rem.class_name, rem.name)
+    self_hint = f" {self_hint}" if self_hint else ""
+
+    # Build the subject (shared message prefix) and the suggestion string.
+    subject = f"{label}`{target}`{self_hint}"
+    suggestion = f"{suggestion_verb} `{target}`{self_hint}."
+
+    # Build the message, enriching it with the "was deprecated" context when applicable.
+    if was_deprecated:
+        message = (
+            f"{subject} was deprecated since {dep_since} and has been removed."
+            if dep_since
+            else f"{subject} was previously deprecated and has been removed."
+        )
+    else:
+        message = f"{subject} has been removed."
 
     return build_python_symbol_rule(
         rule_id,

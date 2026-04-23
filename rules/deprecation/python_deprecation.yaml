@@ -2,7 +2,8 @@
 
 rules:
 - id: DEP-0023
-  message: '`octoprint.plugin.PluginSettings.getInt` has been renamed to get_int.'
+  message: '`octoprint.plugin.PluginSettings.getInt` (commonly accessed by plugins
+    as `self._settings.getInt`) has been renamed to get_int.'
   languages:
   - python
   severity: MEDIUM
@@ -12,10 +13,12 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.get_int` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.get_int` (commonly accessed by
+      plugins as `self._settings.get_int`) instead.
     _ref: octoprint.plugin.PluginSettings.getInt
 - id: DEP-0024
-  message: '`octoprint.plugin.PluginSettings.getFloat` has been renamed to get_float.'
+  message: '`octoprint.plugin.PluginSettings.getFloat` (commonly accessed by plugins
+    as `self._settings.getFloat`) has been renamed to get_float.'
   languages:
   - python
   severity: MEDIUM
@@ -25,10 +28,12 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.get_float` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.get_float` (commonly accessed
+      by plugins as `self._settings.get_float`) instead.
     _ref: octoprint.plugin.PluginSettings.getFloat
 - id: DEP-0025
-  message: '`octoprint.plugin.PluginSettings.getBoolean` has been renamed to get_boolean.'
+  message: '`octoprint.plugin.PluginSettings.getBoolean` (commonly accessed by plugins
+    as `self._settings.getBoolean`) has been renamed to get_boolean.'
   languages:
   - python
   severity: MEDIUM
@@ -38,10 +43,12 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.get_boolean` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.get_boolean` (commonly accessed
+      by plugins as `self._settings.get_boolean`) instead.
     _ref: octoprint.plugin.PluginSettings.getBoolean
 - id: DEP-0026
-  message: '`octoprint.plugin.PluginSettings.setInt` has been renamed to set_int.'
+  message: '`octoprint.plugin.PluginSettings.setInt` (commonly accessed by plugins
+    as `self._settings.setInt`) has been renamed to set_int.'
   languages:
   - python
   severity: MEDIUM
@@ -51,10 +58,12 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.set_int` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.set_int` (commonly accessed by
+      plugins as `self._settings.set_int`) instead.
     _ref: octoprint.plugin.PluginSettings.setInt
 - id: DEP-0027
-  message: '`octoprint.plugin.PluginSettings.setFloat` has been renamed to set_float.'
+  message: '`octoprint.plugin.PluginSettings.setFloat` (commonly accessed by plugins
+    as `self._settings.setFloat`) has been renamed to set_float.'
   languages:
   - python
   severity: MEDIUM
@@ -64,10 +73,12 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.set_float` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.set_float` (commonly accessed
+      by plugins as `self._settings.set_float`) instead.
     _ref: octoprint.plugin.PluginSettings.setFloat
 - id: DEP-0028
-  message: '`octoprint.plugin.PluginSettings.setBoolean` has been renamed to set_boolean.'
+  message: '`octoprint.plugin.PluginSettings.setBoolean` (commonly accessed by plugins
+    as `self._settings.setBoolean`) has been renamed to set_boolean.'
   languages:
   - python
   severity: MEDIUM
@@ -77,7 +88,8 @@ rules:
   metadata:
     type: deprecation
     since: 1.4.0
-    suggestion: Use `octoprint.plugin.PluginSettings.set_boolean` instead.
+    suggestion: Use `octoprint.plugin.PluginSettings.set_boolean` (commonly accessed
+      by plugins as `self._settings.set_boolean`) instead.
     _ref: octoprint.plugin.PluginSettings.setBoolean
 - id: DEP-0047
   message: '`octoprint.util.thaw_immutabledict` has been renamed back to thaw_frozendict.'
@@ -107,8 +119,8 @@ rules:
     suggestion: Use `flask.request.remote_addr` instead.
     _ref: octoprint.server.util.flask.get_remote_address
 - id: DEP-0050
-  message: '`octoprint.filemanager.FileManager.list_files` has been deprecated in
-    favor of list_storage_entries.'
+  message: '`octoprint.filemanager.FileManager.list_files` (commonly accessed by plugins
+    as `self._file_manager.list_files`) has been deprecated in favor of list_storage_entries.'
   languages:
   - python
   severity: MEDIUM
@@ -119,11 +131,12 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.filemanager.FileManager.list_storage_entries` instead.
+    suggestion: Use `octoprint.filemanager.FileManager.list_storage_entries` (commonly
+      accessed by plugins as `self._file_manager.list_storage_entries`) instead.
     _ref: octoprint.filemanager.FileManager.list_files
 - id: DEP-0051
-  message: '`octoprint.filemanager.FileManager.get_file` has been deprecated in favor
-    of get_storage_entry.'
+  message: '`octoprint.filemanager.FileManager.get_file` (commonly accessed by plugins
+    as `self._file_manager.get_file`) has been deprecated in favor of get_storage_entry.'
   languages:
   - python
   severity: MEDIUM
@@ -134,11 +147,13 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.filemanager.FileManager.get_storage_entry` instead.
+    suggestion: Use `octoprint.filemanager.FileManager.get_storage_entry` (commonly
+      accessed by plugins as `self._file_manager.get_storage_entry`) instead.
     _ref: octoprint.filemanager.FileManager.get_file
 - id: DEP-0052
-  message: '`octoprint.filemanager.FileManager.add_link` has been deprecated and will
-    be removed in a future version.'
+  message: '`octoprint.filemanager.FileManager.add_link` (commonly accessed by plugins
+    as `self._file_manager.add_link`) has been deprecated and will be removed in a
+    future version.'
   languages:
   - python
   severity: MEDIUM
@@ -149,11 +164,13 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.filemanager.FileManager.add_link`.
+    suggestion: Remove usage of `octoprint.filemanager.FileManager.add_link` (commonly
+      accessed by plugins as `self._file_manager.add_link`).
     _ref: octoprint.filemanager.FileManager.add_link
 - id: DEP-0053
-  message: '`octoprint.filemanager.FileManager.remove_link` has been deprecated and
-    will be removed in a future version.'
+  message: '`octoprint.filemanager.FileManager.remove_link` (commonly accessed by
+    plugins as `self._file_manager.remove_link`) has been deprecated and will be removed
+    in a future version.'
   languages:
   - python
   severity: MEDIUM
@@ -164,7 +181,8 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.filemanager.FileManager.remove_link`.
+    suggestion: Remove usage of `octoprint.filemanager.FileManager.remove_link` (commonly
+      accessed by plugins as `self._file_manager.remove_link`).
     _ref: octoprint.filemanager.FileManager.remove_link
 - id: DEP-0054
   message: '`octoprint.filemanager.storage.common.StorageInterface.last_modified`
@@ -230,8 +248,8 @@ rules:
     suggestion: Remove usage of `octoprint.filemanager.storage.common.StorageInterface.remove_link`.
     _ref: octoprint.filemanager.storage.common.StorageInterface.remove_link
 - id: DEP-0059
-  message: '`octoprint.plugin.core.PluginInfo.blacklisted` is deprecated in favor
-    of blocklisted.'
+  message: '`octoprint.plugin.core.PluginInfo.blacklisted` (commonly accessed by plugins
+    as `self._plugin_info.blacklisted`) is deprecated in favor of blocklisted.'
   languages:
   - python
   severity: MEDIUM
@@ -243,7 +261,8 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.plugin.core.PluginInfo.blocklisted` instead.
+    suggestion: Use `octoprint.plugin.core.PluginInfo.blocklisted` (commonly accessed
+      by plugins as `self._plugin_info.blocklisted`) instead.
     _ref: octoprint.plugin.core.PluginInfo.blacklisted
 - id: DEP-0060
   message: get_connection_option has been deprecated and will be removed in a future
@@ -253,6 +272,7 @@ rules:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.get_connection_options
   - pattern: PrinterInterface.get_connection_options
   - pattern: PrinterMixin.get_connection_options
   - pattern: $X._printer.get_connection_options
@@ -264,12 +284,14 @@ rules:
     suggestion: Use `ConnectedPrinter.all()` instead.
     _ref: octoprint.printer.PrinterMixin.get_connection_options
 - id: DEP-0061
-  message: '`octoprint.printer.PrinterMixin.select_file` has been deprecated and will
-    be removed in a future version. Please use set_job instead.'
+  message: '`octoprint.printer.PrinterMixin.select_file` (commonly accessed by plugins
+    as `self._printer.select_file`) has been deprecated and will be removed in a future
+    version. Please use set_job instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.select_file
   - pattern: PrinterInterface.select_file
   - pattern: PrinterMixin.select_file
   - pattern: $X._printer.select_file
@@ -278,15 +300,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.set_job` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.set_job` (commonly accessed by
+      plugins as `self._printer.set_job`) instead.
     _ref: octoprint.printer.PrinterMixin.select_file
 - id: DEP-0062
-  message: '`octoprint.printer.PrinterMixin.unselect_file` has been deprecated and
-    will be removed in a future version. Please use set_job instead.'
+  message: '`octoprint.printer.PrinterMixin.unselect_file` (commonly accessed by plugins
+    as `self._printer.unselect_file`) has been deprecated and will be removed in a
+    future version. Please use set_job instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.unselect_file
   - pattern: PrinterInterface.unselect_file
   - pattern: PrinterMixin.unselect_file
   - pattern: $X._printer.unselect_file
@@ -295,16 +320,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.set_job` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.set_job` (commonly accessed by
+      plugins as `self._printer.set_job`) instead.
     _ref: octoprint.printer.PrinterMixin.unselect_file
 - id: DEP-0063
-  message: '`octoprint.printer.PrinterMixin.fake_ack` has been renamed to repair_communication.
-    This compatibility layer will be removed in a future version. Please use repair_communication
-    instead.'
+  message: '`octoprint.printer.PrinterMixin.fake_ack` (commonly accessed by plugins
+    as `self._printer.fake_ack`) has been renamed to repair_communication. This compatibility
+    layer will be removed in a future version. Please use repair_communication instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.fake_ack
   - pattern: PrinterInterface.fake_ack
   - pattern: PrinterMixin.fake_ack
   - pattern: $X._printer.fake_ack
@@ -313,16 +340,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.repair_communication` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.repair_communication` (commonly
+      accessed by plugins as `self._printer.repair_communication`) instead.
     _ref: octoprint.printer.PrinterMixin.fake_ack
 - id: DEP-0064
-  message: '`octoprint.printer.PrinterMixin.get_transport` is non-functional. There
-    is currently no alternative implementation. This compatibility layer will be removed
-    in a future version.'
+  message: '`octoprint.printer.PrinterMixin.get_transport` (commonly accessed by plugins
+    as `self._printer.get_transport`) is non-functional. There is currently no alternative
+    implementation. This compatibility layer will be removed in a future version.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.get_transport
   - pattern: PrinterInterface.get_transport
   - pattern: PrinterMixin.get_transport
   - pattern: $X._printer.get_transport
@@ -331,16 +360,19 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.PrinterMixin.get_transport`.
+    suggestion: Remove usage of `octoprint.printer.PrinterMixin.get_transport` (commonly
+      accessed by plugins as `self._printer.get_transport`).
     _ref: octoprint.printer.PrinterMixin.get_transport
 - id: DEP-0065
-  message: '`octoprint.printer.PrinterMixin._comm` is no longer available here after
-    some heavy refactoring, and was private to begin with. It should never have been
-    used by third parties. This compatibility layer will be removed in a future version.'
+  message: '`octoprint.printer.PrinterMixin._comm` (commonly accessed by plugins as
+    `self._printer._comm`) is no longer available here after some heavy refactoring,
+    and was private to begin with. It should never have been used by third parties.
+    This compatibility layer will be removed in a future version.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer._comm
   - pattern: PrinterInterface._comm
   - pattern: PrinterMixin._comm
   - pattern: $X._printer._comm
@@ -349,15 +381,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.PrinterMixin._comm`.
+    suggestion: Remove usage of `octoprint.printer.PrinterMixin._comm` (commonly accessed
+      by plugins as `self._printer._comm`).
     _ref: octoprint.printer.PrinterMixin._comm
 - id: DEP-0066
-  message: '`octoprint.printer.PrinterMixin.get_current_connection` has been replaced
-    by connection_state. This compatibility layer will be removed in a future version.'
+  message: '`octoprint.printer.PrinterMixin.get_current_connection` (commonly accessed
+    by plugins as `self._printer.get_current_connection`) has been replaced by connection_state.
+    This compatibility layer will be removed in a future version.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.get_current_connection
   - pattern: PrinterInterface.get_current_connection
   - pattern: PrinterMixin.get_current_connection
   - pattern: $X._printer.get_current_connection
@@ -366,15 +401,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.connection_state` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.connection_state` (commonly accessed
+      by plugins as `self._printer.connection_state`) instead.
     _ref: octoprint.printer.PrinterMixin.get_current_connection
 - id: DEP-0067
-  message: '`octoprint.printer.PrinterMixin.is_sd_ready` has been deprecated and will
-    be removed in a future version. Please use is_storage_mounted instead.'
+  message: '`octoprint.printer.PrinterMixin.is_sd_ready` (commonly accessed by plugins
+    as `self._printer.is_sd_ready`) has been deprecated and will be removed in a future
+    version. Please use is_storage_mounted instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.is_sd_ready
   - pattern: PrinterInterface.is_sd_ready
   - pattern: PrinterMixin.is_sd_ready
   - pattern: $X._printer.is_sd_ready
@@ -383,15 +421,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.is_storage_mounted` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.is_storage_mounted` (commonly
+      accessed by plugins as `self._printer.is_storage_mounted`) instead.
     _ref: octoprint.printer.PrinterMixin.is_sd_ready
 - id: DEP-0068
-  message: '`octoprint.printer.PrinterMixin.init_sd_card` has been deprecated and
-    will be removed in a future version. Please use mount_storage instead.'
+  message: '`octoprint.printer.PrinterMixin.init_sd_card` (commonly accessed by plugins
+    as `self._printer.init_sd_card`) has been deprecated and will be removed in a
+    future version. Please use mount_storage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.init_sd_card
   - pattern: PrinterInterface.init_sd_card
   - pattern: PrinterMixin.init_sd_card
   - pattern: $X._printer.init_sd_card
@@ -400,15 +441,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.mount_storage` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.mount_storage` (commonly accessed
+      by plugins as `self._printer.mount_storage`) instead.
     _ref: octoprint.printer.PrinterMixin.init_sd_card
 - id: DEP-0069
-  message: '`octoprint.printer.PrinterMixin.release_sd_card` has been deprecated and
-    will be removed in a future version. Please use unmount_storage instead.'
+  message: '`octoprint.printer.PrinterMixin.release_sd_card` (commonly accessed by
+    plugins as `self._printer.release_sd_card`) has been deprecated and will be removed
+    in a future version. Please use unmount_storage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.release_sd_card
   - pattern: PrinterInterface.release_sd_card
   - pattern: PrinterMixin.release_sd_card
   - pattern: $X._printer.release_sd_card
@@ -417,16 +461,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.PrinterMixin.unmount_storage` instead.
+    suggestion: Use `octoprint.printer.PrinterMixin.unmount_storage` (commonly accessed
+      by plugins as `self._printer.unmount_storage`) instead.
     _ref: octoprint.printer.PrinterMixin.release_sd_card
 - id: DEP-0070
-  message: '`octoprint.printer.PrinterMixin.can_modify_file` has been deprecated and
-    will be removed in 3.0.0. Please directly compare the job parameters and printing
-    state instead.'
+  message: '`octoprint.printer.PrinterMixin.can_modify_file` (commonly accessed by
+    plugins as `self._printer.can_modify_file`) has been deprecated and will be removed
+    in 3.0.0. Please directly compare the job parameters and printing state instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.can_modify_file
   - pattern: PrinterInterface.can_modify_file
   - pattern: PrinterMixin.can_modify_file
   - pattern: $X._printer.can_modify_file
@@ -435,15 +481,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.PrinterMixin.can_modify_file`.
+    suggestion: Remove usage of `octoprint.printer.PrinterMixin.can_modify_file` (commonly
+      accessed by plugins as `self._printer.can_modify_file`).
     _ref: octoprint.printer.PrinterMixin.can_modify_file
 - id: DEP-0071
-  message: '`octoprint.printer.PrinterMixin.is_current_file` has been deprecated and
-    will be removed in 3.0.0. Please directly compare the job parameters instead.'
+  message: '`octoprint.printer.PrinterMixin.is_current_file` (commonly accessed by
+    plugins as `self._printer.is_current_file`) has been deprecated and will be removed
+    in 3.0.0. Please directly compare the job parameters instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.is_current_file
   - pattern: PrinterInterface.is_current_file
   - pattern: PrinterMixin.is_current_file
   - pattern: $X._printer.is_current_file
@@ -452,15 +501,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.PrinterMixin.is_current_file`.
+    suggestion: Remove usage of `octoprint.printer.PrinterMixin.is_current_file` (commonly
+      accessed by plugins as `self._printer.is_current_file`).
     _ref: octoprint.printer.PrinterMixin.is_current_file
 - id: DEP-0072
-  message: '`octoprint.printer.standard.Printer.get_sd_files` has been deprecated
-    and will be removed in a future version. Please use the PrinterStorage instead.'
+  message: '`octoprint.printer.standard.Printer.get_sd_files` (commonly accessed by
+    plugins as `self._printer.get_sd_files`) has been deprecated and will be removed
+    in a future version. Please use the PrinterStorage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.get_sd_files
   - pattern: PrinterInterface.get_sd_files
   - pattern: PrinterMixin.get_sd_files
   - pattern: $X._printer.get_sd_files
@@ -469,15 +521,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
+    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` (commonly
+      accessed by plugins as `self._printer.PrinterStorage`) instead.
     _ref: octoprint.printer.standard.Printer.get_sd_files
 - id: DEP-0073
-  message: '`octoprint.printer.standard.Printer.add_sd_file` has been deprecated and
-    will be removed in a future version. Please use the PrinterStorage instead.'
+  message: '`octoprint.printer.standard.Printer.add_sd_file` (commonly accessed by
+    plugins as `self._printer.add_sd_file`) has been deprecated and will be removed
+    in a future version. Please use the PrinterStorage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.add_sd_file
   - pattern: PrinterInterface.add_sd_file
   - pattern: PrinterMixin.add_sd_file
   - pattern: $X._printer.add_sd_file
@@ -486,15 +541,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
+    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` (commonly
+      accessed by plugins as `self._printer.PrinterStorage`) instead.
     _ref: octoprint.printer.standard.Printer.add_sd_file
 - id: DEP-0074
-  message: '`octoprint.printer.standard.Printer.delete_sd_file` has been deprecated
-    and will be removed in a future version. Please use the PrinterStorage instead.'
+  message: '`octoprint.printer.standard.Printer.delete_sd_file` (commonly accessed
+    by plugins as `self._printer.delete_sd_file`) has been deprecated and will be
+    removed in a future version. Please use the PrinterStorage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.delete_sd_file
   - pattern: PrinterInterface.delete_sd_file
   - pattern: PrinterMixin.delete_sd_file
   - pattern: $X._printer.delete_sd_file
@@ -503,15 +561,18 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
+    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` (commonly
+      accessed by plugins as `self._printer.PrinterStorage`) instead.
     _ref: octoprint.printer.standard.Printer.delete_sd_file
 - id: DEP-0075
-  message: '`octoprint.printer.standard.Printer.refresh_sd_files` has been deprecated
-    and will be removed in a future version. Please use the PrinterStorage instead.'
+  message: '`octoprint.printer.standard.Printer.refresh_sd_files` (commonly accessed
+    by plugins as `self._printer.refresh_sd_files`) has been deprecated and will be
+    removed in a future version. Please use the PrinterStorage instead.'
   languages:
   - python
   severity: MEDIUM
   pattern-either:
+  - pattern: Printer.refresh_sd_files
   - pattern: PrinterInterface.refresh_sd_files
   - pattern: PrinterMixin.refresh_sd_files
   - pattern: $X._printer.refresh_sd_files
@@ -520,7 +581,8 @@ rules:
   metadata:
     type: deprecation
     since: 2.0.0
-    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` instead.
+    suggestion: Use `octoprint.printer.standard.Printer.PrinterStorage` (commonly
+      accessed by plugins as `self._printer.PrinterStorage`) instead.
     _ref: octoprint.printer.standard.Printer.refresh_sd_files
 - id: DEP-0076
   message: '`octoprint.util.comm.octoprint.util.comm` has been moved into the bundled

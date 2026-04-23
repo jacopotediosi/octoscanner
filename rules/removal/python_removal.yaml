@@ -933,7 +933,8 @@ rules:
     suggestion: Remove usage of `octoprint.util.comm.MachineCom._perform_baudrate_detection_step`.
     _ref: octoprint.util.comm.MachineCom._perform_baudrate_detection_step
 - id: REM-0071
-  message: '`octoprint.access.users.UserManager._enabled` has been removed.'
+  message: '`octoprint.access.users.UserManager._enabled` (commonly accessed by plugins
+    as `self._user_manager._enabled`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -944,10 +945,12 @@ rules:
   metadata:
     type: removal
     since: 1.5.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager._enabled`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager._enabled` (commonly
+      accessed by plugins as `self._user_manager._enabled`).
     _ref: octoprint.access.users.UserManager._enabled
 - id: REM-0072
-  message: '`octoprint.access.users.UserManager.disable` has been removed.'
+  message: '`octoprint.access.users.UserManager.disable` (commonly accessed by plugins
+    as `self._user_manager.disable`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -958,10 +961,12 @@ rules:
   metadata:
     type: removal
     since: 1.5.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.disable`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.disable` (commonly
+      accessed by plugins as `self._user_manager.disable`).
     _ref: octoprint.access.users.UserManager.disable
 - id: REM-0073
-  message: '`octoprint.access.users.UserManager.enable` has been removed.'
+  message: '`octoprint.access.users.UserManager.enable` (commonly accessed by plugins
+    as `self._user_manager.enable`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -972,7 +977,8 @@ rules:
   metadata:
     type: removal
     since: 1.5.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.enable`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.enable` (commonly
+      accessed by plugins as `self._user_manager.enable`).
     _ref: octoprint.access.users.UserManager.enable
 - id: REM-0074
   message: '`octoprint.server.util.sockjs.PrinterStateConnection._baseRateLimit` has
@@ -1540,7 +1546,8 @@ rules:
     suggestion: Remove usage of `octoprint.server.api.apiPrinterState`.
     _ref: octoprint.server.api.apiPrinterState
 - id: REM-0118
-  message: '`octoprint.plugin.core.PluginInfo.attr_implementations` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_implementations` (commonly accessed
+    by plugins as `self._plugin_info.attr_implementations`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1552,10 +1559,12 @@ rules:
   metadata:
     type: removal
     since: 1.6.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_implementations`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_implementations`
+      (commonly accessed by plugins as `self._plugin_info.attr_implementations`).
     _ref: octoprint.plugin.core.PluginInfo.attr_implementations
 - id: REM-0119
-  message: '`octoprint.plugin.core.PluginInfo.attr_init` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_init` (commonly accessed by plugins
+    as `self._plugin_info.attr_init`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1567,7 +1576,8 @@ rules:
   metadata:
     type: removal
     since: 1.6.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_init`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_init` (commonly
+      accessed by plugins as `self._plugin_info.attr_init`).
     _ref: octoprint.plugin.core.PluginInfo.attr_init
 - id: REM-0120
   message: '`octoprint.util.gcodeInterpreter.gcode.layerList` has been removed.'
@@ -1665,7 +1675,8 @@ rules:
     suggestion: Remove usage of `octoprint.util.get_free_bytes`.
     _ref: octoprint.util.get_free_bytes
 - id: REM-0128
-  message: '`octoprint.plugin.core.PluginInfo.attr_author` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_author` (commonly accessed by plugins
+    as `self._plugin_info.attr_author`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1677,10 +1688,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_author`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_author` (commonly
+      accessed by plugins as `self._plugin_info.attr_author`).
     _ref: octoprint.plugin.core.PluginInfo.attr_author
 - id: REM-0129
-  message: '`octoprint.plugin.core.PluginInfo.attr_check` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_check` (commonly accessed by plugins
+    as `self._plugin_info.attr_check`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1692,10 +1705,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_check`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_check` (commonly
+      accessed by plugins as `self._plugin_info.attr_check`).
     _ref: octoprint.plugin.core.PluginInfo.attr_check
 - id: REM-0130
-  message: '`octoprint.plugin.core.PluginInfo.attr_description` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_description` (commonly accessed
+    by plugins as `self._plugin_info.attr_description`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1707,10 +1722,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_description`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_description`
+      (commonly accessed by plugins as `self._plugin_info.attr_description`).
     _ref: octoprint.plugin.core.PluginInfo.attr_description
 - id: REM-0131
-  message: '`octoprint.plugin.core.PluginInfo.attr_disable` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_disable` (commonly accessed by
+    plugins as `self._plugin_info.attr_disable`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1722,10 +1739,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_disable`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_disable` (commonly
+      accessed by plugins as `self._plugin_info.attr_disable`).
     _ref: octoprint.plugin.core.PluginInfo.attr_disable
 - id: REM-0132
-  message: '`octoprint.plugin.core.PluginInfo.attr_disabling_discouraged` has been
+  message: '`octoprint.plugin.core.PluginInfo.attr_disabling_discouraged` (commonly
+    accessed by plugins as `self._plugin_info.attr_disabling_discouraged`) has been
     removed.'
   languages:
   - python
@@ -1738,10 +1757,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_disabling_discouraged`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_disabling_discouraged`
+      (commonly accessed by plugins as `self._plugin_info.attr_disabling_discouraged`).
     _ref: octoprint.plugin.core.PluginInfo.attr_disabling_discouraged
 - id: REM-0133
-  message: '`octoprint.plugin.core.PluginInfo.attr_enable` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_enable` (commonly accessed by plugins
+    as `self._plugin_info.attr_enable`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1753,10 +1774,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_enable`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_enable` (commonly
+      accessed by plugins as `self._plugin_info.attr_enable`).
     _ref: octoprint.plugin.core.PluginInfo.attr_enable
 - id: REM-0134
-  message: '`octoprint.plugin.core.PluginInfo.attr_helpers` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_helpers` (commonly accessed by
+    plugins as `self._plugin_info.attr_helpers`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1768,10 +1791,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_helpers`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_helpers` (commonly
+      accessed by plugins as `self._plugin_info.attr_helpers`).
     _ref: octoprint.plugin.core.PluginInfo.attr_helpers
 - id: REM-0135
-  message: '`octoprint.plugin.core.PluginInfo.attr_hidden` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_hidden` (commonly accessed by plugins
+    as `self._plugin_info.attr_hidden`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1783,10 +1808,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_hidden`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_hidden` (commonly
+      accessed by plugins as `self._plugin_info.attr_hidden`).
     _ref: octoprint.plugin.core.PluginInfo.attr_hidden
 - id: REM-0136
-  message: '`octoprint.plugin.core.PluginInfo.attr_hooks` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_hooks` (commonly accessed by plugins
+    as `self._plugin_info.attr_hooks`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1798,10 +1825,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_hooks`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_hooks` (commonly
+      accessed by plugins as `self._plugin_info.attr_hooks`).
     _ref: octoprint.plugin.core.PluginInfo.attr_hooks
 - id: REM-0137
-  message: '`octoprint.plugin.core.PluginInfo.attr_implementation` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_implementation` (commonly accessed
+    by plugins as `self._plugin_info.attr_implementation`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1813,10 +1842,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_implementation`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_implementation`
+      (commonly accessed by plugins as `self._plugin_info.attr_implementation`).
     _ref: octoprint.plugin.core.PluginInfo.attr_implementation
 - id: REM-0138
-  message: '`octoprint.plugin.core.PluginInfo.attr_license` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_license` (commonly accessed by
+    plugins as `self._plugin_info.attr_license`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1828,10 +1859,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_license`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_license` (commonly
+      accessed by plugins as `self._plugin_info.attr_license`).
     _ref: octoprint.plugin.core.PluginInfo.attr_license
 - id: REM-0139
-  message: '`octoprint.plugin.core.PluginInfo.attr_load` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_load` (commonly accessed by plugins
+    as `self._plugin_info.attr_load`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1843,10 +1876,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_load`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_load` (commonly
+      accessed by plugins as `self._plugin_info.attr_load`).
     _ref: octoprint.plugin.core.PluginInfo.attr_load
 - id: REM-0140
-  message: '`octoprint.plugin.core.PluginInfo.attr_name` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_name` (commonly accessed by plugins
+    as `self._plugin_info.attr_name`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1858,10 +1893,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_name`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_name` (commonly
+      accessed by plugins as `self._plugin_info.attr_name`).
     _ref: octoprint.plugin.core.PluginInfo.attr_name
 - id: REM-0141
-  message: '`octoprint.plugin.core.PluginInfo.attr_pythoncompat` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_pythoncompat` (commonly accessed
+    by plugins as `self._plugin_info.attr_pythoncompat`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1873,10 +1910,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_pythoncompat`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_pythoncompat`
+      (commonly accessed by plugins as `self._plugin_info.attr_pythoncompat`).
     _ref: octoprint.plugin.core.PluginInfo.attr_pythoncompat
 - id: REM-0142
-  message: '`octoprint.plugin.core.PluginInfo.attr_unload` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_unload` (commonly accessed by plugins
+    as `self._plugin_info.attr_unload`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1888,10 +1927,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_unload`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_unload` (commonly
+      accessed by plugins as `self._plugin_info.attr_unload`).
     _ref: octoprint.plugin.core.PluginInfo.attr_unload
 - id: REM-0143
-  message: '`octoprint.plugin.core.PluginInfo.attr_url` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_url` (commonly accessed by plugins
+    as `self._plugin_info.attr_url`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1903,10 +1944,12 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_url`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_url` (commonly
+      accessed by plugins as `self._plugin_info.attr_url`).
     _ref: octoprint.plugin.core.PluginInfo.attr_url
 - id: REM-0144
-  message: '`octoprint.plugin.core.PluginInfo.attr_version` has been removed.'
+  message: '`octoprint.plugin.core.PluginInfo.attr_version` (commonly accessed by
+    plugins as `self._plugin_info.attr_version`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -1918,7 +1961,8 @@ rules:
   metadata:
     type: removal
     since: 1.7.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_version`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginInfo.attr_version` (commonly
+      accessed by plugins as `self._plugin_info.attr_version`).
     _ref: octoprint.plugin.core.PluginInfo.attr_version
 - id: REM-0145
   message: '`octoprint.settings.Settings._validate_config` has been removed.'
@@ -3625,11 +3669,13 @@ rules:
     suggestion: Remove usage of `octoprint.vendor.zeroconf.service_type_name`.
     _ref: octoprint.vendor.zeroconf.service_type_name
 - id: REM-0276
-  message: '`octoprint.printer.standard.Printer._bedTemp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._bedTemp` (commonly accessed by plugins
+    as `self._printer._bedTemp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._bedTemp
   - pattern: PrinterInterface._bedTemp
   - pattern: PrinterMixin._bedTemp
   - pattern: $X._printer._bedTemp
@@ -3638,14 +3684,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._bedTemp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._bedTemp` (commonly
+      accessed by plugins as `self._printer._bedTemp`).
     _ref: octoprint.printer.standard.Printer._bedTemp
 - id: REM-0277
-  message: '`octoprint.printer.standard.Printer._chamberTemp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._chamberTemp` (commonly accessed by
+    plugins as `self._printer._chamberTemp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._chamberTemp
   - pattern: PrinterInterface._chamberTemp
   - pattern: PrinterMixin._chamberTemp
   - pattern: $X._printer._chamberTemp
@@ -3654,14 +3703,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._chamberTemp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._chamberTemp`
+      (commonly accessed by plugins as `self._printer._chamberTemp`).
     _ref: octoprint.printer.standard.Printer._chamberTemp
 - id: REM-0278
-  message: '`octoprint.printer.standard.Printer._logBacklog` has been removed.'
+  message: '`octoprint.printer.standard.Printer._logBacklog` (commonly accessed by
+    plugins as `self._printer._logBacklog`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._logBacklog
   - pattern: PrinterInterface._logBacklog
   - pattern: PrinterMixin._logBacklog
   - pattern: $X._printer._logBacklog
@@ -3670,14 +3722,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._logBacklog`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._logBacklog` (commonly
+      accessed by plugins as `self._printer._logBacklog`).
     _ref: octoprint.printer.standard.Printer._logBacklog
 - id: REM-0279
-  message: '`octoprint.printer.standard.Printer._messageBacklog` has been removed.'
+  message: '`octoprint.printer.standard.Printer._messageBacklog` (commonly accessed
+    by plugins as `self._printer._messageBacklog`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._messageBacklog
   - pattern: PrinterInterface._messageBacklog
   - pattern: PrinterMixin._messageBacklog
   - pattern: $X._printer._messageBacklog
@@ -3686,14 +3741,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._messageBacklog`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._messageBacklog`
+      (commonly accessed by plugins as `self._printer._messageBacklog`).
     _ref: octoprint.printer.standard.Printer._messageBacklog
 - id: REM-0280
-  message: '`octoprint.printer.standard.Printer._targetBedTemp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._targetBedTemp` (commonly accessed
+    by plugins as `self._printer._targetBedTemp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._targetBedTemp
   - pattern: PrinterInterface._targetBedTemp
   - pattern: PrinterMixin._targetBedTemp
   - pattern: $X._printer._targetBedTemp
@@ -3702,14 +3760,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetBedTemp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetBedTemp`
+      (commonly accessed by plugins as `self._printer._targetBedTemp`).
     _ref: octoprint.printer.standard.Printer._targetBedTemp
 - id: REM-0281
-  message: '`octoprint.printer.standard.Printer._targetChamberTemp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._targetChamberTemp` (commonly accessed
+    by plugins as `self._printer._targetChamberTemp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._targetChamberTemp
   - pattern: PrinterInterface._targetChamberTemp
   - pattern: PrinterMixin._targetChamberTemp
   - pattern: $X._printer._targetChamberTemp
@@ -3718,14 +3779,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetChamberTemp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetChamberTemp`
+      (commonly accessed by plugins as `self._printer._targetChamberTemp`).
     _ref: octoprint.printer.standard.Printer._targetChamberTemp
 - id: REM-0282
-  message: '`octoprint.printer.standard.Printer._targetTemp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._targetTemp` (commonly accessed by
+    plugins as `self._printer._targetTemp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._targetTemp
   - pattern: PrinterInterface._targetTemp
   - pattern: PrinterMixin._targetTemp
   - pattern: $X._printer._targetTemp
@@ -3734,14 +3798,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetTemp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._targetTemp` (commonly
+      accessed by plugins as `self._printer._targetTemp`).
     _ref: octoprint.printer.standard.Printer._targetTemp
 - id: REM-0283
-  message: '`octoprint.printer.standard.Printer._temp` has been removed.'
+  message: '`octoprint.printer.standard.Printer._temp` (commonly accessed by plugins
+    as `self._printer._temp`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._temp
   - pattern: PrinterInterface._temp
   - pattern: PrinterMixin._temp
   - pattern: $X._printer._temp
@@ -3750,14 +3817,17 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._temp`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._temp` (commonly
+      accessed by plugins as `self._printer._temp`).
     _ref: octoprint.printer.standard.Printer._temp
 - id: REM-0284
-  message: '`octoprint.printer.standard.Printer._tempBacklog` has been removed.'
+  message: '`octoprint.printer.standard.Printer._tempBacklog` (commonly accessed by
+    plugins as `self._printer._tempBacklog`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._tempBacklog
   - pattern: PrinterInterface._tempBacklog
   - pattern: PrinterMixin._tempBacklog
   - pattern: $X._printer._tempBacklog
@@ -3766,7 +3836,8 @@ rules:
   metadata:
     type: removal
     since: 1.8.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._tempBacklog`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._tempBacklog`
+      (commonly accessed by plugins as `self._printer._tempBacklog`).
     _ref: octoprint.printer.standard.Printer._tempBacklog
 - id: REM-0285
   message: '`octoprint.plugins.softwareupdate.SoftwareUpdatePlugin._get_restart_command`
@@ -3982,8 +4053,9 @@ rules:
     suggestion: Remove usage of `octoprint.util.comm.MachineCom._sdFilesMap`.
     _ref: octoprint.util.comm.MachineCom._sdFilesMap
 - id: REM-0302
-  message: '`octoprint.util.connectivity.ConnectivityChecker.log_change_report` has
-    been removed.'
+  message: '`octoprint.util.connectivity.ConnectivityChecker.log_change_report` (commonly
+    accessed by plugins as `self._connectivity_checker.log_change_report`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
@@ -3993,7 +4065,8 @@ rules:
   metadata:
     type: removal
     since: 1.9.0
-    suggestion: Remove usage of `octoprint.util.connectivity.ConnectivityChecker.log_change_report`.
+    suggestion: Remove usage of `octoprint.util.connectivity.ConnectivityChecker.log_change_report`
+      (commonly accessed by plugins as `self._connectivity_checker.log_change_report`).
     _ref: octoprint.util.connectivity.ConnectivityChecker.log_change_report
 - id: REM-0303
   message: '`octoprint.util.gcodeInterpreter.gcode._minMax` has been removed.'
@@ -4007,7 +4080,8 @@ rules:
     suggestion: Remove usage of `octoprint.util.gcodeInterpreter.gcode._minMax`.
     _ref: octoprint.util.gcodeInterpreter.gcode._minMax
 - id: REM-0304
-  message: '`octoprint.access.users.UserManager.createPasswordHash` has been removed.'
+  message: '`octoprint.access.users.UserManager.createPasswordHash` (commonly accessed
+    by plugins as `self._user_manager.createPasswordHash`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -4018,7 +4092,8 @@ rules:
   metadata:
     type: removal
     since: 1.9.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.createPasswordHash`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.createPasswordHash`
+      (commonly accessed by plugins as `self._user_manager.createPasswordHash`).
     _ref: octoprint.access.users.UserManager.createPasswordHash
 - id: REM-0305
   message: '`octoprint.filemanager.storage.StorageError.message` has been removed.'
@@ -4032,11 +4107,13 @@ rules:
     suggestion: Remove usage of `octoprint.filemanager.storage.StorageError.message`.
     _ref: octoprint.filemanager.storage.StorageError.message
 - id: REM-0306
-  message: '`octoprint.printer.standard.Printer._sdFilelistAvailable` has been removed.'
+  message: '`octoprint.printer.standard.Printer._sdFilelistAvailable` (commonly accessed
+    by plugins as `self._printer._sdFilelistAvailable`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sdFilelistAvailable
   - pattern: PrinterInterface._sdFilelistAvailable
   - pattern: PrinterMixin._sdFilelistAvailable
   - pattern: $X._printer._sdFilelistAvailable
@@ -4045,14 +4122,17 @@ rules:
   metadata:
     type: removal
     since: 1.9.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sdFilelistAvailable`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sdFilelistAvailable`
+      (commonly accessed by plugins as `self._printer._sdFilelistAvailable`).
     _ref: octoprint.printer.standard.Printer._sdFilelistAvailable
 - id: REM-0307
-  message: '`octoprint.printer.standard.Printer.add_marking` has been removed.'
+  message: '`octoprint.printer.standard.Printer.add_marking` (commonly accessed by
+    plugins as `self._printer.add_marking`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.add_marking
   - pattern: PrinterInterface.add_marking
   - pattern: PrinterMixin.add_marking
   - pattern: $X._printer.add_marking
@@ -4061,7 +4141,8 @@ rules:
   metadata:
     type: removal
     since: 1.9.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.add_marking`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.add_marking` (commonly
+      accessed by plugins as `self._printer.add_marking`).
     _ref: octoprint.printer.standard.Printer.add_marking
 - id: REM-0308
   message: '`octoprint.plugins.backup.BackupPlugin._in_progress` has been removed.'
@@ -5413,8 +5494,9 @@ rules:
     suggestion: Remove usage of `octoprint.logging.handlers.SerialLogHandler`.
     _ref: octoprint.logging.handlers.SerialLogHandler
 - id: REM-0414
-  message: '`octoprint.plugin.PluginSettings.get_plugin_data_folder` was deprecated
-    since 1.2.0 and has been removed.'
+  message: '`octoprint.plugin.PluginSettings.get_plugin_data_folder` (commonly accessed
+    by plugins as `self._settings.get_plugin_data_folder`) was deprecated since 1.2.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -5424,10 +5506,12 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.plugin.PluginSettings.get_plugin_data_folder`.
+    suggestion: Remove usage of `octoprint.plugin.PluginSettings.get_plugin_data_folder`
+      (commonly accessed by plugins as `self._settings.get_plugin_data_folder`).
     _ref: octoprint.plugin.PluginSettings.get_plugin_data_folder
 - id: REM-0415
-  message: '`octoprint.plugin.core.PluginManager._is_plugin_blacklisted` has been
+  message: '`octoprint.plugin.core.PluginManager._is_plugin_blacklisted` (commonly
+    accessed by plugins as `self._plugin_manager._is_plugin_blacklisted`) has been
     removed.'
   languages:
   - python
@@ -5440,11 +5524,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginManager._is_plugin_blacklisted`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginManager._is_plugin_blacklisted`
+      (commonly accessed by plugins as `self._plugin_manager._is_plugin_blacklisted`).
     _ref: octoprint.plugin.core.PluginManager._is_plugin_blacklisted
 - id: REM-0416
-  message: '`octoprint.plugin.core.PluginManager._is_plugin_version_blacklisted` has
-    been removed.'
+  message: '`octoprint.plugin.core.PluginManager._is_plugin_version_blacklisted` (commonly
+    accessed by plugins as `self._plugin_manager._is_plugin_version_blacklisted`)
+    has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -5456,10 +5542,12 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginManager._is_plugin_version_blacklisted`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginManager._is_plugin_version_blacklisted`
+      (commonly accessed by plugins as `self._plugin_manager._is_plugin_version_blacklisted`).
     _ref: octoprint.plugin.core.PluginManager._is_plugin_version_blacklisted
 - id: REM-0417
-  message: '`octoprint.plugin.core.PluginManager.plugin_blacklist` has been removed.'
+  message: '`octoprint.plugin.core.PluginManager.plugin_blacklist` (commonly accessed
+    by plugins as `self._plugin_manager.plugin_blacklist`) has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -5471,7 +5559,8 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.plugin.core.PluginManager.plugin_blacklist`.
+    suggestion: Remove usage of `octoprint.plugin.core.PluginManager.plugin_blacklist`
+      (commonly accessed by plugins as `self._plugin_manager.plugin_blacklist`).
     _ref: octoprint.plugin.core.PluginManager.plugin_blacklist
 - id: REM-0418
   message: Class `octoprint.plugins.corewizard.subwizards.PluginBlacklistSubwizard`
@@ -6196,7 +6285,7 @@ rules:
     suggestion: Remove usage of `octoprint.users.__license__`.
     _ref: octoprint.users.__license__
 - id: REM-0474
-  message: Module `octoprint.users` has been removed.
+  message: Module `octoprint.users` was deprecated since 1.11.7 and has been removed.
   languages:
   - python
   severity: CRITICAL
@@ -6810,8 +6899,9 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.User.roles`.
     _ref: octoprint.access.users.User.roles
 - id: REM-0522
-  message: '`octoprint.access.users.UserManager.addRolesToUser` was deprecated since
-    1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.addRolesToUser` (commonly accessed
+    by plugins as `self._user_manager.addRolesToUser`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6822,11 +6912,12 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.addRolesToUser`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.addRolesToUser`
+      (commonly accessed by plugins as `self._user_manager.addRolesToUser`).
     _ref: octoprint.access.users.UserManager.addRolesToUser
 - id: REM-0523
-  message: '`octoprint.access.users.UserManager.addUser` was deprecated since 1.4.0
-    and has been removed.'
+  message: '`octoprint.access.users.UserManager.addUser` (commonly accessed by plugins
+    as `self._user_manager.addUser`) was deprecated since 1.4.0 and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6837,11 +6928,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.addUser`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.addUser` (commonly
+      accessed by plugins as `self._user_manager.addUser`).
     _ref: octoprint.access.users.UserManager.addUser
 - id: REM-0524
-  message: '`octoprint.access.users.UserManager.changeUserActivation` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.changeUserActivation` (commonly accessed
+    by plugins as `self._user_manager.changeUserActivation`) was deprecated since
+    1.4.0 and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6852,11 +6945,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserActivation`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserActivation`
+      (commonly accessed by plugins as `self._user_manager.changeUserActivation`).
     _ref: octoprint.access.users.UserManager.changeUserActivation
 - id: REM-0525
-  message: '`octoprint.access.users.UserManager.changeUserPassword` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.changeUserPassword` (commonly accessed
+    by plugins as `self._user_manager.changeUserPassword`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6867,11 +6962,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserPassword`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserPassword`
+      (commonly accessed by plugins as `self._user_manager.changeUserPassword`).
     _ref: octoprint.access.users.UserManager.changeUserPassword
 - id: REM-0526
-  message: '`octoprint.access.users.UserManager.changeUserRoles` was deprecated since
-    1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.changeUserRoles` (commonly accessed
+    by plugins as `self._user_manager.changeUserRoles`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6882,11 +6979,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserRoles`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserRoles`
+      (commonly accessed by plugins as `self._user_manager.changeUserRoles`).
     _ref: octoprint.access.users.UserManager.changeUserRoles
 - id: REM-0527
-  message: '`octoprint.access.users.UserManager.changeUserSetting` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.changeUserSetting` (commonly accessed
+    by plugins as `self._user_manager.changeUserSetting`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6897,11 +6996,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSetting`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSetting`
+      (commonly accessed by plugins as `self._user_manager.changeUserSetting`).
     _ref: octoprint.access.users.UserManager.changeUserSetting
 - id: REM-0528
-  message: '`octoprint.access.users.UserManager.changeUserSettings` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.changeUserSettings` (commonly accessed
+    by plugins as `self._user_manager.changeUserSettings`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6912,11 +7013,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSettings`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSettings`
+      (commonly accessed by plugins as `self._user_manager.changeUserSettings`).
     _ref: octoprint.access.users.UserManager.changeUserSettings
 - id: REM-0529
-  message: '`octoprint.access.users.UserManager.checkPassword` was deprecated since
-    1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.checkPassword` (commonly accessed
+    by plugins as `self._user_manager.checkPassword`) was deprecated since 1.4.0 and
+    has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6927,11 +7030,12 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.checkPassword`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.checkPassword`
+      (commonly accessed by plugins as `self._user_manager.checkPassword`).
     _ref: octoprint.access.users.UserManager.checkPassword
 - id: REM-0530
-  message: '`octoprint.access.users.UserManager.findUser` was deprecated since 1.4.0
-    and has been removed.'
+  message: '`octoprint.access.users.UserManager.findUser` (commonly accessed by plugins
+    as `self._user_manager.findUser`) was deprecated since 1.4.0 and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6942,11 +7046,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.findUser`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.findUser` (commonly
+      accessed by plugins as `self._user_manager.findUser`).
     _ref: octoprint.access.users.UserManager.findUser
 - id: REM-0531
-  message: '`octoprint.access.users.UserManager.getAllUserSettings` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.getAllUserSettings` (commonly accessed
+    by plugins as `self._user_manager.getAllUserSettings`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6957,11 +7063,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUserSettings`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUserSettings`
+      (commonly accessed by plugins as `self._user_manager.getAllUserSettings`).
     _ref: octoprint.access.users.UserManager.getAllUserSettings
 - id: REM-0532
-  message: '`octoprint.access.users.UserManager.getAllUsers` was deprecated since
-    1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.getAllUsers` (commonly accessed by
+    plugins as `self._user_manager.getAllUsers`) was deprecated since 1.4.0 and has
+    been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6972,11 +7080,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUsers`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUsers` (commonly
+      accessed by plugins as `self._user_manager.getAllUsers`).
     _ref: octoprint.access.users.UserManager.getAllUsers
 - id: REM-0533
-  message: '`octoprint.access.users.UserManager.getUserSetting` was deprecated since
-    1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.getUserSetting` (commonly accessed
+    by plugins as `self._user_manager.getUserSetting`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -6987,11 +7097,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.getUserSetting`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.getUserSetting`
+      (commonly accessed by plugins as `self._user_manager.getUserSetting`).
     _ref: octoprint.access.users.UserManager.getUserSetting
 - id: REM-0534
-  message: '`octoprint.access.users.UserManager.hasBeenCustomized` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.hasBeenCustomized` (commonly accessed
+    by plugins as `self._user_manager.hasBeenCustomized`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -7002,11 +7114,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.hasBeenCustomized`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.hasBeenCustomized`
+      (commonly accessed by plugins as `self._user_manager.hasBeenCustomized`).
     _ref: octoprint.access.users.UserManager.hasBeenCustomized
 - id: REM-0535
-  message: '`octoprint.access.users.UserManager.removeRolesFromUser` was deprecated
-    since 1.4.0 and has been removed.'
+  message: '`octoprint.access.users.UserManager.removeRolesFromUser` (commonly accessed
+    by plugins as `self._user_manager.removeRolesFromUser`) was deprecated since 1.4.0
+    and has been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -7017,11 +7131,13 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.removeRolesFromUser`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.removeRolesFromUser`
+      (commonly accessed by plugins as `self._user_manager.removeRolesFromUser`).
     _ref: octoprint.access.users.UserManager.removeRolesFromUser
 - id: REM-0536
-  message: '`octoprint.access.users.UserManager.removeUser` was deprecated since 1.4.0
-    and has been removed.'
+  message: '`octoprint.access.users.UserManager.removeUser` (commonly accessed by
+    plugins as `self._user_manager.removeUser`) was deprecated since 1.4.0 and has
+    been removed.'
   languages:
   - python
   severity: CRITICAL
@@ -7032,7 +7148,8 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.access.users.UserManager.removeUser`.
+    suggestion: Remove usage of `octoprint.access.users.UserManager.removeUser` (commonly
+      accessed by plugins as `self._user_manager.removeUser`).
     _ref: octoprint.access.users.UserManager.removeUser
 - id: REM-0537
   message: '`octoprint.filemanager.storage.LocalFileStorage._add_links` has been removed.'
@@ -7137,11 +7254,13 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.FilebasedUserManager.generateApiKey`.
     _ref: octoprint.access.users.FilebasedUserManager.generateApiKey
 - id: REM-0545
-  message: '`octoprint.printer.standard.Printer._addLog` has been removed.'
+  message: '`octoprint.printer.standard.Printer._addLog` (commonly accessed by plugins
+    as `self._printer._addLog`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._addLog
   - pattern: PrinterInterface._addLog
   - pattern: PrinterMixin._addLog
   - pattern: $X._printer._addLog
@@ -7150,14 +7269,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._addLog`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._addLog` (commonly
+      accessed by plugins as `self._printer._addLog`).
     _ref: octoprint.printer.standard.Printer._addLog
 - id: REM-0546
-  message: '`octoprint.printer.standard.Printer._addMessage` has been removed.'
+  message: '`octoprint.printer.standard.Printer._addMessage` (commonly accessed by
+    plugins as `self._printer._addMessage`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._addMessage
   - pattern: PrinterInterface._addMessage
   - pattern: PrinterMixin._addMessage
   - pattern: $X._printer._addMessage
@@ -7166,14 +7288,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._addMessage`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._addMessage` (commonly
+      accessed by plugins as `self._printer._addMessage`).
     _ref: octoprint.printer.standard.Printer._addMessage
 - id: REM-0547
-  message: '`octoprint.printer.standard.Printer._addTemperatureData` has been removed.'
+  message: '`octoprint.printer.standard.Printer._addTemperatureData` (commonly accessed
+    by plugins as `self._printer._addTemperatureData`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._addTemperatureData
   - pattern: PrinterInterface._addTemperatureData
   - pattern: PrinterMixin._addTemperatureData
   - pattern: $X._printer._addTemperatureData
@@ -7182,14 +7307,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._addTemperatureData`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._addTemperatureData`
+      (commonly accessed by plugins as `self._printer._addTemperatureData`).
     _ref: octoprint.printer.standard.Printer._addTemperatureData
 - id: REM-0548
-  message: '`octoprint.printer.standard.Printer._add_sd_file` has been removed.'
+  message: '`octoprint.printer.standard.Printer._add_sd_file` (commonly accessed by
+    plugins as `self._printer._add_sd_file`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._add_sd_file
   - pattern: PrinterInterface._add_sd_file
   - pattern: PrinterMixin._add_sd_file
   - pattern: $X._printer._add_sd_file
@@ -7198,14 +7326,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._add_sd_file`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._add_sd_file`
+      (commonly accessed by plugins as `self._printer._add_sd_file`).
     _ref: octoprint.printer.standard.Printer._add_sd_file
 - id: REM-0549
-  message: '`octoprint.printer.standard.Printer._analysisQueue` has been removed.'
+  message: '`octoprint.printer.standard.Printer._analysisQueue` (commonly accessed
+    by plugins as `self._printer._analysisQueue`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._analysisQueue
   - pattern: PrinterInterface._analysisQueue
   - pattern: PrinterMixin._analysisQueue
   - pattern: $X._printer._analysisQueue
@@ -7214,15 +7345,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._analysisQueue`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._analysisQueue`
+      (commonly accessed by plugins as `self._printer._analysisQueue`).
     _ref: octoprint.printer.standard.Printer._analysisQueue
 - id: REM-0550
-  message: '`octoprint.printer.standard.Printer._blacklisted_data_hooks` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._blacklisted_data_hooks` (commonly
+    accessed by plugins as `self._printer._blacklisted_data_hooks`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._blacklisted_data_hooks
   - pattern: PrinterInterface._blacklisted_data_hooks
   - pattern: PrinterMixin._blacklisted_data_hooks
   - pattern: $X._printer._blacklisted_data_hooks
@@ -7231,14 +7364,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._blacklisted_data_hooks`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._blacklisted_data_hooks`
+      (commonly accessed by plugins as `self._printer._blacklisted_data_hooks`).
     _ref: octoprint.printer.standard.Printer._blacklisted_data_hooks
 - id: REM-0551
-  message: '`octoprint.printer.standard.Printer._currentZ` has been removed.'
+  message: '`octoprint.printer.standard.Printer._currentZ` (commonly accessed by plugins
+    as `self._printer._currentZ`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._currentZ
   - pattern: PrinterInterface._currentZ
   - pattern: PrinterMixin._currentZ
   - pattern: $X._printer._currentZ
@@ -7247,14 +7383,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._currentZ`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._currentZ` (commonly
+      accessed by plugins as `self._printer._currentZ`).
     _ref: octoprint.printer.standard.Printer._currentZ
 - id: REM-0552
-  message: '`octoprint.printer.standard.Printer._error_info` has been removed.'
+  message: '`octoprint.printer.standard.Printer._error_info` (commonly accessed by
+    plugins as `self._printer._error_info`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._error_info
   - pattern: PrinterInterface._error_info
   - pattern: PrinterMixin._error_info
   - pattern: $X._printer._error_info
@@ -7263,14 +7402,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._error_info`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._error_info` (commonly
+      accessed by plugins as `self._printer._error_info`).
     _ref: octoprint.printer.standard.Printer._error_info
 - id: REM-0553
-  message: '`octoprint.printer.standard.Printer._fileManager` has been removed.'
+  message: '`octoprint.printer.standard.Printer._fileManager` (commonly accessed by
+    plugins as `self._printer._fileManager`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._fileManager
   - pattern: PrinterInterface._fileManager
   - pattern: PrinterMixin._fileManager
   - pattern: $X._printer._fileManager
@@ -7279,14 +7421,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._fileManager`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._fileManager`
+      (commonly accessed by plugins as `self._printer._fileManager`).
     _ref: octoprint.printer.standard.Printer._fileManager
 - id: REM-0554
-  message: '`octoprint.printer.standard.Printer._firmware_info` has been removed.'
+  message: '`octoprint.printer.standard.Printer._firmware_info` (commonly accessed
+    by plugins as `self._printer._firmware_info`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._firmware_info
   - pattern: PrinterInterface._firmware_info
   - pattern: PrinterMixin._firmware_info
   - pattern: $X._printer._firmware_info
@@ -7295,14 +7440,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._firmware_info`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._firmware_info`
+      (commonly accessed by plugins as `self._printer._firmware_info`).
     _ref: octoprint.printer.standard.Printer._firmware_info
 - id: REM-0555
-  message: '`octoprint.printer.standard.Printer._getStateFlags` has been removed.'
+  message: '`octoprint.printer.standard.Printer._getStateFlags` (commonly accessed
+    by plugins as `self._printer._getStateFlags`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._getStateFlags
   - pattern: PrinterInterface._getStateFlags
   - pattern: PrinterMixin._getStateFlags
   - pattern: $X._printer._getStateFlags
@@ -7311,14 +7459,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._getStateFlags`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._getStateFlags`
+      (commonly accessed by plugins as `self._printer._getStateFlags`).
     _ref: octoprint.printer.standard.Printer._getStateFlags
 - id: REM-0556
-  message: '`octoprint.printer.standard.Printer._get_free_remote_name` has been removed.'
+  message: '`octoprint.printer.standard.Printer._get_free_remote_name` (commonly accessed
+    by plugins as `self._printer._get_free_remote_name`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._get_free_remote_name
   - pattern: PrinterInterface._get_free_remote_name
   - pattern: PrinterMixin._get_free_remote_name
   - pattern: $X._printer._get_free_remote_name
@@ -7327,14 +7478,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._get_free_remote_name`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._get_free_remote_name`
+      (commonly accessed by plugins as `self._printer._get_free_remote_name`).
     _ref: octoprint.printer.standard.Printer._get_free_remote_name
 - id: REM-0557
-  message: '`octoprint.printer.standard.Printer._posAfterSelect` has been removed.'
+  message: '`octoprint.printer.standard.Printer._posAfterSelect` (commonly accessed
+    by plugins as `self._printer._posAfterSelect`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._posAfterSelect
   - pattern: PrinterInterface._posAfterSelect
   - pattern: PrinterMixin._posAfterSelect
   - pattern: $X._printer._posAfterSelect
@@ -7343,14 +7497,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._posAfterSelect`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._posAfterSelect`
+      (commonly accessed by plugins as `self._printer._posAfterSelect`).
     _ref: octoprint.printer.standard.Printer._posAfterSelect
 - id: REM-0558
-  message: '`octoprint.printer.standard.Printer._printAfterSelect` has been removed.'
+  message: '`octoprint.printer.standard.Printer._printAfterSelect` (commonly accessed
+    by plugins as `self._printer._printAfterSelect`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._printAfterSelect
   - pattern: PrinterInterface._printAfterSelect
   - pattern: PrinterMixin._printAfterSelect
   - pattern: $X._printer._printAfterSelect
@@ -7359,14 +7516,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._printAfterSelect`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._printAfterSelect`
+      (commonly accessed by plugins as `self._printer._printAfterSelect`).
     _ref: octoprint.printer.standard.Printer._printAfterSelect
 - id: REM-0559
-  message: '`octoprint.printer.standard.Printer._printerProfileManager` has been removed.'
+  message: '`octoprint.printer.standard.Printer._printerProfileManager` (commonly
+    accessed by plugins as `self._printer._printerProfileManager`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._printerProfileManager
   - pattern: PrinterInterface._printerProfileManager
   - pattern: PrinterMixin._printerProfileManager
   - pattern: $X._printer._printerProfileManager
@@ -7375,15 +7535,18 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._printerProfileManager`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._printerProfileManager`
+      (commonly accessed by plugins as `self._printer._printerProfileManager`).
     _ref: octoprint.printer.standard.Printer._printerProfileManager
 - id: REM-0560
-  message: '`octoprint.printer.standard.Printer._reportPrintProgressToPlugins` has
-    been removed.'
+  message: '`octoprint.printer.standard.Printer._reportPrintProgressToPlugins` (commonly
+    accessed by plugins as `self._printer._reportPrintProgressToPlugins`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._reportPrintProgressToPlugins
   - pattern: PrinterInterface._reportPrintProgressToPlugins
   - pattern: PrinterMixin._reportPrintProgressToPlugins
   - pattern: $X._printer._reportPrintProgressToPlugins
@@ -7392,14 +7555,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._reportPrintProgressToPlugins`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._reportPrintProgressToPlugins`
+      (commonly accessed by plugins as `self._printer._reportPrintProgressToPlugins`).
     _ref: octoprint.printer.standard.Printer._reportPrintProgressToPlugins
 - id: REM-0561
-  message: '`octoprint.printer.standard.Printer._selectedFileMutex` has been removed.'
+  message: '`octoprint.printer.standard.Printer._selectedFileMutex` (commonly accessed
+    by plugins as `self._printer._selectedFileMutex`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._selectedFileMutex
   - pattern: PrinterInterface._selectedFileMutex
   - pattern: PrinterMixin._selectedFileMutex
   - pattern: $X._printer._selectedFileMutex
@@ -7408,14 +7574,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._selectedFileMutex`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._selectedFileMutex`
+      (commonly accessed by plugins as `self._printer._selectedFileMutex`).
     _ref: octoprint.printer.standard.Printer._selectedFileMutex
 - id: REM-0562
-  message: '`octoprint.printer.standard.Printer._sendAddLogCallbacks` has been removed.'
+  message: '`octoprint.printer.standard.Printer._sendAddLogCallbacks` (commonly accessed
+    by plugins as `self._printer._sendAddLogCallbacks`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sendAddLogCallbacks
   - pattern: PrinterInterface._sendAddLogCallbacks
   - pattern: PrinterMixin._sendAddLogCallbacks
   - pattern: $X._printer._sendAddLogCallbacks
@@ -7424,15 +7593,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddLogCallbacks`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddLogCallbacks`
+      (commonly accessed by plugins as `self._printer._sendAddLogCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddLogCallbacks
 - id: REM-0563
-  message: '`octoprint.printer.standard.Printer._sendAddMessageCallbacks` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._sendAddMessageCallbacks` (commonly
+    accessed by plugins as `self._printer._sendAddMessageCallbacks`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sendAddMessageCallbacks
   - pattern: PrinterInterface._sendAddMessageCallbacks
   - pattern: PrinterMixin._sendAddMessageCallbacks
   - pattern: $X._printer._sendAddMessageCallbacks
@@ -7441,15 +7612,18 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddMessageCallbacks`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddMessageCallbacks`
+      (commonly accessed by plugins as `self._printer._sendAddMessageCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddMessageCallbacks
 - id: REM-0564
-  message: '`octoprint.printer.standard.Printer._sendAddTemperatureCallbacks` has
-    been removed.'
+  message: '`octoprint.printer.standard.Printer._sendAddTemperatureCallbacks` (commonly
+    accessed by plugins as `self._printer._sendAddTemperatureCallbacks`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sendAddTemperatureCallbacks
   - pattern: PrinterInterface._sendAddTemperatureCallbacks
   - pattern: PrinterMixin._sendAddTemperatureCallbacks
   - pattern: $X._printer._sendAddTemperatureCallbacks
@@ -7458,15 +7632,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddTemperatureCallbacks`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddTemperatureCallbacks`
+      (commonly accessed by plugins as `self._printer._sendAddTemperatureCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddTemperatureCallbacks
 - id: REM-0565
-  message: '`octoprint.printer.standard.Printer._sendCurrentDataCallbacks` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._sendCurrentDataCallbacks` (commonly
+    accessed by plugins as `self._printer._sendCurrentDataCallbacks`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sendCurrentDataCallbacks
   - pattern: PrinterInterface._sendCurrentDataCallbacks
   - pattern: PrinterMixin._sendCurrentDataCallbacks
   - pattern: $X._printer._sendCurrentDataCallbacks
@@ -7475,15 +7651,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendCurrentDataCallbacks`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendCurrentDataCallbacks`
+      (commonly accessed by plugins as `self._printer._sendCurrentDataCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendCurrentDataCallbacks
 - id: REM-0566
-  message: '`octoprint.printer.standard.Printer._sendInitialStateUpdate` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._sendInitialStateUpdate` (commonly
+    accessed by plugins as `self._printer._sendInitialStateUpdate`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._sendInitialStateUpdate
   - pattern: PrinterInterface._sendInitialStateUpdate
   - pattern: PrinterMixin._sendInitialStateUpdate
   - pattern: $X._printer._sendInitialStateUpdate
@@ -7492,14 +7670,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendInitialStateUpdate`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._sendInitialStateUpdate`
+      (commonly accessed by plugins as `self._printer._sendInitialStateUpdate`).
     _ref: octoprint.printer.standard.Printer._sendInitialStateUpdate
 - id: REM-0567
-  message: '`octoprint.printer.standard.Printer._setCurrentZ` has been removed.'
+  message: '`octoprint.printer.standard.Printer._setCurrentZ` (commonly accessed by
+    plugins as `self._printer._setCurrentZ`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._setCurrentZ
   - pattern: PrinterInterface._setCurrentZ
   - pattern: PrinterMixin._setCurrentZ
   - pattern: $X._printer._setCurrentZ
@@ -7508,14 +7689,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._setCurrentZ`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._setCurrentZ`
+      (commonly accessed by plugins as `self._printer._setCurrentZ`).
     _ref: octoprint.printer.standard.Printer._setCurrentZ
 - id: REM-0568
-  message: '`octoprint.printer.standard.Printer._setJobData` has been removed.'
+  message: '`octoprint.printer.standard.Printer._setJobData` (commonly accessed by
+    plugins as `self._printer._setJobData`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._setJobData
   - pattern: PrinterInterface._setJobData
   - pattern: PrinterMixin._setJobData
   - pattern: $X._printer._setJobData
@@ -7524,14 +7708,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._setJobData`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._setJobData` (commonly
+      accessed by plugins as `self._printer._setJobData`).
     _ref: octoprint.printer.standard.Printer._setJobData
 - id: REM-0569
-  message: '`octoprint.printer.standard.Printer._setOffsets` has been removed.'
+  message: '`octoprint.printer.standard.Printer._setOffsets` (commonly accessed by
+    plugins as `self._printer._setOffsets`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._setOffsets
   - pattern: PrinterInterface._setOffsets
   - pattern: PrinterMixin._setOffsets
   - pattern: $X._printer._setOffsets
@@ -7540,14 +7727,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._setOffsets`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._setOffsets` (commonly
+      accessed by plugins as `self._printer._setOffsets`).
     _ref: octoprint.printer.standard.Printer._setOffsets
 - id: REM-0570
-  message: '`octoprint.printer.standard.Printer._setState` has been removed.'
+  message: '`octoprint.printer.standard.Printer._setState` (commonly accessed by plugins
+    as `self._printer._setState`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._setState
   - pattern: PrinterInterface._setState
   - pattern: PrinterMixin._setState
   - pattern: $X._printer._setState
@@ -7556,14 +7746,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._setState`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._setState` (commonly
+      accessed by plugins as `self._printer._setState`).
     _ref: octoprint.printer.standard.Printer._setState
 - id: REM-0571
-  message: '`octoprint.printer.standard.Printer._updateJobUser` has been removed.'
+  message: '`octoprint.printer.standard.Printer._updateJobUser` (commonly accessed
+    by plugins as `self._printer._updateJobUser`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._updateJobUser
   - pattern: PrinterInterface._updateJobUser
   - pattern: PrinterMixin._updateJobUser
   - pattern: $X._printer._updateJobUser
@@ -7572,14 +7765,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateJobUser`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateJobUser`
+      (commonly accessed by plugins as `self._printer._updateJobUser`).
     _ref: octoprint.printer.standard.Printer._updateJobUser
 - id: REM-0572
-  message: '`octoprint.printer.standard.Printer._updateProgressData` has been removed.'
+  message: '`octoprint.printer.standard.Printer._updateProgressData` (commonly accessed
+    by plugins as `self._printer._updateProgressData`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._updateProgressData
   - pattern: PrinterInterface._updateProgressData
   - pattern: PrinterMixin._updateProgressData
   - pattern: $X._printer._updateProgressData
@@ -7588,15 +7784,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressData`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressData`
+      (commonly accessed by plugins as `self._printer._updateProgressData`).
     _ref: octoprint.printer.standard.Printer._updateProgressData
 - id: REM-0573
-  message: '`octoprint.printer.standard.Printer._updateProgressDataCallback` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._updateProgressDataCallback` (commonly
+    accessed by plugins as `self._printer._updateProgressDataCallback`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._updateProgressDataCallback
   - pattern: PrinterInterface._updateProgressDataCallback
   - pattern: PrinterMixin._updateProgressDataCallback
   - pattern: $X._printer._updateProgressDataCallback
@@ -7605,15 +7803,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressDataCallback`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressDataCallback`
+      (commonly accessed by plugins as `self._printer._updateProgressDataCallback`).
     _ref: octoprint.printer.standard.Printer._updateProgressDataCallback
 - id: REM-0574
-  message: '`octoprint.printer.standard.Printer._updateResendDataCallback` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer._updateResendDataCallback` (commonly
+    accessed by plugins as `self._printer._updateResendDataCallback`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._updateResendDataCallback
   - pattern: PrinterInterface._updateResendDataCallback
   - pattern: PrinterMixin._updateResendDataCallback
   - pattern: $X._printer._updateResendDataCallback
@@ -7622,14 +7822,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateResendDataCallback`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._updateResendDataCallback`
+      (commonly accessed by plugins as `self._printer._updateResendDataCallback`).
     _ref: octoprint.printer.standard.Printer._updateResendDataCallback
 - id: REM-0575
-  message: '`octoprint.printer.standard.Printer._validateJob` has been removed.'
+  message: '`octoprint.printer.standard.Printer._validateJob` (commonly accessed by
+    plugins as `self._printer._validateJob`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer._validateJob
   - pattern: PrinterInterface._validateJob
   - pattern: PrinterMixin._validateJob
   - pattern: $X._printer._validateJob
@@ -7638,14 +7841,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer._validateJob`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer._validateJob`
+      (commonly accessed by plugins as `self._printer._validateJob`).
     _ref: octoprint.printer.standard.Printer._validateJob
 - id: REM-0576
-  message: '`octoprint.printer.standard.Printer.getTransport` has been removed.'
+  message: '`octoprint.printer.standard.Printer.getTransport` (commonly accessed by
+    plugins as `self._printer.getTransport`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.getTransport
   - pattern: PrinterInterface.getTransport
   - pattern: PrinterMixin.getTransport
   - pattern: $X._printer.getTransport
@@ -7654,14 +7860,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.getTransport`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.getTransport`
+      (commonly accessed by plugins as `self._printer.getTransport`).
     _ref: octoprint.printer.standard.Printer.getTransport
 - id: REM-0577
-  message: '`octoprint.printer.standard.Printer.on_comm_error` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_error` (commonly accessed
+    by plugins as `self._printer.on_comm_error`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_error
   - pattern: PrinterInterface.on_comm_error
   - pattern: PrinterMixin.on_comm_error
   - pattern: $X._printer.on_comm_error
@@ -7670,14 +7879,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_error`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_error`
+      (commonly accessed by plugins as `self._printer.on_comm_error`).
     _ref: octoprint.printer.standard.Printer.on_comm_error
 - id: REM-0578
-  message: '`octoprint.printer.standard.Printer.on_comm_file_selected` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_file_selected` (commonly accessed
+    by plugins as `self._printer.on_comm_file_selected`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_file_selected
   - pattern: PrinterInterface.on_comm_file_selected
   - pattern: PrinterMixin.on_comm_file_selected
   - pattern: $X._printer.on_comm_file_selected
@@ -7686,15 +7898,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_selected`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_selected`
+      (commonly accessed by plugins as `self._printer.on_comm_file_selected`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_selected
 - id: REM-0579
-  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_done` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_done` (commonly
+    accessed by plugins as `self._printer.on_comm_file_transfer_done`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_file_transfer_done
   - pattern: PrinterInterface.on_comm_file_transfer_done
   - pattern: PrinterMixin.on_comm_file_transfer_done
   - pattern: $X._printer.on_comm_file_transfer_done
@@ -7703,15 +7917,18 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_done`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_done`
+      (commonly accessed by plugins as `self._printer.on_comm_file_transfer_done`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_done
 - id: REM-0580
-  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_failed` has
-    been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_failed` (commonly
+    accessed by plugins as `self._printer.on_comm_file_transfer_failed`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_file_transfer_failed
   - pattern: PrinterInterface.on_comm_file_transfer_failed
   - pattern: PrinterMixin.on_comm_file_transfer_failed
   - pattern: $X._printer.on_comm_file_transfer_failed
@@ -7720,15 +7937,18 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_failed`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_failed`
+      (commonly accessed by plugins as `self._printer.on_comm_file_transfer_failed`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_failed
 - id: REM-0581
-  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_started` has
-    been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_started` (commonly
+    accessed by plugins as `self._printer.on_comm_file_transfer_started`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_file_transfer_started
   - pattern: PrinterInterface.on_comm_file_transfer_started
   - pattern: PrinterMixin.on_comm_file_transfer_started
   - pattern: $X._printer.on_comm_file_transfer_started
@@ -7737,14 +7957,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_started`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_started`
+      (commonly accessed by plugins as `self._printer.on_comm_file_transfer_started`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_started
 - id: REM-0582
-  message: '`octoprint.printer.standard.Printer.on_comm_firmware_info` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_firmware_info` (commonly accessed
+    by plugins as `self._printer.on_comm_firmware_info`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_firmware_info
   - pattern: PrinterInterface.on_comm_firmware_info
   - pattern: PrinterMixin.on_comm_firmware_info
   - pattern: $X._printer.on_comm_firmware_info
@@ -7753,15 +7976,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_firmware_info`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_firmware_info`
+      (commonly accessed by plugins as `self._printer.on_comm_firmware_info`).
     _ref: octoprint.printer.standard.Printer.on_comm_firmware_info
 - id: REM-0583
-  message: '`octoprint.printer.standard.Printer.on_comm_force_disconnect` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_force_disconnect` (commonly
+    accessed by plugins as `self._printer.on_comm_force_disconnect`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_force_disconnect
   - pattern: PrinterInterface.on_comm_force_disconnect
   - pattern: PrinterMixin.on_comm_force_disconnect
   - pattern: $X._printer.on_comm_force_disconnect
@@ -7770,14 +7995,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_force_disconnect`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_force_disconnect`
+      (commonly accessed by plugins as `self._printer.on_comm_force_disconnect`).
     _ref: octoprint.printer.standard.Printer.on_comm_force_disconnect
 - id: REM-0584
-  message: '`octoprint.printer.standard.Printer.on_comm_log` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_log` (commonly accessed by
+    plugins as `self._printer.on_comm_log`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_log
   - pattern: PrinterInterface.on_comm_log
   - pattern: PrinterMixin.on_comm_log
   - pattern: $X._printer.on_comm_log
@@ -7786,14 +8014,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_log`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_log` (commonly
+      accessed by plugins as `self._printer.on_comm_log`).
     _ref: octoprint.printer.standard.Printer.on_comm_log
 - id: REM-0585
-  message: '`octoprint.printer.standard.Printer.on_comm_message` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_message` (commonly accessed
+    by plugins as `self._printer.on_comm_message`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_message
   - pattern: PrinterInterface.on_comm_message
   - pattern: PrinterMixin.on_comm_message
   - pattern: $X._printer.on_comm_message
@@ -7802,15 +8033,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_message`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_message`
+      (commonly accessed by plugins as `self._printer.on_comm_message`).
     _ref: octoprint.printer.standard.Printer.on_comm_message
 - id: REM-0586
-  message: '`octoprint.printer.standard.Printer.on_comm_position_update` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_position_update` (commonly
+    accessed by plugins as `self._printer.on_comm_position_update`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_position_update
   - pattern: PrinterInterface.on_comm_position_update
   - pattern: PrinterMixin.on_comm_position_update
   - pattern: $X._printer.on_comm_position_update
@@ -7819,15 +8052,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_position_update`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_position_update`
+      (commonly accessed by plugins as `self._printer.on_comm_position_update`).
     _ref: octoprint.printer.standard.Printer.on_comm_position_update
 - id: REM-0587
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelled` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelled` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_cancelled`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_cancelled
   - pattern: PrinterInterface.on_comm_print_job_cancelled
   - pattern: PrinterMixin.on_comm_print_job_cancelled
   - pattern: $X._printer.on_comm_print_job_cancelled
@@ -7836,15 +8071,18 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelled`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelled`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_cancelled`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_cancelled
 - id: REM-0588
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelling` has
-    been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelling` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_cancelling`) has been
+    removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_cancelling
   - pattern: PrinterInterface.on_comm_print_job_cancelling
   - pattern: PrinterMixin.on_comm_print_job_cancelling
   - pattern: $X._printer.on_comm_print_job_cancelling
@@ -7853,14 +8091,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelling`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelling`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_cancelling`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_cancelling
 - id: REM-0589
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_done` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_done` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_done`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_done
   - pattern: PrinterInterface.on_comm_print_job_done
   - pattern: PrinterMixin.on_comm_print_job_done
   - pattern: $X._printer.on_comm_print_job_done
@@ -7869,15 +8110,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_done`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_done`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_done`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_done
 - id: REM-0590
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_paused` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_paused` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_paused`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_paused
   - pattern: PrinterInterface.on_comm_print_job_paused
   - pattern: PrinterMixin.on_comm_print_job_paused
   - pattern: $X._printer.on_comm_print_job_paused
@@ -7886,15 +8129,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_paused`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_paused`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_paused`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_paused
 - id: REM-0591
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_resumed` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_resumed` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_resumed`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_resumed
   - pattern: PrinterInterface.on_comm_print_job_resumed
   - pattern: PrinterMixin.on_comm_print_job_resumed
   - pattern: $X._printer.on_comm_print_job_resumed
@@ -7903,15 +8148,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_resumed`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_resumed`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_resumed`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_resumed
 - id: REM-0592
-  message: '`octoprint.printer.standard.Printer.on_comm_print_job_started` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_print_job_started` (commonly
+    accessed by plugins as `self._printer.on_comm_print_job_started`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_started
   - pattern: PrinterInterface.on_comm_print_job_started
   - pattern: PrinterMixin.on_comm_print_job_started
   - pattern: $X._printer.on_comm_print_job_started
@@ -7920,14 +8167,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_started`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_started`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_started`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_started
 - id: REM-0593
-  message: '`octoprint.printer.standard.Printer.on_comm_progress` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_progress` (commonly accessed
+    by plugins as `self._printer.on_comm_progress`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_progress
   - pattern: PrinterInterface.on_comm_progress
   - pattern: PrinterMixin.on_comm_progress
   - pattern: $X._printer.on_comm_progress
@@ -7936,15 +8186,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_progress`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_progress`
+      (commonly accessed by plugins as `self._printer.on_comm_progress`).
     _ref: octoprint.printer.standard.Printer.on_comm_progress
 - id: REM-0594
-  message: '`octoprint.printer.standard.Printer.on_comm_record_fileposition` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_record_fileposition` (commonly
+    accessed by plugins as `self._printer.on_comm_record_fileposition`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_record_fileposition
   - pattern: PrinterInterface.on_comm_record_fileposition
   - pattern: PrinterMixin.on_comm_record_fileposition
   - pattern: $X._printer.on_comm_record_fileposition
@@ -7953,14 +8205,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_record_fileposition`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_record_fileposition`
+      (commonly accessed by plugins as `self._printer.on_comm_record_fileposition`).
     _ref: octoprint.printer.standard.Printer.on_comm_record_fileposition
 - id: REM-0595
-  message: '`octoprint.printer.standard.Printer.on_comm_sd_files` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_sd_files` (commonly accessed
+    by plugins as `self._printer.on_comm_sd_files`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_sd_files
   - pattern: PrinterInterface.on_comm_sd_files
   - pattern: PrinterMixin.on_comm_sd_files
   - pattern: $X._printer.on_comm_sd_files
@@ -7969,15 +8224,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_files`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_files`
+      (commonly accessed by plugins as `self._printer.on_comm_sd_files`).
     _ref: octoprint.printer.standard.Printer.on_comm_sd_files
 - id: REM-0596
-  message: '`octoprint.printer.standard.Printer.on_comm_sd_state_change` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_sd_state_change` (commonly
+    accessed by plugins as `self._printer.on_comm_sd_state_change`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_sd_state_change
   - pattern: PrinterInterface.on_comm_sd_state_change
   - pattern: PrinterMixin.on_comm_sd_state_change
   - pattern: $X._printer.on_comm_sd_state_change
@@ -7986,14 +8243,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_state_change`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_state_change`
+      (commonly accessed by plugins as `self._printer.on_comm_sd_state_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_sd_state_change
 - id: REM-0597
-  message: '`octoprint.printer.standard.Printer.on_comm_state_change` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_state_change` (commonly accessed
+    by plugins as `self._printer.on_comm_state_change`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_state_change
   - pattern: PrinterInterface.on_comm_state_change
   - pattern: PrinterMixin.on_comm_state_change
   - pattern: $X._printer.on_comm_state_change
@@ -8002,15 +8262,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_state_change`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_state_change`
+      (commonly accessed by plugins as `self._printer.on_comm_state_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_state_change
 - id: REM-0598
-  message: '`octoprint.printer.standard.Printer.on_comm_temperature_update` has been
-    removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_temperature_update` (commonly
+    accessed by plugins as `self._printer.on_comm_temperature_update`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_temperature_update
   - pattern: PrinterInterface.on_comm_temperature_update
   - pattern: PrinterMixin.on_comm_temperature_update
   - pattern: $X._printer.on_comm_temperature_update
@@ -8019,14 +8281,17 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_temperature_update`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_temperature_update`
+      (commonly accessed by plugins as `self._printer.on_comm_temperature_update`).
     _ref: octoprint.printer.standard.Printer.on_comm_temperature_update
 - id: REM-0599
-  message: '`octoprint.printer.standard.Printer.on_comm_z_change` has been removed.'
+  message: '`octoprint.printer.standard.Printer.on_comm_z_change` (commonly accessed
+    by plugins as `self._printer.on_comm_z_change`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_z_change
   - pattern: PrinterInterface.on_comm_z_change
   - pattern: PrinterMixin.on_comm_z_change
   - pattern: $X._printer.on_comm_z_change
@@ -8035,7 +8300,8 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_z_change`.
+    suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_z_change`
+      (commonly accessed by plugins as `self._printer.on_comm_z_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_z_change
 - id: REM-0600
   message: '`octoprint.schema.config.Config.serial` has been removed.'
@@ -8085,11 +8351,13 @@ rules:
     suggestion: Remove usage of `octoprint.schema.config.server.ServerConfig.pluginBlacklist`.
     _ref: octoprint.schema.config.server.ServerConfig.pluginBlacklist
 - id: REM-0604
-  message: '`octoprint.util.comm.Printer.on_comm_print_job_failed` has been removed.'
+  message: '`octoprint.util.comm.Printer.on_comm_print_job_failed` (commonly accessed
+    by plugins as `self._printer.on_comm_print_job_failed`) has been removed.'
   languages:
   - python
   severity: CRITICAL
   pattern-either:
+  - pattern: Printer.on_comm_print_job_failed
   - pattern: PrinterInterface.on_comm_print_job_failed
   - pattern: PrinterMixin.on_comm_print_job_failed
   - pattern: $X._printer.on_comm_print_job_failed
@@ -8098,7 +8366,8 @@ rules:
   metadata:
     type: removal
     since: 2.0.0
-    suggestion: Remove usage of `octoprint.util.comm.Printer.on_comm_print_job_failed`.
+    suggestion: Remove usage of `octoprint.util.comm.Printer.on_comm_print_job_failed`
+      (commonly accessed by plugins as `self._printer.on_comm_print_job_failed`).
     _ref: octoprint.util.comm.Printer.on_comm_print_job_failed
 - id: REM-0605
   message: '`octoprint.util.comm.StreamingGcodeFileInformation._localFilename` has

@@ -25,6 +25,7 @@ variable names from three sources:
 from __future__ import annotations
 
 _CLASS_TO_MIXIN_ATTR = {
+    "Printer": "_printer",
     "PrinterInterface": "_printer",
     "PrinterMixin": "_printer",
     "PrinterProfileManager": "_printer_profile_manager",
@@ -71,6 +72,39 @@ _EXTRA_RECEIVERS = {
 OctoPrint's own public APIs. For example, ``settings()`` is a function call
 that returns a ``Settings`` instance, so Semgrep can match
 ``settings().get(...)`` as a literal pattern."""
+
+
+def format_plugin_self_hint(class_name: str | None, member: str | None) -> str:
+    """Format the plugin-side ``self._xxx.member`` hint for a class member.
+
+    Returns a parenthesized hint like
+    ``"(commonly accessed by plugins as `self._printer.fake_ack`)"`` when
+    ``class_name`` is a well-known OctoPrint class injected into plugins and
+    ``member`` is provided; otherwise returns an empty string.
+
+    Args:
+        class_name (str | None): Enclosing class name, or ``None``.
+        member (str | None): Member name (without class prefix), or ``None``.
+
+    Returns:
+        str: The hint fragment, or an empty string.
+
+    Examples:
+        >>> format_plugin_self_hint("PrinterInterface", "fake_ack")
+        '(commonly accessed by plugins as `self._printer.fake_ack`)'
+        >>> format_plugin_self_hint("SomethingUnknown", "foo")
+        ''
+        >>> format_plugin_self_hint(None, "foo")
+        ''
+        >>> format_plugin_self_hint("PrinterInterface", None)
+        ''
+    """
+    if not (class_name and member):
+        return ""
+    self_attr = _CLASS_TO_MIXIN_ATTR.get(class_name)
+    if not self_attr:
+        return ""
+    return f"(commonly accessed by plugins as `self.{self_attr}.{member}`)"
 
 
 def get_receivers_map(

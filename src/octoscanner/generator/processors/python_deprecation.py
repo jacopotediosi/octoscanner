@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 
 from ..models import Deprecation, PipelineState, RuleFile
-from ..python_receivers import get_receivers_map
+from ..python_receivers import format_plugin_self_hint, get_receivers_map
 from ..rules import (
     build_fqn,
     build_python_symbol_rule,
@@ -43,7 +43,8 @@ def _create_suggestion(
 
     Args:
         message (str): Deprecation message text from the source code.
-        name (str): Symbol name (e.g. ``"getApiKey"``).
+        name (str): Name of the deprecated symbol, unqualified (e.g.
+            ``"getApiKey"``).
         class_name (str | None): Enclosing class name, or ``None``.
         module_path (str | None): Module path (e.g. ``"octoprint.access"``).
 
@@ -65,18 +66,32 @@ def _create_suggestion(
     suggestion_match = _SUGGESTION_RE.search(message)
     if suggestion_match:
         replacement = suggestion_match.group(1).rstrip(".")
-        # Only qualify simple names or names starting with class_name
-        # External refs like "flask.request.remote_addr" should not be prefixed
+        # Derive the `member` used for the plugin-side "self" hint and
+        # qualify the replacement, based on the shape of the extracted name.
         if "." not in replacement:
+            # Bare name (e.g. "apikey"): the name itself is the member;
+            # qualify the replacement with module/class (-> "octoprint.access.User.apikey").
+            member = replacement
             replacement = build_fqn(replacement, class_name, module_path)
         elif class_name and replacement.startswith(f"{class_name}."):
+            # Dotted name on the current class (e.g. "User.apikey"): member is
+            # the last segment ("apikey"); prepend the replacement with the module
+            # (-> "octoprint.access.User.apikey").
+            member = replacement.split(".")[-1].rstrip("()")
             replacement = f"{module_path}.{replacement}" if module_path else replacement
-        return f"Use `{replacement}` instead."
+        else:
+            # Any other dotted name (e.g. "flask.request.remote_addr"):
+            # external reference, no member (no "self" hint) and replacement
+            # left untouched.
+            member = None
+        self_hint = format_plugin_self_hint(class_name, member)
+        return f"Use `{replacement}`{f' {self_hint}' if self_hint else ''} instead."
 
     # Fallback: suggest removing usage
     # If name already contains dots (e.g. module imports), it's already qualified
     full_name = name if "." in name else build_fqn(name, class_name, module_path)
-    return f"Remove usage of `{full_name}`."
+    self_hint = format_plugin_self_hint(class_name, name)
+    return f"Remove usage of `{full_name}`{f' {self_hint}' if self_hint else ''}."
 
 
 # ---------------------------------------------------------------------------
@@ -124,7 +139,8 @@ def _make_rule(dep: Deprecation, rule_id: str, receivers_map: dict[str, list[str
     # Qualify symbol name with fully qualified name (e.g. "use foo instead" -> "use `module.Class.foo` instead") in message
     message = dep.message
     if not message.startswith(f"`{dep.module_path}."):
-        qualified = f"`{build_fqn(dep.name, dep.class_name, dep.module_path)}`"
+        self_hint = format_plugin_self_hint(dep.class_name, dep.name)
+        qualified = f"`{build_fqn(dep.name, dep.class_name, dep.module_path)}`{f' {self_hint}' if self_hint else ''}"
 
         # Try backtick-quoted name first: `foo` -> `module.Class.foo`
         message = message.replace(f"`{dep.name}`", qualified, 1)
