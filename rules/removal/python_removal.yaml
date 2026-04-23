@@ -804,7 +804,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: UnknownRole._init_
+  mode: taint
+  pattern-sources:
+  - pattern: UnknownRole
+  pattern-sinks:
+  - pattern: $SINK._init_
   metadata:
     type: removal
     since: 1.5.0
@@ -815,7 +819,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidSettings.__init__
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidSettings
+  pattern-sinks:
+  - pattern: $SINK.__init__
   metadata:
     type: removal
     since: 1.5.0
@@ -826,7 +834,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidSettings.column
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidSettings
+  pattern-sinks:
+  - pattern: $SINK.column
   metadata:
     type: removal
     since: 1.5.0
@@ -837,7 +849,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidSettings.details
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidSettings
+  pattern-sinks:
+  - pattern: $SINK.details
   metadata:
     type: removal
     since: 1.5.0
@@ -848,7 +864,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidSettings.line
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidSettings
+  pattern-sinks:
+  - pattern: $SINK.line
   metadata:
     type: removal
     since: 1.5.0
@@ -859,7 +879,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidSettings.message
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidSettings
+  pattern-sinks:
+  - pattern: $SINK.message
   metadata:
     type: removal
     since: 1.5.0
@@ -870,7 +894,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom.STATE_DETECT_BAUDRATE
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK.STATE_DETECT_BAUDRATE
   metadata:
     type: removal
     since: 1.5.0
@@ -881,7 +909,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._baudrateDetectList
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._baudrateDetectList
   metadata:
     type: removal
     since: 1.5.0
@@ -892,7 +924,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._baudrateDetectRetry
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._baudrateDetectRetry
   metadata:
     type: removal
     since: 1.5.0
@@ -903,7 +939,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._detect_port
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._detect_port
   metadata:
     type: removal
     since: 1.5.0
@@ -914,7 +954,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._openSerial
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._openSerial
   metadata:
     type: removal
     since: 1.5.0
@@ -926,7 +970,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._perform_baudrate_detection_step
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._perform_baudrate_detection_step
   metadata:
     type: removal
     since: 1.5.0
@@ -937,10 +985,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager._enabled
-  - pattern: $X._user_manager._enabled
-  - pattern: userManager._enabled
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK._enabled
   metadata:
     type: removal
     since: 1.5.0
@@ -951,10 +1002,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.disable
-  - pattern: $X._user_manager.disable
-  - pattern: userManager.disable
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.disable
   metadata:
     type: removal
     since: 1.5.0
@@ -965,10 +1019,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.enable
-  - pattern: $X._user_manager.enable
-  - pattern: userManager.enable
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.enable
   metadata:
     type: removal
     since: 1.5.0
@@ -980,7 +1037,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: PrinterStateConnection._baseRateLimit
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterStateConnection
+  pattern-sinks:
+  - pattern: $SINK._baseRateLimit
   metadata:
     type: removal
     since: 1.5.0
@@ -992,7 +1053,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: PrinterStateConnection._lastCurrent
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterStateConnection
+  pattern-sinks:
+  - pattern: $SINK._lastCurrent
   metadata:
     type: removal
     since: 1.5.0
@@ -1004,7 +1069,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: PrinterStateConnection._throttleFactor
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterStateConnection
+  pattern-sinks:
+  - pattern: $SINK._throttleFactor
   metadata:
     type: removal
     since: 1.5.0
@@ -1016,7 +1085,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: SerialLogHandler.on_open_connection
+  mode: taint
+  pattern-sources:
+  - pattern: SerialLogHandler
+  pattern-sinks:
+  - pattern: $SINK.on_open_connection
   metadata:
     type: removal
     since: 1.5.0
@@ -1027,7 +1100,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: DiscoveryPlugin._cnames
+  mode: taint
+  pattern-sources:
+  - pattern: DiscoveryPlugin
+  pattern-sinks:
+  - pattern: $SINK._cnames
   metadata:
     type: removal
     since: 1.5.0
@@ -1038,7 +1115,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: DiscoveryPlugin._sd_refs
+  mode: taint
+  pattern-sources:
+  - pattern: DiscoveryPlugin
+  pattern-sinks:
+  - pattern: $SINK._sd_refs
   metadata:
     type: removal
     since: 1.5.0
@@ -1050,7 +1131,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: PluginManagerPlugin.upload_archive
+  mode: taint
+  pattern-sources:
+  - pattern: PluginManagerPlugin
+  pattern-sinks:
+  - pattern: $SINK.upload_archive
   metadata:
     type: removal
     since: 1.5.0
@@ -1544,11 +1629,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_implementations
-  - pattern: $X._plugin_info.attr_implementations
-  - pattern: plugin_info.attr_implementations
-  - pattern: plugin.attr_implementations
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_implementations
   metadata:
     type: removal
     since: 1.6.0
@@ -1559,11 +1647,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_init
-  - pattern: $X._plugin_info.attr_init
-  - pattern: plugin_info.attr_init
-  - pattern: plugin.attr_init
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_init
   metadata:
     type: removal
     since: 1.6.0
@@ -1574,7 +1665,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: gcode.layerList
+  mode: taint
+  pattern-sources:
+  - pattern: gcode
+  pattern-sinks:
+  - pattern: $SINK.layerList
   metadata:
     type: removal
     since: 1.6.0
@@ -1585,7 +1680,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._SLUGIFY
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._SLUGIFY
   metadata:
     type: removal
     since: 1.6.0
@@ -1597,7 +1696,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._UNICODE_VARIATIONS
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._UNICODE_VARIATIONS
   metadata:
     type: removal
     since: 1.6.0
@@ -1609,7 +1712,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._no_unicode_variations
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._no_unicode_variations
   metadata:
     type: removal
     since: 1.6.0
@@ -1620,7 +1727,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._slugify
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._slugify
   metadata:
     type: removal
     since: 1.6.0
@@ -1632,7 +1743,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AnnouncementPlugin._slugify
+  mode: taint
+  pattern-sources:
+  - pattern: AnnouncementPlugin
+  pattern-sinks:
+  - pattern: $SINK._slugify
   metadata:
     type: removal
     since: 1.6.0
@@ -1644,7 +1759,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: SoftwareUpdatePlugin.storage_info
+  mode: taint
+  pattern-sources:
+  - pattern: SoftwareUpdatePlugin
+  pattern-sinks:
+  - pattern: $SINK.storage_info
   metadata:
     type: removal
     since: 1.6.0
@@ -1669,11 +1788,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_author
-  - pattern: $X._plugin_info.attr_author
-  - pattern: plugin_info.attr_author
-  - pattern: plugin.attr_author
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_author
   metadata:
     type: removal
     since: 1.7.0
@@ -1684,11 +1806,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_check
-  - pattern: $X._plugin_info.attr_check
-  - pattern: plugin_info.attr_check
-  - pattern: plugin.attr_check
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_check
   metadata:
     type: removal
     since: 1.7.0
@@ -1699,11 +1824,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_description
-  - pattern: $X._plugin_info.attr_description
-  - pattern: plugin_info.attr_description
-  - pattern: plugin.attr_description
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_description
   metadata:
     type: removal
     since: 1.7.0
@@ -1714,11 +1842,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_disable
-  - pattern: $X._plugin_info.attr_disable
-  - pattern: plugin_info.attr_disable
-  - pattern: plugin.attr_disable
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_disable
   metadata:
     type: removal
     since: 1.7.0
@@ -1730,11 +1861,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_disabling_discouraged
-  - pattern: $X._plugin_info.attr_disabling_discouraged
-  - pattern: plugin_info.attr_disabling_discouraged
-  - pattern: plugin.attr_disabling_discouraged
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_disabling_discouraged
   metadata:
     type: removal
     since: 1.7.0
@@ -1745,11 +1879,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_enable
-  - pattern: $X._plugin_info.attr_enable
-  - pattern: plugin_info.attr_enable
-  - pattern: plugin.attr_enable
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_enable
   metadata:
     type: removal
     since: 1.7.0
@@ -1760,11 +1897,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_helpers
-  - pattern: $X._plugin_info.attr_helpers
-  - pattern: plugin_info.attr_helpers
-  - pattern: plugin.attr_helpers
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_helpers
   metadata:
     type: removal
     since: 1.7.0
@@ -1775,11 +1915,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_hidden
-  - pattern: $X._plugin_info.attr_hidden
-  - pattern: plugin_info.attr_hidden
-  - pattern: plugin.attr_hidden
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_hidden
   metadata:
     type: removal
     since: 1.7.0
@@ -1790,11 +1933,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_hooks
-  - pattern: $X._plugin_info.attr_hooks
-  - pattern: plugin_info.attr_hooks
-  - pattern: plugin.attr_hooks
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_hooks
   metadata:
     type: removal
     since: 1.7.0
@@ -1805,11 +1951,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_implementation
-  - pattern: $X._plugin_info.attr_implementation
-  - pattern: plugin_info.attr_implementation
-  - pattern: plugin.attr_implementation
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_implementation
   metadata:
     type: removal
     since: 1.7.0
@@ -1820,11 +1969,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_license
-  - pattern: $X._plugin_info.attr_license
-  - pattern: plugin_info.attr_license
-  - pattern: plugin.attr_license
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_license
   metadata:
     type: removal
     since: 1.7.0
@@ -1835,11 +1987,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_load
-  - pattern: $X._plugin_info.attr_load
-  - pattern: plugin_info.attr_load
-  - pattern: plugin.attr_load
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_load
   metadata:
     type: removal
     since: 1.7.0
@@ -1850,11 +2005,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_name
-  - pattern: $X._plugin_info.attr_name
-  - pattern: plugin_info.attr_name
-  - pattern: plugin.attr_name
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_name
   metadata:
     type: removal
     since: 1.7.0
@@ -1865,11 +2023,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_pythoncompat
-  - pattern: $X._plugin_info.attr_pythoncompat
-  - pattern: plugin_info.attr_pythoncompat
-  - pattern: plugin.attr_pythoncompat
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_pythoncompat
   metadata:
     type: removal
     since: 1.7.0
@@ -1880,11 +2041,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_unload
-  - pattern: $X._plugin_info.attr_unload
-  - pattern: plugin_info.attr_unload
-  - pattern: plugin.attr_unload
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_unload
   metadata:
     type: removal
     since: 1.7.0
@@ -1895,11 +2059,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_url
-  - pattern: $X._plugin_info.attr_url
-  - pattern: plugin_info.attr_url
-  - pattern: plugin.attr_url
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_url
   metadata:
     type: removal
     since: 1.7.0
@@ -1910,11 +2077,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginInfo.attr_version
-  - pattern: $X._plugin_info.attr_version
-  - pattern: plugin_info.attr_version
-  - pattern: plugin.attr_version
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.attr_version
   metadata:
     type: removal
     since: 1.7.0
@@ -1925,7 +2095,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: settings()._validate_config
+  mode: taint
+  pattern-sources:
+  - pattern: settings()
+  pattern-sinks:
+  - pattern: $SINK._validate_config
   metadata:
     type: removal
     since: 1.7.0
@@ -2243,7 +2417,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Server._template_searchpaths
+  mode: taint
+  pattern-sources:
+  - pattern: Server
+  pattern-sinks:
+  - pattern: $SINK._template_searchpaths
   metadata:
     type: removal
     since: 1.8.0
@@ -2280,7 +2458,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: HierarchicalChainMap._get_next
+  mode: taint
+  pattern-sources:
+  - pattern: HierarchicalChainMap
+  pattern-sinks:
+  - pattern: $SINK._get_next
   metadata:
     type: removal
     since: 1.8.0
@@ -2292,7 +2474,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: HierarchicalChainMap._hierarchy_for_key
+  mode: taint
+  pattern-sources:
+  - pattern: HierarchicalChainMap
+  pattern-sinks:
+  - pattern: $SINK._hierarchy_for_key
   metadata:
     type: removal
     since: 1.8.0
@@ -2303,7 +2489,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: settings()._overlay_maps
+  mode: taint
+  pattern-sources:
+  - pattern: settings()
+  pattern-sinks:
+  - pattern: $SINK._overlay_maps
   metadata:
     type: removal
     since: 1.8.0
@@ -3629,11 +3819,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._bedTemp
-  - pattern: PrinterMixin._bedTemp
-  - pattern: $X._printer._bedTemp
-  - pattern: printer._bedTemp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._bedTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3644,11 +3837,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._chamberTemp
-  - pattern: PrinterMixin._chamberTemp
-  - pattern: $X._printer._chamberTemp
-  - pattern: printer._chamberTemp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._chamberTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3659,11 +3855,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._logBacklog
-  - pattern: PrinterMixin._logBacklog
-  - pattern: $X._printer._logBacklog
-  - pattern: printer._logBacklog
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._logBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -3674,11 +3873,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._messageBacklog
-  - pattern: PrinterMixin._messageBacklog
-  - pattern: $X._printer._messageBacklog
-  - pattern: printer._messageBacklog
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._messageBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -3689,11 +3891,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._targetBedTemp
-  - pattern: PrinterMixin._targetBedTemp
-  - pattern: $X._printer._targetBedTemp
-  - pattern: printer._targetBedTemp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._targetBedTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3704,11 +3909,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._targetChamberTemp
-  - pattern: PrinterMixin._targetChamberTemp
-  - pattern: $X._printer._targetChamberTemp
-  - pattern: printer._targetChamberTemp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._targetChamberTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3719,11 +3927,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._targetTemp
-  - pattern: PrinterMixin._targetTemp
-  - pattern: $X._printer._targetTemp
-  - pattern: printer._targetTemp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._targetTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3734,11 +3945,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._temp
-  - pattern: PrinterMixin._temp
-  - pattern: $X._printer._temp
-  - pattern: printer._temp
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._temp
   metadata:
     type: removal
     since: 1.8.0
@@ -3749,11 +3963,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._tempBacklog
-  - pattern: PrinterMixin._tempBacklog
-  - pattern: $X._printer._tempBacklog
-  - pattern: printer._tempBacklog
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._tempBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -3765,7 +3982,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: SoftwareUpdatePlugin._get_restart_command
+  mode: taint
+  pattern-sources:
+  - pattern: SoftwareUpdatePlugin
+  pattern-sinks:
+  - pattern: $SINK._get_restart_command
   metadata:
     type: removal
     since: 1.8.0
@@ -3933,7 +4154,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Timelapse._snapshot_timeout
+  mode: taint
+  pattern-sources:
+  - pattern: Timelapse
+  pattern-sinks:
+  - pattern: $SINK._snapshot_timeout
   metadata:
     type: removal
     since: 1.9.0
@@ -3944,7 +4169,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Timelapse._snapshot_url
+  mode: taint
+  pattern-sources:
+  - pattern: Timelapse
+  pattern-sinks:
+  - pattern: $SINK._snapshot_url
   metadata:
     type: removal
     since: 1.9.0
@@ -3955,7 +4184,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Timelapse._snapshot_validate_ssl
+  mode: taint
+  pattern-sources:
+  - pattern: Timelapse
+  pattern-sinks:
+  - pattern: $SINK._snapshot_validate_ssl
   metadata:
     type: removal
     since: 1.9.0
@@ -3966,7 +4199,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._sdFilesMap
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._sdFilesMap
   metadata:
     type: removal
     since: 1.9.0
@@ -3978,9 +4215,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: ConnectivityChecker.log_change_report
-  - pattern: $X._connectivity_checker.log_change_report
+  mode: taint
+  pattern-sources:
+  - pattern: ConnectivityChecker
+  - pattern: $X._connectivity_checker
+  pattern-sinks:
+  - pattern: $SINK.log_change_report
   metadata:
     type: removal
     since: 1.9.0
@@ -3991,7 +4231,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: gcode._minMax
+  mode: taint
+  pattern-sources:
+  - pattern: gcode
+  pattern-sinks:
+  - pattern: $SINK._minMax
   metadata:
     type: removal
     since: 1.9.0
@@ -4002,10 +4246,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.createPasswordHash
-  - pattern: $X._user_manager.createPasswordHash
-  - pattern: userManager.createPasswordHash
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.createPasswordHash
   metadata:
     type: removal
     since: 1.9.0
@@ -4016,7 +4263,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StorageError.message
+  mode: taint
+  pattern-sources:
+  - pattern: StorageError
+  pattern-sinks:
+  - pattern: $SINK.message
   metadata:
     type: removal
     since: 1.9.0
@@ -4027,11 +4278,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sdFilelistAvailable
-  - pattern: PrinterMixin._sdFilelistAvailable
-  - pattern: $X._printer._sdFilelistAvailable
-  - pattern: printer._sdFilelistAvailable
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sdFilelistAvailable
   metadata:
     type: removal
     since: 1.9.0
@@ -4042,11 +4296,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.add_marking
-  - pattern: PrinterMixin.add_marking
-  - pattern: $X._printer.add_marking
-  - pattern: printer.add_marking
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.add_marking
   metadata:
     type: removal
     since: 1.9.0
@@ -4057,7 +4314,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: BackupPlugin._in_progress
+  mode: taint
+  pattern-sources:
+  - pattern: BackupPlugin
+  pattern-sinks:
+  - pattern: $SINK._in_progress
   metadata:
     type: removal
     since: 1.9.0
@@ -4068,7 +4329,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: BackupPlugin._in_progress_lock
+  mode: taint
+  pattern-sources:
+  - pattern: BackupPlugin
+  pattern-sinks:
+  - pattern: $SINK._in_progress_lock
   metadata:
     type: removal
     since: 1.9.0
@@ -4431,7 +4696,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: VirtualPrinter._triggerResendAt100
+  mode: taint
+  pattern-sources:
+  - pattern: VirtualPrinter
+  pattern-sinks:
+  - pattern: $SINK._triggerResendAt100
   metadata:
     type: removal
     since: 1.10.0
@@ -4443,7 +4712,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: VirtualPrinter._triggerResendWithChecksumMismatchAt115
+  mode: taint
+  pattern-sources:
+  - pattern: VirtualPrinter
+  pattern-sinks:
+  - pattern: $SINK._triggerResendWithChecksumMismatchAt115
   metadata:
     type: removal
     since: 1.10.0
@@ -4455,7 +4728,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: VirtualPrinter._triggerResendWithMissingLinenoAt110
+  mode: taint
+  pattern-sources:
+  - pattern: VirtualPrinter
+  pattern-sinks:
+  - pattern: $SINK._triggerResendWithMissingLinenoAt110
   metadata:
     type: removal
     since: 1.10.0
@@ -4467,7 +4744,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: VirtualPrinter._triggerResendWithTimeoutAt105
+  mode: taint
+  pattern-sources:
+  - pattern: VirtualPrinter
+  pattern-sinks:
+  - pattern: $SINK._triggerResendWithTimeoutAt105
   metadata:
     type: removal
     since: 1.10.0
@@ -4492,7 +4773,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ServerConfig.incompleteStartup
+  mode: taint
+  pattern-sources:
+  - pattern: ServerConfig
+  pattern-sinks:
+  - pattern: $SINK.incompleteStartup
   metadata:
     type: removal
     since: 1.10.0
@@ -4572,7 +4857,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Server._setup_app
+  mode: taint
+  pattern-sources:
+  - pattern: Server
+  pattern-sinks:
+  - pattern: $SINK._setup_app
   metadata:
     type: removal
     since: 1.11.0
@@ -4703,7 +4992,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._knownInvalidTools
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._knownInvalidTools
   metadata:
     type: removal
     since: 1.11.0
@@ -5133,7 +5426,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ReverseProxyConfig.trustedDownstream
+  mode: taint
+  pattern-sources:
+  - pattern: ReverseProxyConfig
+  pattern-sinks:
+  - pattern: $SINK.trustedDownstream
   metadata:
     type: removal
     since: 1.11.0
@@ -5144,7 +5441,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidYaml.column
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidYaml
+  pattern-sinks:
+  - pattern: $SINK.column
   metadata:
     type: removal
     since: 1.11.0
@@ -5155,7 +5456,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidYaml.details
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidYaml
+  pattern-sinks:
+  - pattern: $SINK.details
   metadata:
     type: removal
     since: 1.11.0
@@ -5166,7 +5471,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: InvalidYaml.line
+  mode: taint
+  pattern-sources:
+  - pattern: InvalidYaml
+  pattern-sinks:
+  - pattern: $SINK.line
   metadata:
     type: removal
     since: 1.11.0
@@ -5178,7 +5487,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ErrorTrackingPlugin.get_api_commands
+  mode: taint
+  pattern-sources:
+  - pattern: ErrorTrackingPlugin
+  pattern-sinks:
+  - pattern: $SINK.get_api_commands
   metadata:
     type: removal
     since: 1.11.0
@@ -5190,7 +5503,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ErrorTrackingPlugin.is_api_adminonly
+  mode: taint
+  pattern-sources:
+  - pattern: ErrorTrackingPlugin
+  pattern-sinks:
+  - pattern: $SINK.is_api_adminonly
   metadata:
     type: removal
     since: 1.11.0
@@ -5201,7 +5518,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ErrorTrackingPlugin.on_api_command
+  mode: taint
+  pattern-sources:
+  - pattern: ErrorTrackingPlugin
+  pattern-sinks:
+  - pattern: $SINK.on_api_command
   metadata:
     type: removal
     since: 1.11.0
@@ -5213,7 +5534,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ErrorTrackingPlugin.on_api_get
+  mode: taint
+  pattern-sources:
+  - pattern: ErrorTrackingPlugin
+  pattern-sinks:
+  - pattern: $SINK.on_api_get
   metadata:
     type: removal
     since: 1.11.0
@@ -5224,7 +5549,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: CommandTrigger._executeGcodeCommand
+  mode: taint
+  pattern-sources:
+  - pattern: CommandTrigger
+  pattern-sinks:
+  - pattern: $SINK._executeGcodeCommand
   metadata:
     type: removal
     since: 1.11.7
@@ -5235,7 +5564,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: CommandTrigger._executeSystemCommand
+  mode: taint
+  pattern-sources:
+  - pattern: CommandTrigger
+  pattern-sinks:
+  - pattern: $SINK._executeSystemCommand
   metadata:
     type: removal
     since: 1.11.7
@@ -5246,7 +5579,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: CommandTrigger._initSubscriptions
+  mode: taint
+  pattern-sources:
+  - pattern: CommandTrigger
+  pattern-sinks:
+  - pattern: $SINK._initSubscriptions
   metadata:
     type: removal
     since: 1.11.7
@@ -5257,7 +5594,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: CommandTrigger._processCommand
+  mode: taint
+  pattern-sources:
+  - pattern: CommandTrigger
+  pattern-sinks:
+  - pattern: $SINK._processCommand
   metadata:
     type: removal
     since: 1.11.7
@@ -5268,7 +5609,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: CommandTrigger.executeCommand
+  mode: taint
+  pattern-sources:
+  - pattern: CommandTrigger
+  pattern-sinks:
+  - pattern: $SINK.executeCommand
   metadata:
     type: removal
     since: 1.11.7
@@ -5280,7 +5625,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AchievementsPlugin.get_api_commands
+  mode: taint
+  pattern-sources:
+  - pattern: AchievementsPlugin
+  pattern-sinks:
+  - pattern: $SINK.get_api_commands
   metadata:
     type: removal
     since: 1.11.7
@@ -5292,7 +5641,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AchievementsPlugin.is_api_adminonly
+  mode: taint
+  pattern-sources:
+  - pattern: AchievementsPlugin
+  pattern-sinks:
+  - pattern: $SINK.is_api_adminonly
   metadata:
     type: removal
     since: 1.11.7
@@ -5303,7 +5656,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AchievementsPlugin.on_api_command
+  mode: taint
+  pattern-sources:
+  - pattern: AchievementsPlugin
+  pattern-sinks:
+  - pattern: $SINK.on_api_command
   metadata:
     type: removal
     since: 1.11.7
@@ -5314,7 +5671,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AchievementsPlugin.on_api_get
+  mode: taint
+  pattern-sources:
+  - pattern: AchievementsPlugin
+  pattern-sinks:
+  - pattern: $SINK.on_api_get
   metadata:
     type: removal
     since: 1.11.7
@@ -5407,9 +5768,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginSettings.get_plugin_data_folder
-  - pattern: $X._settings.get_plugin_data_folder
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.get_plugin_data_folder
   metadata:
     type: removal
     since: 2.0.0
@@ -5421,11 +5785,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginManager._is_plugin_blacklisted
-  - pattern: $X._plugin_manager._is_plugin_blacklisted
-  - pattern: pluginManager._is_plugin_blacklisted
-  - pattern: plugin_manager()._is_plugin_blacklisted
+  mode: taint
+  pattern-sources:
+  - pattern: PluginManager
+  - pattern: $X._plugin_manager
+  - pattern: pluginManager
+  - pattern: plugin_manager()
+  pattern-sinks:
+  - pattern: $SINK._is_plugin_blacklisted
   metadata:
     type: removal
     since: 2.0.0
@@ -5437,11 +5804,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginManager._is_plugin_version_blacklisted
-  - pattern: $X._plugin_manager._is_plugin_version_blacklisted
-  - pattern: pluginManager._is_plugin_version_blacklisted
-  - pattern: plugin_manager()._is_plugin_version_blacklisted
+  mode: taint
+  pattern-sources:
+  - pattern: PluginManager
+  - pattern: $X._plugin_manager
+  - pattern: pluginManager
+  - pattern: plugin_manager()
+  pattern-sinks:
+  - pattern: $SINK._is_plugin_version_blacklisted
   metadata:
     type: removal
     since: 2.0.0
@@ -5452,11 +5822,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PluginManager.plugin_blacklist
-  - pattern: $X._plugin_manager.plugin_blacklist
-  - pattern: pluginManager.plugin_blacklist
-  - pattern: plugin_manager().plugin_blacklist
+  mode: taint
+  pattern-sources:
+  - pattern: PluginManager
+  - pattern: $X._plugin_manager
+  - pattern: pluginManager
+  - pattern: plugin_manager()
+  pattern-sinks:
+  - pattern: $SINK.plugin_blacklist
   metadata:
     type: removal
     since: 2.0.0
@@ -5522,7 +5895,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor._get_current_resends
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK._get_current_resends
   metadata:
     type: removal
     since: 2.0.0
@@ -5533,7 +5910,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor._on_get_resends
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK._on_get_resends
   metadata:
     type: removal
     since: 2.0.0
@@ -5544,7 +5925,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor._resends
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK._resends
   metadata:
     type: removal
     since: 2.0.0
@@ -5555,7 +5940,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor._resends_dirty
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK._resends_dirty
   metadata:
     type: removal
     since: 2.0.0
@@ -5566,7 +5955,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor._resends_lock
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK._resends_lock
   metadata:
     type: removal
     since: 2.0.0
@@ -5577,7 +5970,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StateMonitor.set_resends
+  mode: taint
+  pattern-sources:
+  - pattern: StateMonitor
+  pattern-sinks:
+  - pattern: $SINK.set_resends
   metadata:
     type: removal
     since: 2.0.0
@@ -5800,7 +6197,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Server._start_serial_autoconnect
+  mode: taint
+  pattern-sources:
+  - pattern: Server
+  pattern-sinks:
+  - pattern: $SINK._start_serial_autoconnect
   metadata:
     type: removal
     since: 2.0.0
@@ -5811,7 +6212,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Server._start_serial_autorefresh
+  mode: taint
+  pattern-sources:
+  - pattern: Server
+  pattern-sinks:
+  - pattern: $SINK._start_serial_autorefresh
   metadata:
     type: removal
     since: 2.0.0
@@ -6113,7 +6518,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: settings()._config
+  mode: taint
+  pattern-sources:
+  - pattern: settings()
+  pattern-sinks:
+  - pattern: $SINK._config
   metadata:
     type: removal
     since: 2.0.0
@@ -6348,7 +6757,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._alwaysSendChecksum
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._alwaysSendChecksum
   metadata:
     type: removal
     since: 2.0.0
@@ -6359,7 +6772,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._disconnect_on_errors
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._disconnect_on_errors
   metadata:
     type: removal
     since: 2.0.0
@@ -6370,7 +6787,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._error_faqs
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._error_faqs
   metadata:
     type: removal
     since: 2.0.0
@@ -6381,7 +6802,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._get_free_remote_name
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._get_free_remote_name
   metadata:
     type: removal
     since: 2.0.0
@@ -6392,7 +6817,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._ignore_errors
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._ignore_errors
   metadata:
     type: removal
     since: 2.0.0
@@ -6403,7 +6832,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._neverSendChecksum
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._neverSendChecksum
   metadata:
     type: removal
     since: 2.0.0
@@ -6414,7 +6847,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._printerProfileManager
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._printerProfileManager
   metadata:
     type: removal
     since: 2.0.0
@@ -6426,7 +6863,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._sendChecksumWithUnknownCommands
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._sendChecksumWithUnknownCommands
   metadata:
     type: removal
     since: 2.0.0
@@ -6437,7 +6878,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._serialLogger
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._serialLogger
   metadata:
     type: removal
     since: 2.0.0
@@ -6448,7 +6893,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineCom._unknownCommandsNeedAck
+  mode: taint
+  pattern-sources:
+  - pattern: MachineCom
+  pattern-sinks:
+  - pattern: $SINK._unknownCommandsNeedAck
   metadata:
     type: removal
     since: 2.0.0
@@ -6460,7 +6909,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: MachineComPrintCallback.on_comm_z_change
+  mode: taint
+  pattern-sources:
+  - pattern: MachineComPrintCallback
+  pattern-sinks:
+  - pattern: $SINK.on_comm_z_change
   metadata:
     type: removal
     since: 2.0.0
@@ -6721,9 +7174,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.get_session
-  - pattern: user.get_session
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK.get_session
   metadata:
     type: removal
     since: 2.0.0
@@ -6734,9 +7190,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user._roles
-  - pattern: user._roles
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK._roles
   metadata:
     type: removal
     since: 2.0.0
@@ -6748,9 +7207,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.asDict
-  - pattern: user.asDict
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK.asDict
   metadata:
     type: removal
     since: 2.0.0
@@ -6762,9 +7224,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.is_admin
-  - pattern: user.is_admin
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK.is_admin
   metadata:
     type: removal
     since: 2.0.0
@@ -6776,9 +7241,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.is_user
-  - pattern: user.is_user
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK.is_user
   metadata:
     type: removal
     since: 2.0.0
@@ -6790,9 +7258,12 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: current_user.roles
-  - pattern: user.roles
+  mode: taint
+  pattern-sources:
+  - pattern: current_user
+  - pattern: user
+  pattern-sinks:
+  - pattern: $SINK.roles
   metadata:
     type: removal
     since: 2.0.0
@@ -6804,10 +7275,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.addRolesToUser
-  - pattern: $X._user_manager.addRolesToUser
-  - pattern: userManager.addRolesToUser
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.addRolesToUser
   metadata:
     type: removal
     since: 2.0.0
@@ -6819,10 +7293,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.addUser
-  - pattern: $X._user_manager.addUser
-  - pattern: userManager.addUser
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.addUser
   metadata:
     type: removal
     since: 2.0.0
@@ -6834,10 +7311,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.changeUserActivation
-  - pattern: $X._user_manager.changeUserActivation
-  - pattern: userManager.changeUserActivation
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.changeUserActivation
   metadata:
     type: removal
     since: 2.0.0
@@ -6849,10 +7329,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.changeUserPassword
-  - pattern: $X._user_manager.changeUserPassword
-  - pattern: userManager.changeUserPassword
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.changeUserPassword
   metadata:
     type: removal
     since: 2.0.0
@@ -6864,10 +7347,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.changeUserRoles
-  - pattern: $X._user_manager.changeUserRoles
-  - pattern: userManager.changeUserRoles
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.changeUserRoles
   metadata:
     type: removal
     since: 2.0.0
@@ -6879,10 +7365,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.changeUserSetting
-  - pattern: $X._user_manager.changeUserSetting
-  - pattern: userManager.changeUserSetting
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.changeUserSetting
   metadata:
     type: removal
     since: 2.0.0
@@ -6894,10 +7383,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.changeUserSettings
-  - pattern: $X._user_manager.changeUserSettings
-  - pattern: userManager.changeUserSettings
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.changeUserSettings
   metadata:
     type: removal
     since: 2.0.0
@@ -6909,10 +7401,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.checkPassword
-  - pattern: $X._user_manager.checkPassword
-  - pattern: userManager.checkPassword
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.checkPassword
   metadata:
     type: removal
     since: 2.0.0
@@ -6924,10 +7419,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.findUser
-  - pattern: $X._user_manager.findUser
-  - pattern: userManager.findUser
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.findUser
   metadata:
     type: removal
     since: 2.0.0
@@ -6939,10 +7437,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.getAllUserSettings
-  - pattern: $X._user_manager.getAllUserSettings
-  - pattern: userManager.getAllUserSettings
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.getAllUserSettings
   metadata:
     type: removal
     since: 2.0.0
@@ -6954,10 +7455,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.getAllUsers
-  - pattern: $X._user_manager.getAllUsers
-  - pattern: userManager.getAllUsers
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.getAllUsers
   metadata:
     type: removal
     since: 2.0.0
@@ -6969,10 +7473,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.getUserSetting
-  - pattern: $X._user_manager.getUserSetting
-  - pattern: userManager.getUserSetting
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.getUserSetting
   metadata:
     type: removal
     since: 2.0.0
@@ -6984,10 +7491,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.hasBeenCustomized
-  - pattern: $X._user_manager.hasBeenCustomized
-  - pattern: userManager.hasBeenCustomized
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.hasBeenCustomized
   metadata:
     type: removal
     since: 2.0.0
@@ -6999,10 +7509,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.removeRolesFromUser
-  - pattern: $X._user_manager.removeRolesFromUser
-  - pattern: userManager.removeRolesFromUser
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.removeRolesFromUser
   metadata:
     type: removal
     since: 2.0.0
@@ -7014,10 +7527,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.removeUser
-  - pattern: $X._user_manager.removeUser
-  - pattern: userManager.removeUser
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.removeUser
   metadata:
     type: removal
     since: 2.0.0
@@ -7028,7 +7544,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._add_links
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._add_links
   metadata:
     type: removal
     since: 2.0.0
@@ -7040,7 +7560,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._create_hash
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._create_hash
   metadata:
     type: removal
     since: 2.0.0
@@ -7051,7 +7575,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._get_links
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._get_links
   metadata:
     type: removal
     since: 2.0.0
@@ -7063,7 +7591,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage._remove_links
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK._remove_links
   metadata:
     type: removal
     since: 2.0.0
@@ -7074,7 +7606,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: LocalFileStorage.get_link
+  mode: taint
+  pattern-sources:
+  - pattern: LocalFileStorage
+  pattern-sinks:
+  - pattern: $SINK.get_link
   metadata:
     type: removal
     since: 2.0.0
@@ -7086,10 +7622,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager._migrate_roles_to_groups
-  - pattern: $X._user_manager._migrate_roles_to_groups
-  - pattern: userManager._migrate_roles_to_groups
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK._migrate_roles_to_groups
   metadata:
     type: removal
     since: 2.0.0
@@ -7101,10 +7640,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.deleteApiKey
-  - pattern: $X._user_manager.deleteApiKey
-  - pattern: userManager.deleteApiKey
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.deleteApiKey
   metadata:
     type: removal
     since: 2.0.0
@@ -7116,10 +7658,13 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: UserManager.generateApiKey
-  - pattern: $X._user_manager.generateApiKey
-  - pattern: userManager.generateApiKey
+  mode: taint
+  pattern-sources:
+  - pattern: UserManager
+  - pattern: $X._user_manager
+  - pattern: userManager
+  pattern-sinks:
+  - pattern: $SINK.generateApiKey
   metadata:
     type: removal
     since: 2.0.0
@@ -7130,11 +7675,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._addLog
-  - pattern: PrinterMixin._addLog
-  - pattern: $X._printer._addLog
-  - pattern: printer._addLog
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._addLog
   metadata:
     type: removal
     since: 2.0.0
@@ -7145,11 +7693,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._addMessage
-  - pattern: PrinterMixin._addMessage
-  - pattern: $X._printer._addMessage
-  - pattern: printer._addMessage
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._addMessage
   metadata:
     type: removal
     since: 2.0.0
@@ -7160,11 +7711,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._addTemperatureData
-  - pattern: PrinterMixin._addTemperatureData
-  - pattern: $X._printer._addTemperatureData
-  - pattern: printer._addTemperatureData
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._addTemperatureData
   metadata:
     type: removal
     since: 2.0.0
@@ -7175,11 +7729,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._add_sd_file
-  - pattern: PrinterMixin._add_sd_file
-  - pattern: $X._printer._add_sd_file
-  - pattern: printer._add_sd_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._add_sd_file
   metadata:
     type: removal
     since: 2.0.0
@@ -7190,11 +7747,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._analysisQueue
-  - pattern: PrinterMixin._analysisQueue
-  - pattern: $X._printer._analysisQueue
-  - pattern: printer._analysisQueue
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._analysisQueue
   metadata:
     type: removal
     since: 2.0.0
@@ -7206,11 +7766,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._blacklisted_data_hooks
-  - pattern: PrinterMixin._blacklisted_data_hooks
-  - pattern: $X._printer._blacklisted_data_hooks
-  - pattern: printer._blacklisted_data_hooks
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._blacklisted_data_hooks
   metadata:
     type: removal
     since: 2.0.0
@@ -7221,11 +7784,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._currentZ
-  - pattern: PrinterMixin._currentZ
-  - pattern: $X._printer._currentZ
-  - pattern: printer._currentZ
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._currentZ
   metadata:
     type: removal
     since: 2.0.0
@@ -7236,11 +7802,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._error_info
-  - pattern: PrinterMixin._error_info
-  - pattern: $X._printer._error_info
-  - pattern: printer._error_info
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._error_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7251,11 +7820,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._fileManager
-  - pattern: PrinterMixin._fileManager
-  - pattern: $X._printer._fileManager
-  - pattern: printer._fileManager
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._fileManager
   metadata:
     type: removal
     since: 2.0.0
@@ -7266,11 +7838,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._firmware_info
-  - pattern: PrinterMixin._firmware_info
-  - pattern: $X._printer._firmware_info
-  - pattern: printer._firmware_info
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._firmware_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7281,11 +7856,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._getStateFlags
-  - pattern: PrinterMixin._getStateFlags
-  - pattern: $X._printer._getStateFlags
-  - pattern: printer._getStateFlags
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._getStateFlags
   metadata:
     type: removal
     since: 2.0.0
@@ -7296,11 +7874,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._get_free_remote_name
-  - pattern: PrinterMixin._get_free_remote_name
-  - pattern: $X._printer._get_free_remote_name
-  - pattern: printer._get_free_remote_name
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._get_free_remote_name
   metadata:
     type: removal
     since: 2.0.0
@@ -7311,11 +7892,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._posAfterSelect
-  - pattern: PrinterMixin._posAfterSelect
-  - pattern: $X._printer._posAfterSelect
-  - pattern: printer._posAfterSelect
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._posAfterSelect
   metadata:
     type: removal
     since: 2.0.0
@@ -7326,11 +7910,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._printAfterSelect
-  - pattern: PrinterMixin._printAfterSelect
-  - pattern: $X._printer._printAfterSelect
-  - pattern: printer._printAfterSelect
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._printAfterSelect
   metadata:
     type: removal
     since: 2.0.0
@@ -7341,11 +7928,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._printerProfileManager
-  - pattern: PrinterMixin._printerProfileManager
-  - pattern: $X._printer._printerProfileManager
-  - pattern: printer._printerProfileManager
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._printerProfileManager
   metadata:
     type: removal
     since: 2.0.0
@@ -7357,11 +7947,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._reportPrintProgressToPlugins
-  - pattern: PrinterMixin._reportPrintProgressToPlugins
-  - pattern: $X._printer._reportPrintProgressToPlugins
-  - pattern: printer._reportPrintProgressToPlugins
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._reportPrintProgressToPlugins
   metadata:
     type: removal
     since: 2.0.0
@@ -7372,11 +7965,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._selectedFileMutex
-  - pattern: PrinterMixin._selectedFileMutex
-  - pattern: $X._printer._selectedFileMutex
-  - pattern: printer._selectedFileMutex
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._selectedFileMutex
   metadata:
     type: removal
     since: 2.0.0
@@ -7387,11 +7983,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sendAddLogCallbacks
-  - pattern: PrinterMixin._sendAddLogCallbacks
-  - pattern: $X._printer._sendAddLogCallbacks
-  - pattern: printer._sendAddLogCallbacks
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sendAddLogCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7403,11 +8002,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sendAddMessageCallbacks
-  - pattern: PrinterMixin._sendAddMessageCallbacks
-  - pattern: $X._printer._sendAddMessageCallbacks
-  - pattern: printer._sendAddMessageCallbacks
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sendAddMessageCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7419,11 +8021,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sendAddTemperatureCallbacks
-  - pattern: PrinterMixin._sendAddTemperatureCallbacks
-  - pattern: $X._printer._sendAddTemperatureCallbacks
-  - pattern: printer._sendAddTemperatureCallbacks
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sendAddTemperatureCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7435,11 +8040,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sendCurrentDataCallbacks
-  - pattern: PrinterMixin._sendCurrentDataCallbacks
-  - pattern: $X._printer._sendCurrentDataCallbacks
-  - pattern: printer._sendCurrentDataCallbacks
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sendCurrentDataCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7451,11 +8059,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._sendInitialStateUpdate
-  - pattern: PrinterMixin._sendInitialStateUpdate
-  - pattern: $X._printer._sendInitialStateUpdate
-  - pattern: printer._sendInitialStateUpdate
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._sendInitialStateUpdate
   metadata:
     type: removal
     since: 2.0.0
@@ -7466,11 +8077,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._setCurrentZ
-  - pattern: PrinterMixin._setCurrentZ
-  - pattern: $X._printer._setCurrentZ
-  - pattern: printer._setCurrentZ
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._setCurrentZ
   metadata:
     type: removal
     since: 2.0.0
@@ -7481,11 +8095,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._setJobData
-  - pattern: PrinterMixin._setJobData
-  - pattern: $X._printer._setJobData
-  - pattern: printer._setJobData
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._setJobData
   metadata:
     type: removal
     since: 2.0.0
@@ -7496,11 +8113,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._setOffsets
-  - pattern: PrinterMixin._setOffsets
-  - pattern: $X._printer._setOffsets
-  - pattern: printer._setOffsets
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._setOffsets
   metadata:
     type: removal
     since: 2.0.0
@@ -7511,11 +8131,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._setState
-  - pattern: PrinterMixin._setState
-  - pattern: $X._printer._setState
-  - pattern: printer._setState
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._setState
   metadata:
     type: removal
     since: 2.0.0
@@ -7526,11 +8149,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._updateJobUser
-  - pattern: PrinterMixin._updateJobUser
-  - pattern: $X._printer._updateJobUser
-  - pattern: printer._updateJobUser
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._updateJobUser
   metadata:
     type: removal
     since: 2.0.0
@@ -7541,11 +8167,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._updateProgressData
-  - pattern: PrinterMixin._updateProgressData
-  - pattern: $X._printer._updateProgressData
-  - pattern: printer._updateProgressData
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._updateProgressData
   metadata:
     type: removal
     since: 2.0.0
@@ -7557,11 +8186,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._updateProgressDataCallback
-  - pattern: PrinterMixin._updateProgressDataCallback
-  - pattern: $X._printer._updateProgressDataCallback
-  - pattern: printer._updateProgressDataCallback
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._updateProgressDataCallback
   metadata:
     type: removal
     since: 2.0.0
@@ -7573,11 +8205,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._updateResendDataCallback
-  - pattern: PrinterMixin._updateResendDataCallback
-  - pattern: $X._printer._updateResendDataCallback
-  - pattern: printer._updateResendDataCallback
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._updateResendDataCallback
   metadata:
     type: removal
     since: 2.0.0
@@ -7588,11 +8223,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface._validateJob
-  - pattern: PrinterMixin._validateJob
-  - pattern: $X._printer._validateJob
-  - pattern: printer._validateJob
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._validateJob
   metadata:
     type: removal
     since: 2.0.0
@@ -7603,11 +8241,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.getTransport
-  - pattern: PrinterMixin.getTransport
-  - pattern: $X._printer.getTransport
-  - pattern: printer.getTransport
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.getTransport
   metadata:
     type: removal
     since: 2.0.0
@@ -7618,11 +8259,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_error
-  - pattern: PrinterMixin.on_comm_error
-  - pattern: $X._printer.on_comm_error
-  - pattern: printer.on_comm_error
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_error
   metadata:
     type: removal
     since: 2.0.0
@@ -7633,11 +8277,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_file_selected
-  - pattern: PrinterMixin.on_comm_file_selected
-  - pattern: $X._printer.on_comm_file_selected
-  - pattern: printer.on_comm_file_selected
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_file_selected
   metadata:
     type: removal
     since: 2.0.0
@@ -7649,11 +8296,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_file_transfer_done
-  - pattern: PrinterMixin.on_comm_file_transfer_done
-  - pattern: $X._printer.on_comm_file_transfer_done
-  - pattern: printer.on_comm_file_transfer_done
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_file_transfer_done
   metadata:
     type: removal
     since: 2.0.0
@@ -7665,11 +8315,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_file_transfer_failed
-  - pattern: PrinterMixin.on_comm_file_transfer_failed
-  - pattern: $X._printer.on_comm_file_transfer_failed
-  - pattern: printer.on_comm_file_transfer_failed
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_file_transfer_failed
   metadata:
     type: removal
     since: 2.0.0
@@ -7681,11 +8334,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_file_transfer_started
-  - pattern: PrinterMixin.on_comm_file_transfer_started
-  - pattern: $X._printer.on_comm_file_transfer_started
-  - pattern: printer.on_comm_file_transfer_started
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_file_transfer_started
   metadata:
     type: removal
     since: 2.0.0
@@ -7696,11 +8352,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_firmware_info
-  - pattern: PrinterMixin.on_comm_firmware_info
-  - pattern: $X._printer.on_comm_firmware_info
-  - pattern: printer.on_comm_firmware_info
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_firmware_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7712,11 +8371,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_force_disconnect
-  - pattern: PrinterMixin.on_comm_force_disconnect
-  - pattern: $X._printer.on_comm_force_disconnect
-  - pattern: printer.on_comm_force_disconnect
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_force_disconnect
   metadata:
     type: removal
     since: 2.0.0
@@ -7727,11 +8389,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_log
-  - pattern: PrinterMixin.on_comm_log
-  - pattern: $X._printer.on_comm_log
-  - pattern: printer.on_comm_log
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_log
   metadata:
     type: removal
     since: 2.0.0
@@ -7742,11 +8407,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_message
-  - pattern: PrinterMixin.on_comm_message
-  - pattern: $X._printer.on_comm_message
-  - pattern: printer.on_comm_message
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_message
   metadata:
     type: removal
     since: 2.0.0
@@ -7758,11 +8426,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_position_update
-  - pattern: PrinterMixin.on_comm_position_update
-  - pattern: $X._printer.on_comm_position_update
-  - pattern: printer.on_comm_position_update
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_position_update
   metadata:
     type: removal
     since: 2.0.0
@@ -7774,11 +8445,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_cancelled
-  - pattern: PrinterMixin.on_comm_print_job_cancelled
-  - pattern: $X._printer.on_comm_print_job_cancelled
-  - pattern: printer.on_comm_print_job_cancelled
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_cancelled
   metadata:
     type: removal
     since: 2.0.0
@@ -7790,11 +8464,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_cancelling
-  - pattern: PrinterMixin.on_comm_print_job_cancelling
-  - pattern: $X._printer.on_comm_print_job_cancelling
-  - pattern: printer.on_comm_print_job_cancelling
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_cancelling
   metadata:
     type: removal
     since: 2.0.0
@@ -7805,11 +8482,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_done
-  - pattern: PrinterMixin.on_comm_print_job_done
-  - pattern: $X._printer.on_comm_print_job_done
-  - pattern: printer.on_comm_print_job_done
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_done
   metadata:
     type: removal
     since: 2.0.0
@@ -7821,11 +8501,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_paused
-  - pattern: PrinterMixin.on_comm_print_job_paused
-  - pattern: $X._printer.on_comm_print_job_paused
-  - pattern: printer.on_comm_print_job_paused
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_paused
   metadata:
     type: removal
     since: 2.0.0
@@ -7837,11 +8520,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_resumed
-  - pattern: PrinterMixin.on_comm_print_job_resumed
-  - pattern: $X._printer.on_comm_print_job_resumed
-  - pattern: printer.on_comm_print_job_resumed
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_resumed
   metadata:
     type: removal
     since: 2.0.0
@@ -7853,11 +8539,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_started
-  - pattern: PrinterMixin.on_comm_print_job_started
-  - pattern: $X._printer.on_comm_print_job_started
-  - pattern: printer.on_comm_print_job_started
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_started
   metadata:
     type: removal
     since: 2.0.0
@@ -7868,11 +8557,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_progress
-  - pattern: PrinterMixin.on_comm_progress
-  - pattern: $X._printer.on_comm_progress
-  - pattern: printer.on_comm_progress
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_progress
   metadata:
     type: removal
     since: 2.0.0
@@ -7884,11 +8576,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_record_fileposition
-  - pattern: PrinterMixin.on_comm_record_fileposition
-  - pattern: $X._printer.on_comm_record_fileposition
-  - pattern: printer.on_comm_record_fileposition
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_record_fileposition
   metadata:
     type: removal
     since: 2.0.0
@@ -7899,11 +8594,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_sd_files
-  - pattern: PrinterMixin.on_comm_sd_files
-  - pattern: $X._printer.on_comm_sd_files
-  - pattern: printer.on_comm_sd_files
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_sd_files
   metadata:
     type: removal
     since: 2.0.0
@@ -7915,11 +8613,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_sd_state_change
-  - pattern: PrinterMixin.on_comm_sd_state_change
-  - pattern: $X._printer.on_comm_sd_state_change
-  - pattern: printer.on_comm_sd_state_change
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_sd_state_change
   metadata:
     type: removal
     since: 2.0.0
@@ -7930,11 +8631,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_state_change
-  - pattern: PrinterMixin.on_comm_state_change
-  - pattern: $X._printer.on_comm_state_change
-  - pattern: printer.on_comm_state_change
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_state_change
   metadata:
     type: removal
     since: 2.0.0
@@ -7946,11 +8650,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_temperature_update
-  - pattern: PrinterMixin.on_comm_temperature_update
-  - pattern: $X._printer.on_comm_temperature_update
-  - pattern: printer.on_comm_temperature_update
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_temperature_update
   metadata:
     type: removal
     since: 2.0.0
@@ -7961,11 +8668,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_z_change
-  - pattern: PrinterMixin.on_comm_z_change
-  - pattern: $X._printer.on_comm_z_change
-  - pattern: printer.on_comm_z_change
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_z_change
   metadata:
     type: removal
     since: 2.0.0
@@ -7976,7 +8686,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: Config.serial
+  mode: taint
+  pattern-sources:
+  - pattern: Config
+  pattern-sinks:
+  - pattern: $SINK.serial
   metadata:
     type: removal
     since: 2.0.0
@@ -7988,7 +8702,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: AccessControlConfig.trustRemoteUser
+  mode: taint
+  pattern-sources:
+  - pattern: AccessControlConfig
+  pattern-sinks:
+  - pattern: $SINK.trustRemoteUser
   metadata:
     type: removal
     since: 2.0.0
@@ -8000,7 +8718,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: FeatureConfig.autoUppercaseBlacklist
+  mode: taint
+  pattern-sources:
+  - pattern: FeatureConfig
+  pattern-sinks:
+  - pattern: $SINK.autoUppercaseBlacklist
   metadata:
     type: removal
     since: 2.0.0
@@ -8012,7 +8734,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: ServerConfig.pluginBlacklist
+  mode: taint
+  pattern-sources:
+  - pattern: ServerConfig
+  pattern-sinks:
+  - pattern: $SINK.pluginBlacklist
   metadata:
     type: removal
     since: 2.0.0
@@ -8023,11 +8749,14 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - pattern: PrinterInterface.on_comm_print_job_failed
-  - pattern: PrinterMixin.on_comm_print_job_failed
-  - pattern: $X._printer.on_comm_print_job_failed
-  - pattern: printer.on_comm_print_job_failed
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.on_comm_print_job_failed
   metadata:
     type: removal
     since: 2.0.0
@@ -8039,7 +8768,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StreamingGcodeFileInformation._localFilename
+  mode: taint
+  pattern-sources:
+  - pattern: StreamingGcodeFileInformation
+  pattern-sinks:
+  - pattern: $SINK._localFilename
   metadata:
     type: removal
     since: 2.0.0
@@ -8051,7 +8784,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StreamingGcodeFileInformation._remoteFilename
+  mode: taint
+  pattern-sources:
+  - pattern: StreamingGcodeFileInformation
+  pattern-sinks:
+  - pattern: $SINK._remoteFilename
   metadata:
     type: removal
     since: 2.0.0
@@ -8063,7 +8800,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StreamingGcodeFileInformation.getLocalFilename
+  mode: taint
+  pattern-sources:
+  - pattern: StreamingGcodeFileInformation
+  pattern-sinks:
+  - pattern: $SINK.getLocalFilename
   metadata:
     type: removal
     since: 2.0.0
@@ -8075,7 +8816,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: StreamingGcodeFileInformation.getRemoteFilename
+  mode: taint
+  pattern-sources:
+  - pattern: StreamingGcodeFileInformation
+  pattern-sinks:
+  - pattern: $SINK.getRemoteFilename
   metadata:
     type: removal
     since: 2.0.0
@@ -8087,7 +8832,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: EventManagerPlugin.get_additional_permissions
+  mode: taint
+  pattern-sources:
+  - pattern: EventManagerPlugin
+  pattern-sinks:
+  - pattern: $SINK.get_additional_permissions
   metadata:
     type: removal
     since: 2.0.0
@@ -8099,7 +8848,11 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern: TrackingPlugin._printer_connection_parameters
+  mode: taint
+  pattern-sources:
+  - pattern: TrackingPlugin
+  pattern-sinks:
+  - pattern: $SINK._printer_connection_parameters
   metadata:
     type: removal
     since: 2.0.0

@@ -6,9 +6,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.getInt
-  - pattern: $X._settings.getInt
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.getInt
   metadata:
     type: deprecation
     since: 1.4.0
@@ -19,9 +22,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.getFloat
-  - pattern: $X._settings.getFloat
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.getFloat
   metadata:
     type: deprecation
     since: 1.4.0
@@ -32,9 +38,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.getBoolean
-  - pattern: $X._settings.getBoolean
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.getBoolean
   metadata:
     type: deprecation
     since: 1.4.0
@@ -45,9 +54,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.setInt
-  - pattern: $X._settings.setInt
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.setInt
   metadata:
     type: deprecation
     since: 1.4.0
@@ -58,9 +70,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.setFloat
-  - pattern: $X._settings.setFloat
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.setFloat
   metadata:
     type: deprecation
     since: 1.4.0
@@ -71,9 +86,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginSettings.setBoolean
-  - pattern: $X._settings.setBoolean
+  mode: taint
+  pattern-sources:
+  - pattern: PluginSettings
+  - pattern: $X._settings
+  pattern-sinks:
+  - pattern: $SINK.setBoolean
   metadata:
     type: deprecation
     since: 1.4.0
@@ -112,9 +130,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: FileManager.list_files
-  - pattern: $X._file_manager.list_files
+  mode: taint
+  pattern-sources:
+  - pattern: FileManager
+  - pattern: $X._file_manager
+  pattern-sinks:
+  - pattern: $SINK.list_files
   metadata:
     type: deprecation
     since: 2.0.0
@@ -126,9 +147,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: FileManager.get_file
-  - pattern: $X._file_manager.get_file
+  mode: taint
+  pattern-sources:
+  - pattern: FileManager
+  - pattern: $X._file_manager
+  pattern-sinks:
+  - pattern: $SINK.get_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -140,9 +164,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: FileManager.add_link
-  - pattern: $X._file_manager.add_link
+  mode: taint
+  pattern-sources:
+  - pattern: FileManager
+  - pattern: $X._file_manager
+  pattern-sinks:
+  - pattern: $SINK.add_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -154,9 +181,12 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: FileManager.remove_link
-  - pattern: $X._file_manager.remove_link
+  mode: taint
+  pattern-sources:
+  - pattern: FileManager
+  - pattern: $X._file_manager
+  pattern-sinks:
+  - pattern: $SINK.remove_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -168,7 +198,11 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern: StorageInterface.last_modified
+  mode: taint
+  pattern-sources:
+  - pattern: StorageInterface
+  pattern-sinks:
+  - pattern: $SINK.last_modified
   metadata:
     type: deprecation
     since: 2.0.0
@@ -181,7 +215,11 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern: StorageInterface.get_file
+  mode: taint
+  pattern-sources:
+  - pattern: StorageInterface
+  pattern-sinks:
+  - pattern: $SINK.get_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -194,7 +232,11 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern: StorageInterface.list_files
+  mode: taint
+  pattern-sources:
+  - pattern: StorageInterface
+  pattern-sinks:
+  - pattern: $SINK.list_files
   metadata:
     type: deprecation
     since: 2.0.0
@@ -207,7 +249,11 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern: StorageInterface.add_link
+  mode: taint
+  pattern-sources:
+  - pattern: StorageInterface
+  pattern-sinks:
+  - pattern: $SINK.add_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -219,7 +265,11 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern: StorageInterface.remove_link
+  mode: taint
+  pattern-sources:
+  - pattern: StorageInterface
+  pattern-sinks:
+  - pattern: $SINK.remove_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -231,11 +281,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PluginInfo.blacklisted
-  - pattern: $X._plugin_info.blacklisted
-  - pattern: plugin_info.blacklisted
-  - pattern: plugin.blacklisted
+  mode: taint
+  pattern-sources:
+  - pattern: PluginInfo
+  - pattern: $X._plugin_info
+  - pattern: plugin_info
+  - pattern: plugin
+  pattern-sinks:
+  - pattern: $SINK.blacklisted
   metadata:
     type: deprecation
     since: 2.0.0
@@ -248,11 +301,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.get_connection_options
-  - pattern: PrinterMixin.get_connection_options
-  - pattern: $X._printer.get_connection_options
-  - pattern: printer.get_connection_options
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.get_connection_options
   metadata:
     type: deprecation
     since: 2.0.0
@@ -264,11 +320,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.select_file
-  - pattern: PrinterMixin.select_file
-  - pattern: $X._printer.select_file
-  - pattern: printer.select_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.select_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -280,11 +339,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.unselect_file
-  - pattern: PrinterMixin.unselect_file
-  - pattern: $X._printer.unselect_file
-  - pattern: printer.unselect_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.unselect_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -297,11 +359,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.fake_ack
-  - pattern: PrinterMixin.fake_ack
-  - pattern: $X._printer.fake_ack
-  - pattern: printer.fake_ack
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.fake_ack
   metadata:
     type: deprecation
     since: 2.0.0
@@ -314,11 +379,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.get_transport
-  - pattern: PrinterMixin.get_transport
-  - pattern: $X._printer.get_transport
-  - pattern: printer.get_transport
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.get_transport
   metadata:
     type: deprecation
     since: 2.0.0
@@ -331,11 +399,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface._comm
-  - pattern: PrinterMixin._comm
-  - pattern: $X._printer._comm
-  - pattern: printer._comm
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK._comm
   metadata:
     type: deprecation
     since: 2.0.0
@@ -347,11 +418,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.get_current_connection
-  - pattern: PrinterMixin.get_current_connection
-  - pattern: $X._printer.get_current_connection
-  - pattern: printer.get_current_connection
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.get_current_connection
   metadata:
     type: deprecation
     since: 2.0.0
@@ -363,11 +437,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.is_sd_ready
-  - pattern: PrinterMixin.is_sd_ready
-  - pattern: $X._printer.is_sd_ready
-  - pattern: printer.is_sd_ready
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.is_sd_ready
   metadata:
     type: deprecation
     since: 2.0.0
@@ -379,11 +456,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.init_sd_card
-  - pattern: PrinterMixin.init_sd_card
-  - pattern: $X._printer.init_sd_card
-  - pattern: printer.init_sd_card
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.init_sd_card
   metadata:
     type: deprecation
     since: 2.0.0
@@ -395,11 +475,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.release_sd_card
-  - pattern: PrinterMixin.release_sd_card
-  - pattern: $X._printer.release_sd_card
-  - pattern: printer.release_sd_card
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.release_sd_card
   metadata:
     type: deprecation
     since: 2.0.0
@@ -412,11 +495,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.can_modify_file
-  - pattern: PrinterMixin.can_modify_file
-  - pattern: $X._printer.can_modify_file
-  - pattern: printer.can_modify_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.can_modify_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -428,11 +514,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.is_current_file
-  - pattern: PrinterMixin.is_current_file
-  - pattern: $X._printer.is_current_file
-  - pattern: printer.is_current_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.is_current_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -444,11 +533,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.get_sd_files
-  - pattern: PrinterMixin.get_sd_files
-  - pattern: $X._printer.get_sd_files
-  - pattern: printer.get_sd_files
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.get_sd_files
   metadata:
     type: deprecation
     since: 2.0.0
@@ -460,11 +552,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.add_sd_file
-  - pattern: PrinterMixin.add_sd_file
-  - pattern: $X._printer.add_sd_file
-  - pattern: printer.add_sd_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.add_sd_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -476,11 +571,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.delete_sd_file
-  - pattern: PrinterMixin.delete_sd_file
-  - pattern: $X._printer.delete_sd_file
-  - pattern: printer.delete_sd_file
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.delete_sd_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -492,11 +590,14 @@ rules:
   languages:
   - python
   severity: MEDIUM
-  pattern-either:
-  - pattern: PrinterInterface.refresh_sd_files
-  - pattern: PrinterMixin.refresh_sd_files
-  - pattern: $X._printer.refresh_sd_files
-  - pattern: printer.refresh_sd_files
+  mode: taint
+  pattern-sources:
+  - pattern: PrinterInterface
+  - pattern: PrinterMixin
+  - pattern: $X._printer
+  - pattern: printer
+  pattern-sinks:
+  - pattern: $SINK.refresh_sd_files
   metadata:
     type: deprecation
     since: 2.0.0

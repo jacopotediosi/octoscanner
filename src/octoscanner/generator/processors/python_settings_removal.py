@@ -33,7 +33,7 @@ _PLUGIN_SETTINGS_GLOBAL_METHODS = [
     "global_set_int",
 ]
 
-_PLUGIN_SETTINGS_RECEIVERS = [
+_PLUGIN_SETTINGS_SOURCES = [
     "$SELF._settings",
 ]
 
@@ -56,7 +56,7 @@ _SETTINGS_METHODS = [
     "set_int",
 ]
 
-_SETTINGS_RECEIVERS = [
+_SETTINGS_SOURCES = [
     "$SELF._settings.settings",
     "$SETTINGS.settings()",
     "settings()",
@@ -128,35 +128,38 @@ def _make_rule(removed_path: tuple[str, ...], since: str, rule_id: str) -> dict 
 
     list_pattern = "[" + ", ".join(f'"{seg}"' for seg in removed_path) + ", ...]"
 
+    plugin_sources = [{"label": "PLUGIN_SETTINGS", "pattern": r} for r in _PLUGIN_SETTINGS_SOURCES]
+    settings_sources = [{"label": "SETTINGS", "pattern": r} for r in _SETTINGS_SOURCES]
+
     pattern_body = {
-        "pattern-either": [
+        "mode": "taint",
+        "pattern-sources": plugin_sources + settings_sources,
+        "pattern-sinks": [
             {
+                "requires": "PLUGIN_SETTINGS",
                 "patterns": [
-                    {
-                        "pattern-either": [
-                            {"pattern": f"{r}.$METHOD({list_pattern}, ...)"} for r in _PLUGIN_SETTINGS_RECEIVERS
-                        ]
-                    },
+                    {"pattern": f"$SINK.$METHOD({list_pattern}, ...)"},
                     {
                         "metavariable-regex": {
                             "metavariable": "$METHOD",
                             "regex": f"^({'|'.join(_PLUGIN_SETTINGS_GLOBAL_METHODS)})$",
                         }
                     },
-                ]
+                ],
             },
             {
+                "requires": "SETTINGS",
                 "patterns": [
-                    {"pattern-either": [{"pattern": f"{r}.$METHOD({list_pattern}, ...)"} for r in _SETTINGS_RECEIVERS]},
+                    {"pattern": f"$SINK.$METHOD({list_pattern}, ...)"},
                     {
                         "metavariable-regex": {
                             "metavariable": "$METHOD",
                             "regex": f"^({'|'.join(_SETTINGS_METHODS)})$",
                         }
                     },
-                ]
+                ],
             },
-        ]
+        ],
     }
 
     return build_rule(

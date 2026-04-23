@@ -128,7 +128,17 @@ def pattern_sig_from_rule(rule: dict) -> str:
             return sorted(canonical_items, key=lambda x: json.dumps(x, sort_keys=True))
         return node
 
-    block = {k: rule[k] for k in ("pattern", "pattern-either", "patterns") if k in rule}
+    keys = (
+        "pattern",
+        "pattern-either",
+        "patterns",
+        "mode",
+        "pattern-sources",
+        "pattern-sinks",
+        "pattern-propagators",
+        "pattern-sanitizers",
+    )
+    block = {k: rule[k] for k in keys if k in rule}
     return json.dumps(_canonicalize(block), sort_keys=True)
 
 
@@ -217,83 +227,97 @@ def is_ignored_ref(ref: str, rule_type: str) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def python_symbol_patterns(
+def python_symbol_pattern_body(
     name: str,
     kind: SymbolKind,
     class_name: str | None = None,
     module_path: str | None = None,
     receivers: list[str] | None = None,
-) -> list[dict]:
-    """Generate Semgrep patterns for a Python symbol based on its ``kind``.
+) -> dict | None:
+    """Generate a Semgrep pattern body for a Python symbol.
 
-    Handles all symbol types:
-    - MODULE: import statements (``import X``, ``from parent import X``, ``from X import $Y``)
-    - CLASS: class imports (``from module import Class``, ``module.Class``)
-    - Class members: receiver access (``receiver.member``, ``$X._attr.prop``)
-    - Module-level symbols: access + import (``module.attr``, ``from module import attr``)
+    Uses two modes, picked per-symbol:
+
+    - **Taint mode** (for class members with a ``class_name``): enables
+      intra-file inter-procedural flow tracking (via
+      ``opengrep --taint-intrafile``), catching plugins that rebind injected
+      attributes in ``__init__`` (``self.printer = self._printer``) and use
+      them in other methods. Sources are the receivers (injected attributes
+      like ``$X._printer``, bare receivers). Sink is ``$SINK.<name>``.
+    - **Pattern mode** (for everything else: MODULE imports, CLASS imports,
+      module-level symbols): Opengrep's taint engine does not propagate taint
+      through ``from X import Y`` to later uses of ``Y``, so taint sources
+      that equal sinks produce no findings. Pattern mode with symbol
+      resolution catches both the import line and all qualified/unqualified
+      uses of the symbol.
 
     Args:
-        name (str): Symbol name (e.g. ``"getApiKey"``, ``"User"``, ``"octoprint.server"``).
+        name (str): Symbol name or dotted module path for MODULE kind.
         kind (SymbolKind): Symbol kind.
         class_name (str | None): Enclosing class name (for class members).
         module_path (str | None): Module path (e.g. ``"octoprint.access"``).
-        receivers (list[str] | None): Receiver variable names for class members.
-            Falls back to ``[class_name]`` if not provided.
+        receivers (list[str] | None): Receiver variable names for class
+            members. Falls back to ``[class_name]`` if not provided.
 
     Returns:
-        list[dict]: List of Semgrep pattern dicts, or empty list if invalid.
+        dict | None: A Semgrep pattern body, or ``None`` if invalid. For
+        class members: ``{"mode": "taint", "pattern-sources": [...],
+        "pattern-sinks": [...]}``. For imports/module-level:
+        ``{"pattern": ...}`` or ``{"pattern-either": [...]}``.
 
     Examples:
-        >>> python_symbol_patterns("octoprint.server.api", SymbolKind.MODULE)
-        [{'pattern': 'import octoprint.server.api'}, {'pattern': 'from octoprint.server import api'}, {'pattern': 'from octoprint.server.api import $X'}]
-        >>> python_symbol_patterns("User", SymbolKind.CLASS, module_path="octoprint.access")
-        [{'pattern': 'from octoprint.access import User'}, {'pattern': 'octoprint.access.User'}]
-        >>> python_symbol_patterns("start", SymbolKind.FUNCTION, class_name="Printer", receivers=["_printer", "printer"])
-        [{'pattern': '$X._printer.start'}, {'pattern': 'printer.start'}]
-        >>> python_symbol_patterns("apikey", SymbolKind.ATTRIBUTE, class_name="User", receivers=["user"])
-        [{'pattern': 'user.apikey'}]
-        >>> python_symbol_patterns("user_permission", SymbolKind.ATTRIBUTE, module_path="octoprint.server")
-        [{'pattern': 'octoprint.server.user_permission'}, {'pattern': 'from octoprint.server import user_permission'}]
-        >>> python_symbol_patterns("some_func", SymbolKind.FUNCTION, module_path="octoprint.util")
-        [{'pattern': 'octoprint.util.some_func'}, {'pattern': 'from octoprint.util import some_func'}]
+        >>> python_symbol_pattern_body("octoprint.server.api", SymbolKind.MODULE)
+        {'pattern-either': [{'pattern': 'import octoprint.server.api'}, {'pattern': 'from octoprint.server import api'}, {'pattern': 'from octoprint.server.api import $X'}]}
+        >>> python_symbol_pattern_body("start", SymbolKind.FUNCTION, class_name="Printer", receivers=["_printer", "printer"])
+        {'mode': 'taint', 'pattern-sources': [{'pattern': '$X._printer'}, {'pattern': 'printer'}], 'pattern-sinks': [{'pattern': '$SINK.start'}]}
     """
-    # MODULE: import statements (import X, from parent import X, from X import $Y)
+    # MODULE: pattern mode
     if kind == SymbolKind.MODULE:
         patterns = [{"pattern": f"import {name}"}]
         if "." in name:
             parent, leaf = name.rsplit(".", 1)
             patterns.append({"pattern": f"from {parent} import {leaf}"})
         patterns.append({"pattern": f"from {name} import $X"})
-        return patterns
+        return patterns[0] if len(patterns) == 1 else {"pattern-either": patterns}
 
-    # CLASS: class imports (from module import Class, module.Class)
+    # CLASS import: pattern mode
     if kind == SymbolKind.CLASS:
         if not module_path:
-            return []
-        return [
+            return None
+        patterns = [
             {"pattern": f"from {module_path} import {name}"},
             {"pattern": f"{module_path}.{name}"},
         ]
+        return {"pattern-either": patterns}
 
-    # Class member: receiver patterns (receiver.member, $X._attr.member)
+    # Class member: taint mode (real taint flow)
     if class_name:
         rcvs = receivers or [class_name]
-        patterns = []
+        sources = []
         for r in rcvs:
             if r.startswith("_"):
-                patterns.append({"pattern": f"$X.{r}.{name}"})
+                # Injected attribute form: $X._printer
+                sources.append({"pattern": f"$X.{r}"})
             else:
-                patterns.append({"pattern": f"{r}.{name}"})
-        return patterns
+                # Bare receiver or class name: printer, PrinterInterface
+                sources.append({"pattern": r})
+        # Sink matches both bare ref (`.name`) and calls (`.name(...)`)
+        sinks = [{"pattern": f"$SINK.{name}"}]
+        return {
+            "mode": "taint",
+            "pattern-sources": sources,
+            "pattern-sinks": sinks,
+        }
 
-    # Module-level symbol: access + import (module.attr, from module import attr)
+    # Module-level symbol: pattern mode
     if module_path:
-        return [
+        patterns = [
             {"pattern": f"{module_path}.{name}"},
             {"pattern": f"from {module_path} import {name}"},
         ]
+        return {"pattern-either": patterns}
 
-    return []
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -442,24 +466,24 @@ def build_python_symbol_rule(
          'message': 'Deprecated.',
          'languages': ['python'],
          'severity': 'MEDIUM',
-         'pattern-either': [{'pattern': 'UserManager.getApiKey'},
-                            {'pattern': '$X._user_manager.getApiKey'},
-                            {'pattern': 'userManager.getApiKey'}],
+         'mode': 'taint',
+         'pattern-sources': [{'pattern': 'UserManager'},
+                             {'pattern': '$X._user_manager'},
+                             {'pattern': 'userManager'}],
+         'pattern-sinks': [{'pattern': '$SINK.getApiKey'}],
          'metadata': {'type': 'deprecation',
                       'since': '1.8.0',
                       '_ref': 'octoprint.access.users.UserManager.getApiKey'}}
     """
-    patterns = python_symbol_patterns(name, kind, class_name, module_path, receivers_map.get(class_name))
-    if not patterns:
+    patterns_body = python_symbol_pattern_body(name, kind, class_name, module_path, receivers_map.get(class_name))
+    if patterns_body is None:
         return None
-
-    pattern_body = patterns[0] if len(patterns) == 1 else {"pattern-either": patterns}
 
     return build_rule(
         rule_id=rule_id,
         ref=build_fqn(name, class_name, module_path),
         message=message,
-        pattern_body=pattern_body,
+        pattern_body=patterns_body,
         metadata=metadata,
         severity=severity,
     )

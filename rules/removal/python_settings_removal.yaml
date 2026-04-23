@@ -7,19 +7,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["accessControl", "enabled", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["accessControl", "enabled", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["accessControl", "enabled", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["accessControl", "enabled", ...], ...)
-      - pattern: settings().$METHOD(["accessControl", "enabled", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["accessControl", "enabled", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -34,19 +41,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["devel", "virtualPrinter", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["devel", "virtualPrinter", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["devel", "virtualPrinter", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["devel", "virtualPrinter", ...], ...)
-      - pattern: settings().$METHOD(["devel", "virtualPrinter", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["devel", "virtualPrinter", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -60,18 +74,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["gcodeViewer", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["gcodeViewer", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["gcodeViewer", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["gcodeViewer", ...], ...)
-      - pattern: settings().$METHOD(["gcodeViewer", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["gcodeViewer", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -86,22 +108,28 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["printerParameters", "defaultExtrusionLength",
-          ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["printerParameters", "defaultExtrusionLength", ...],
+        ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["printerParameters", "defaultExtrusionLength",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["printerParameters", "defaultExtrusionLength",
-          ...], ...)
-      - pattern: settings().$METHOD(["printerParameters", "defaultExtrusionLength",
-          ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["printerParameters", "defaultExtrusionLength", ...],
+        ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -115,19 +143,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "cacheBuster", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "cacheBuster", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "cacheBuster", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "cacheBuster", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -141,18 +176,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "flipH", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "flipH", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "flipH", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "flipH", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "flipH", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "flipH", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -166,18 +209,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "flipV", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "flipV", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "flipV", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "flipV", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "flipV", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "flipV", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -191,18 +242,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "rotate90", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "rotate90", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "rotate90", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "rotate90", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "rotate90", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "rotate90", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -216,18 +275,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "snapshot", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshot", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshot", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshot", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "snapshot", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshot", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -242,21 +309,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotSslValidation", ...],
-          ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshotSslValidation", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotSslValidation",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotSslValidation",
-          ...], ...)
-      - pattern: settings().$METHOD(["webcam", "snapshotSslValidation", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshotSslValidation", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -271,20 +343,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshotTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotTimeout", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotTimeout", ...],
-          ...)
-      - pattern: settings().$METHOD(["webcam", "snapshotTimeout", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "snapshotTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -298,18 +376,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "stream", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "stream", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "stream", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "stream", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "stream", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "stream", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -323,19 +409,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "streamRatio", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamRatio", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamRatio", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamRatio", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "streamRatio", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamRatio", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -350,19 +443,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamTimeout", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamTimeout", ...], ...)
-      - pattern: settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -377,21 +477,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
-          ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamWebrtcIceServers",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamWebrtcIceServers",
-          ...], ...)
-      - pattern: settings().$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -406,20 +511,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["server", "incompleteStartup", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "incompleteStartup", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["server", "incompleteStartup",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["server", "incompleteStartup", ...],
-          ...)
-      - pattern: settings().$METHOD(["server", "incompleteStartup", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "incompleteStartup", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -434,22 +545,28 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
-          ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "reverseProxy", "trustedDownstream", ...],
+        ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["server", "reverseProxy", "trustedDownstream",
-          ...], ...)
-      - pattern: settings().$METHOD(["server", "reverseProxy", "trustedDownstream",
-          ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "reverseProxy", "trustedDownstream", ...],
+        ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -464,21 +581,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["accessControl", "trustRemoteUser", ...],
-          ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["accessControl", "trustRemoteUser", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["accessControl", "trustRemoteUser",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["accessControl", "trustRemoteUser",
-          ...], ...)
-      - pattern: settings().$METHOD(["accessControl", "trustRemoteUser", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["accessControl", "trustRemoteUser", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -493,21 +615,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
-          ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["feature", "autoUppercaseBlacklist",
-          ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["feature", "autoUppercaseBlacklist",
-          ...], ...)
-      - pattern: settings().$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -521,18 +648,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["serial", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["serial", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["serial", ...], ...)
-      - pattern: $SETTINGS.settings().$METHOD(["serial", ...], ...)
-      - pattern: settings().$METHOD(["serial", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["serial", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
@@ -547,20 +682,26 @@ rules:
   languages:
   - python
   severity: CRITICAL
-  pattern-either:
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+  mode: taint
+  pattern-sources:
+  - label: PLUGIN_SETTINGS
+    pattern: $SELF._settings
+  - label: SETTINGS
+    pattern: $SELF._settings.settings
+  - label: SETTINGS
+    pattern: $SETTINGS.settings()
+  - label: SETTINGS
+    pattern: settings()
+  pattern-sinks:
+  - requires: PLUGIN_SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "pluginBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
-  - patterns:
-    - pattern-either:
-      - pattern: $SELF._settings.settings.$METHOD(["server", "pluginBlacklist", ...],
-          ...)
-      - pattern: $SETTINGS.settings().$METHOD(["server", "pluginBlacklist", ...],
-          ...)
-      - pattern: settings().$METHOD(["server", "pluginBlacklist", ...], ...)
+  - requires: SETTINGS
+    patterns:
+    - pattern: $SINK.$METHOD(["server", "pluginBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
