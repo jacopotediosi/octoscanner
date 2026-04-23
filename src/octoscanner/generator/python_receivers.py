@@ -39,6 +39,10 @@ _CLASS_TO_MIXIN_ATTR = {
     "SessionManager": "_app_session_manager",
     "PluginSettings": "_settings",
     "PluginInfo": "_plugin_info",
+    "GroupManager": "_group_manager",
+    "PreemptiveCache": "_preemptive_cache",
+    "EnvironmentDetector": "_environment_detector",
+    "SystemCommandManager": "_system_commands",
 }
 """Maps each OctoPrint class to the ``self._xxx`` attribute that
 ``PluginMixin.__init__`` injects into plugins. For example, every plugin
@@ -54,7 +58,7 @@ _EXTRA_RECEIVERS = {
     "ApiUser": ["current_user"],
     "UserManager": ["userManager"],
     "GroupManager": ["groupManager"],
-    "PluginManager": ["pluginManager"],
+    "PluginManager": ["pluginManager", "plugin_manager()"],
     "PrinterProfileManager": ["printerProfileManager"],
     "PrinterInterface": ["printer"],
     "PluginInfo": ["plugin_info", "plugin"],

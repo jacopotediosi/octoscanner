@@ -5425,6 +5425,7 @@ rules:
   - pattern: PluginManager._is_plugin_blacklisted
   - pattern: $X._plugin_manager._is_plugin_blacklisted
   - pattern: pluginManager._is_plugin_blacklisted
+  - pattern: plugin_manager()._is_plugin_blacklisted
   metadata:
     type: removal
     since: 2.0.0
@@ -5440,6 +5441,7 @@ rules:
   - pattern: PluginManager._is_plugin_version_blacklisted
   - pattern: $X._plugin_manager._is_plugin_version_blacklisted
   - pattern: pluginManager._is_plugin_version_blacklisted
+  - pattern: plugin_manager()._is_plugin_version_blacklisted
   metadata:
     type: removal
     since: 2.0.0
@@ -5454,6 +5456,7 @@ rules:
   - pattern: PluginManager.plugin_blacklist
   - pattern: $X._plugin_manager.plugin_blacklist
   - pattern: pluginManager.plugin_blacklist
+  - pattern: plugin_manager().plugin_blacklist
   metadata:
     type: removal
     since: 2.0.0
