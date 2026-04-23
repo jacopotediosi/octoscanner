@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import fnmatch
 import functools
+import json
 import re
 from collections.abc import Iterable
 from pathlib import Path
@@ -95,32 +96,40 @@ def ref_from_rule(rule: dict) -> str:
     return rule["metadata"]["_ref"]
 
 
-def pattern_sig_from_rule(rule: dict) -> str | tuple[str, ...]:
-    """Create a hashable signature from a rule's Semgrep pattern.
+def pattern_sig_from_rule(rule: dict) -> str:
+    """Create a hashable signature from a rule's Semgrep pattern structure.
 
-    Two rules with identical patterns will have the same signature.
+    Two rules with identical pattern structures will have the same signature.
 
     Args:
-        rule (dict): A Semgrep rule dict with ``pattern`` or ``pattern-either``.
+        rule (dict): A Semgrep rule dict.
 
     Returns:
-        str | tuple[str, ...]: The pattern as a string, or a sorted tuple
-        of patterns for ``pattern-either`` rules.
+        str: A stable string representation of the rule's pattern structure.
 
     Examples:
-        >>> rule1 = {"pattern": "Foo.bar(...)"}
-        >>> pattern_sig_from_rule(rule1)
-        'Foo.bar(...)'
-        >>> rule2 = {"pattern-either": [{"pattern": "A.x"}, {"pattern": "B.x"}]}
-        >>> pattern_sig_from_rule(rule2)
-        ('A.x', 'B.x')
+        >>> pattern_sig_from_rule({"pattern": "Foo.bar(...)"})
+        '{"pattern": "Foo.bar(...)"}'
+        >>> a = pattern_sig_from_rule(
+        ...     {"pattern-either": [{"pattern": "A.x"}, {"pattern": "B.x"}]}
+        ... )
+        >>> b = pattern_sig_from_rule(
+        ...     {"pattern-either": [{"pattern": "B.x"}, {"pattern": "A.x"}]}
+        ... )
+        >>> a == b
+        True
     """
-    if "pattern" in rule:
-        return rule["pattern"]
-    if "pattern-either" in rule:
-        patterns = tuple(sorted(p["pattern"] for p in rule["pattern-either"]))
-        return patterns
-    return ""
+
+    def _canonicalize(node: object) -> object:
+        if isinstance(node, dict):
+            return {k: _canonicalize(v) for k, v in node.items()}
+        if isinstance(node, list):
+            canonical_items = [_canonicalize(item) for item in node]
+            return sorted(canonical_items, key=lambda x: json.dumps(x, sort_keys=True))
+        return node
+
+    block = {k: rule[k] for k in ("pattern", "pattern-either", "patterns") if k in rule}
+    return json.dumps(_canonicalize(block), sort_keys=True)
 
 
 def ref_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> dict[str, str | None]:
@@ -287,31 +296,6 @@ def python_symbol_patterns(
     return []
 
 
-def patterns_field(patterns: list[dict]) -> dict:
-    """Choose between Semgrep's ``pattern`` (single) and ``pattern-either`` (multiple).
-
-    Semgrep requires ``pattern-either`` when there are multiple alternative
-    patterns, but uses ``pattern`` (not wrapped in a list) for a single one.
-
-    Args:
-        patterns (list[dict]): List of Semgrep pattern dicts (each with a
-            ``"pattern"`` key).
-
-    Returns:
-        dict: A dict with either ``{"pattern": "..."}`` (single) or
-        ``{"pattern-either": [...]}`` (multiple).
-
-    Examples:
-        >>> patterns_field([{"pattern": "import foo"}])
-        {'pattern': 'import foo'}
-        >>> patterns_field([{"pattern": "import foo"}, {"pattern": "from bar import foo"}])
-        {'pattern-either': [{'pattern': 'import foo'}, {'pattern': 'from bar import foo'}]}
-    """
-    if len(patterns) == 1:
-        return {"pattern": patterns[0]["pattern"]}
-    return {"pattern-either": patterns}
-
-
 # ---------------------------------------------------------------------------
 # Rule builders
 # ---------------------------------------------------------------------------
@@ -321,7 +305,7 @@ def build_rule(
     rule_id: str,
     ref: str,
     message: str,
-    patterns: list[dict],
+    pattern_body: dict,
     metadata: dict,
     severity: str,
 ) -> dict | None:
@@ -339,7 +323,9 @@ def build_rule(
         ref (str): Ref identifying what the rule targets. Stored under
             ``metadata._ref``.
         message (str): Human-readable message for the Semgrep finding.
-        patterns (list[dict]): List of Semgrep pattern dicts.
+        pattern_body (dict): Pre-built Semgrep pattern block, e.g.
+            ``{"pattern": "..."}``, ``{"pattern-either": [...]}``,
+            ``{"patterns": [...]}``.
         metadata (dict): Dict of metadata fields.
         severity (str): Semgrep severity.
 
@@ -348,23 +334,42 @@ def build_rule(
         is in the ignored refs list for the given rule type.
 
     Examples:
-        >>> rule = build_rule(
+        >>> build_rule(
         ...     rule_id="DEP-0001",
         ...     ref="octoprint.util.foo",
         ...     message="Deprecated API.",
-        ...     patterns=[{"pattern": "import foo"}],
+        ...     pattern_body={"pattern": "octoprint.util.foo"},
         ...     metadata={"type": "deprecation", "since": "1.8.0"},
         ...     severity="MEDIUM",
         ... )
-        >>> rule
         {'id': 'DEP-0001',
          'message': 'Deprecated API.',
          'languages': ['python'],
          'severity': 'MEDIUM',
-         'pattern': 'import foo',
+         'pattern': 'octoprint.util.foo',
          'metadata': {'type': 'deprecation',
                       'since': '1.8.0',
                       '_ref': 'octoprint.util.foo'}}
+        >>> build_rule(
+        ...     rule_id="REM-0007",
+        ...     ref="octoprint.access.User.getApiKey",
+        ...     message="Removed in 2.0.0.",
+        ...     pattern_body={"pattern-either": [
+        ...         {"pattern": "User.getApiKey"},
+        ...         {"pattern": "$X._user.getApiKey"},
+        ...     ]},
+        ...     metadata={"type": "removal", "since": "2.0.0"},
+        ...     severity="CRITICAL",
+        ... )
+        {'id': 'REM-0007',
+         'message': 'Removed in 2.0.0.',
+         'languages': ['python'],
+         'severity': 'CRITICAL',
+         'pattern-either': [{'pattern': 'User.getApiKey'},
+                            {'pattern': '$X._user.getApiKey'}],
+         'metadata': {'type': 'removal',
+                      'since': '2.0.0',
+                      '_ref': 'octoprint.access.User.getApiKey'}}
     """
     rule_type = metadata.get("type")
     if rule_type is not None and is_ignored_ref(ref, rule_type):
@@ -380,7 +385,7 @@ def build_rule(
         "message": _clean_message(message),
         "languages": ["python"],
         "severity": severity,
-        **patterns_field(patterns),
+        **pattern_body,
         "metadata": metadata,
     }
 
@@ -448,11 +453,13 @@ def build_python_symbol_rule(
     if not patterns:
         return None
 
+    pattern_body = patterns[0] if len(patterns) == 1 else {"pattern-either": patterns}
+
     return build_rule(
         rule_id=rule_id,
         ref=build_fqn(name, class_name, module_path),
         message=message,
-        patterns=patterns,
+        pattern_body=pattern_body,
         metadata=metadata,
         severity=severity,
     )
