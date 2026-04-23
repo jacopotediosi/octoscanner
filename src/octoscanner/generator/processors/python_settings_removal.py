@@ -3,10 +3,15 @@
 Detects settings paths that have been removed between OctoPrint versions and
 generates Semgrep rules to catch plugin code accessing them.
 
-Plugins access global OctoPrint settings via the PluginSettings wrapper, e.g.
-(complete list in `_GLOBAL_SETTINGS_METHODS`):
-- `self._settings.global_get(["serial", "autoconnect"])`
-- `self._settings.global_get_boolean(["feature", "autoUppercaseBlacklist"])`
+Plugins access global OctoPrint settings through several entry points, all
+covered below:
+
+- ``PluginSettings`` wrapper with ``global_*`` methods, e.g.
+  ``self._settings.global_get(["foo", "bar"])``.
+- ``PluginSettings.settings`` attribute exposing the underlying ``Settings``
+  instance, e.g. ``self._settings.settings.get(["foo", "bar"])``.
+- ``octoprint.settings.settings()`` factory returning the global ``Settings``
+  singleton, e.g. ``settings().getBoolean(["foo", "bar"])``.
 """
 
 from __future__ import annotations
@@ -15,17 +20,47 @@ from ..models import PipelineState, RuleFile
 from ..rules import build_rule, next_rule_id, pattern_sig_from_rule
 from .base import Processor, format_summary
 
-_GLOBAL_SETTINGS_METHODS = [
+_PLUGIN_SETTINGS_GLOBAL_METHODS = [
     "global_get",
     "global_get_boolean",
     "global_get_float",
     "global_get_int",
+    "global_has",
+    "global_remove",
     "global_set",
     "global_set_boolean",
     "global_set_float",
     "global_set_int",
 ]
-"""PluginSettings global_* methods for accessing OctoPrint settings."""
+
+_PLUGIN_SETTINGS_RECEIVERS = [
+    "$SELF._settings",
+]
+
+_SETTINGS_METHODS = [
+    "get",
+    "getBoolean",
+    "getFloat",
+    "getInt",
+    "get_boolean",
+    "get_float",
+    "get_int",
+    "has",
+    "remove",
+    "set",
+    "setBoolean",
+    "setFloat",
+    "setInt",
+    "set_boolean",
+    "set_float",
+    "set_int",
+]
+
+_SETTINGS_RECEIVERS = [
+    "$SELF._settings.settings",
+    "$SETTINGS.settings()",
+    "settings()",
+]
 
 
 def _find_removed_settings_paths(
@@ -91,23 +126,44 @@ def _make_rule(removed_path: tuple[str, ...], since: str, rule_id: str) -> dict 
     """
     removed_path_str = ".".join(removed_path)
 
-    # Semgrep list pattern matching the path with trailing "..." to match any depth
     list_pattern = "[" + ", ".join(f'"{seg}"' for seg in removed_path) + ", ...]"
 
-    # Generate patterns for PluginSettings global_* methods.
-    # Setter methods have a value argument.
-    patterns = [
-        {"pattern": f"$X.{m}({list_pattern}, ...)"}
-        if m.startswith("global_set")
-        else {"pattern": f"$X.{m}({list_pattern})"}
-        for m in _GLOBAL_SETTINGS_METHODS
-    ]
+    pattern_body = {
+        "pattern-either": [
+            {
+                "patterns": [
+                    {
+                        "pattern-either": [
+                            {"pattern": f"{r}.$METHOD({list_pattern}, ...)"} for r in _PLUGIN_SETTINGS_RECEIVERS
+                        ]
+                    },
+                    {
+                        "metavariable-regex": {
+                            "metavariable": "$METHOD",
+                            "regex": f"^({'|'.join(_PLUGIN_SETTINGS_GLOBAL_METHODS)})$",
+                        }
+                    },
+                ]
+            },
+            {
+                "patterns": [
+                    {"pattern-either": [{"pattern": f"{r}.$METHOD({list_pattern}, ...)"} for r in _SETTINGS_RECEIVERS]},
+                    {
+                        "metavariable-regex": {
+                            "metavariable": "$METHOD",
+                            "regex": f"^({'|'.join(_SETTINGS_METHODS)})$",
+                        }
+                    },
+                ]
+            },
+        ]
+    }
 
     return build_rule(
         rule_id=rule_id,
         ref=removed_path_str,
         message=f"The `{removed_path_str}` settings path has been removed in OctoPrint {since}.",
-        patterns=patterns,
+        pattern_body=pattern_body,
         metadata={
             "type": "removal",
             "since": since,

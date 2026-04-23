@@ -8,14 +8,21 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["accessControl", "enabled", ...])
-  - pattern: $X.global_get_boolean(["accessControl", "enabled", ...])
-  - pattern: $X.global_get_float(["accessControl", "enabled", ...])
-  - pattern: $X.global_get_int(["accessControl", "enabled", ...])
-  - pattern: $X.global_set(["accessControl", "enabled", ...], ...)
-  - pattern: $X.global_set_boolean(["accessControl", "enabled", ...], ...)
-  - pattern: $X.global_set_float(["accessControl", "enabled", ...], ...)
-  - pattern: $X.global_set_int(["accessControl", "enabled", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["accessControl", "enabled", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["accessControl", "enabled", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["accessControl", "enabled", ...], ...)
+      - pattern: settings().$METHOD(["accessControl", "enabled", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.5.0
@@ -28,14 +35,21 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["devel", "virtualPrinter", ...])
-  - pattern: $X.global_get_boolean(["devel", "virtualPrinter", ...])
-  - pattern: $X.global_get_float(["devel", "virtualPrinter", ...])
-  - pattern: $X.global_get_int(["devel", "virtualPrinter", ...])
-  - pattern: $X.global_set(["devel", "virtualPrinter", ...], ...)
-  - pattern: $X.global_set_boolean(["devel", "virtualPrinter", ...], ...)
-  - pattern: $X.global_set_float(["devel", "virtualPrinter", ...], ...)
-  - pattern: $X.global_set_int(["devel", "virtualPrinter", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["devel", "virtualPrinter", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["devel", "virtualPrinter", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["devel", "virtualPrinter", ...], ...)
+      - pattern: settings().$METHOD(["devel", "virtualPrinter", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.5.0
@@ -47,14 +61,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["gcodeViewer", ...])
-  - pattern: $X.global_get_boolean(["gcodeViewer", ...])
-  - pattern: $X.global_get_float(["gcodeViewer", ...])
-  - pattern: $X.global_get_int(["gcodeViewer", ...])
-  - pattern: $X.global_set(["gcodeViewer", ...], ...)
-  - pattern: $X.global_set_boolean(["gcodeViewer", ...], ...)
-  - pattern: $X.global_set_float(["gcodeViewer", ...], ...)
-  - pattern: $X.global_set_int(["gcodeViewer", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["gcodeViewer", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["gcodeViewer", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["gcodeViewer", ...], ...)
+      - pattern: settings().$METHOD(["gcodeViewer", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.5.0
@@ -67,18 +87,24 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["printerParameters", "defaultExtrusionLength", ...])
-  - pattern: $X.global_get_boolean(["printerParameters", "defaultExtrusionLength",
-      ...])
-  - pattern: $X.global_get_float(["printerParameters", "defaultExtrusionLength", ...])
-  - pattern: $X.global_get_int(["printerParameters", "defaultExtrusionLength", ...])
-  - pattern: $X.global_set(["printerParameters", "defaultExtrusionLength", ...], ...)
-  - pattern: $X.global_set_boolean(["printerParameters", "defaultExtrusionLength",
-      ...], ...)
-  - pattern: $X.global_set_float(["printerParameters", "defaultExtrusionLength", ...],
-      ...)
-  - pattern: $X.global_set_int(["printerParameters", "defaultExtrusionLength", ...],
-      ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+      - pattern: settings().$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.8.0
@@ -90,14 +116,21 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "cacheBuster", ...])
-  - pattern: $X.global_get_boolean(["webcam", "cacheBuster", ...])
-  - pattern: $X.global_get_float(["webcam", "cacheBuster", ...])
-  - pattern: $X.global_get_int(["webcam", "cacheBuster", ...])
-  - pattern: $X.global_set(["webcam", "cacheBuster", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "cacheBuster", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "cacheBuster", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "cacheBuster", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "cacheBuster", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -109,14 +142,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "flipH", ...])
-  - pattern: $X.global_get_boolean(["webcam", "flipH", ...])
-  - pattern: $X.global_get_float(["webcam", "flipH", ...])
-  - pattern: $X.global_get_int(["webcam", "flipH", ...])
-  - pattern: $X.global_set(["webcam", "flipH", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "flipH", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "flipH", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "flipH", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "flipH", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "flipH", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "flipH", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "flipH", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -128,14 +167,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "flipV", ...])
-  - pattern: $X.global_get_boolean(["webcam", "flipV", ...])
-  - pattern: $X.global_get_float(["webcam", "flipV", ...])
-  - pattern: $X.global_get_int(["webcam", "flipV", ...])
-  - pattern: $X.global_set(["webcam", "flipV", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "flipV", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "flipV", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "flipV", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "flipV", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "flipV", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "flipV", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "flipV", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -147,14 +192,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "rotate90", ...])
-  - pattern: $X.global_get_boolean(["webcam", "rotate90", ...])
-  - pattern: $X.global_get_float(["webcam", "rotate90", ...])
-  - pattern: $X.global_get_int(["webcam", "rotate90", ...])
-  - pattern: $X.global_set(["webcam", "rotate90", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "rotate90", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "rotate90", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "rotate90", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "rotate90", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "rotate90", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "rotate90", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "rotate90", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -166,14 +217,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "snapshot", ...])
-  - pattern: $X.global_get_boolean(["webcam", "snapshot", ...])
-  - pattern: $X.global_get_float(["webcam", "snapshot", ...])
-  - pattern: $X.global_get_int(["webcam", "snapshot", ...])
-  - pattern: $X.global_set(["webcam", "snapshot", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "snapshot", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "snapshot", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "snapshot", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshot", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "snapshot", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -186,14 +243,23 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "snapshotSslValidation", ...])
-  - pattern: $X.global_get_boolean(["webcam", "snapshotSslValidation", ...])
-  - pattern: $X.global_get_float(["webcam", "snapshotSslValidation", ...])
-  - pattern: $X.global_get_int(["webcam", "snapshotSslValidation", ...])
-  - pattern: $X.global_set(["webcam", "snapshotSslValidation", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "snapshotSslValidation", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "snapshotSslValidation", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "snapshotSslValidation", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotSslValidation", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: settings().$METHOD(["webcam", "snapshotSslValidation", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -206,14 +272,22 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "snapshotTimeout", ...])
-  - pattern: $X.global_get_boolean(["webcam", "snapshotTimeout", ...])
-  - pattern: $X.global_get_float(["webcam", "snapshotTimeout", ...])
-  - pattern: $X.global_get_int(["webcam", "snapshotTimeout", ...])
-  - pattern: $X.global_set(["webcam", "snapshotTimeout", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "snapshotTimeout", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "snapshotTimeout", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "snapshotTimeout", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: settings().$METHOD(["webcam", "snapshotTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -225,14 +299,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "stream", ...])
-  - pattern: $X.global_get_boolean(["webcam", "stream", ...])
-  - pattern: $X.global_get_float(["webcam", "stream", ...])
-  - pattern: $X.global_get_int(["webcam", "stream", ...])
-  - pattern: $X.global_set(["webcam", "stream", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "stream", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "stream", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "stream", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "stream", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "stream", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "stream", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -244,14 +324,21 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "streamRatio", ...])
-  - pattern: $X.global_get_boolean(["webcam", "streamRatio", ...])
-  - pattern: $X.global_get_float(["webcam", "streamRatio", ...])
-  - pattern: $X.global_get_int(["webcam", "streamRatio", ...])
-  - pattern: $X.global_set(["webcam", "streamRatio", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "streamRatio", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "streamRatio", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "streamRatio", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamRatio", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamRatio", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamRatio", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -264,14 +351,21 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "streamTimeout", ...])
-  - pattern: $X.global_get_boolean(["webcam", "streamTimeout", ...])
-  - pattern: $X.global_get_float(["webcam", "streamTimeout", ...])
-  - pattern: $X.global_get_int(["webcam", "streamTimeout", ...])
-  - pattern: $X.global_set(["webcam", "streamTimeout", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "streamTimeout", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "streamTimeout", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "streamTimeout", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamTimeout", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -284,14 +378,23 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["webcam", "streamWebrtcIceServers", ...])
-  - pattern: $X.global_get_boolean(["webcam", "streamWebrtcIceServers", ...])
-  - pattern: $X.global_get_float(["webcam", "streamWebrtcIceServers", ...])
-  - pattern: $X.global_get_int(["webcam", "streamWebrtcIceServers", ...])
-  - pattern: $X.global_set(["webcam", "streamWebrtcIceServers", ...], ...)
-  - pattern: $X.global_set_boolean(["webcam", "streamWebrtcIceServers", ...], ...)
-  - pattern: $X.global_set_float(["webcam", "streamWebrtcIceServers", ...], ...)
-  - pattern: $X.global_set_int(["webcam", "streamWebrtcIceServers", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
@@ -304,14 +407,22 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["server", "incompleteStartup", ...])
-  - pattern: $X.global_get_boolean(["server", "incompleteStartup", ...])
-  - pattern: $X.global_get_float(["server", "incompleteStartup", ...])
-  - pattern: $X.global_get_int(["server", "incompleteStartup", ...])
-  - pattern: $X.global_set(["server", "incompleteStartup", ...], ...)
-  - pattern: $X.global_set_boolean(["server", "incompleteStartup", ...], ...)
-  - pattern: $X.global_set_float(["server", "incompleteStartup", ...], ...)
-  - pattern: $X.global_set_int(["server", "incompleteStartup", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["server", "incompleteStartup", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["server", "incompleteStartup",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["server", "incompleteStartup", ...],
+          ...)
+      - pattern: settings().$METHOD(["server", "incompleteStartup", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.10.0
@@ -324,18 +435,24 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["server", "reverseProxy", "trustedDownstream", ...])
-  - pattern: $X.global_get_boolean(["server", "reverseProxy", "trustedDownstream",
-      ...])
-  - pattern: $X.global_get_float(["server", "reverseProxy", "trustedDownstream", ...])
-  - pattern: $X.global_get_int(["server", "reverseProxy", "trustedDownstream", ...])
-  - pattern: $X.global_set(["server", "reverseProxy", "trustedDownstream", ...], ...)
-  - pattern: $X.global_set_boolean(["server", "reverseProxy", "trustedDownstream",
-      ...], ...)
-  - pattern: $X.global_set_float(["server", "reverseProxy", "trustedDownstream", ...],
-      ...)
-  - pattern: $X.global_set_int(["server", "reverseProxy", "trustedDownstream", ...],
-      ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+      - pattern: settings().$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.11.0
@@ -348,14 +465,23 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["accessControl", "trustRemoteUser", ...])
-  - pattern: $X.global_get_boolean(["accessControl", "trustRemoteUser", ...])
-  - pattern: $X.global_get_float(["accessControl", "trustRemoteUser", ...])
-  - pattern: $X.global_get_int(["accessControl", "trustRemoteUser", ...])
-  - pattern: $X.global_set(["accessControl", "trustRemoteUser", ...], ...)
-  - pattern: $X.global_set_boolean(["accessControl", "trustRemoteUser", ...], ...)
-  - pattern: $X.global_set_float(["accessControl", "trustRemoteUser", ...], ...)
-  - pattern: $X.global_set_int(["accessControl", "trustRemoteUser", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["accessControl", "trustRemoteUser", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["accessControl", "trustRemoteUser",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["accessControl", "trustRemoteUser",
+          ...], ...)
+      - pattern: settings().$METHOD(["accessControl", "trustRemoteUser", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
@@ -368,14 +494,23 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["feature", "autoUppercaseBlacklist", ...])
-  - pattern: $X.global_get_boolean(["feature", "autoUppercaseBlacklist", ...])
-  - pattern: $X.global_get_float(["feature", "autoUppercaseBlacklist", ...])
-  - pattern: $X.global_get_int(["feature", "autoUppercaseBlacklist", ...])
-  - pattern: $X.global_set(["feature", "autoUppercaseBlacklist", ...], ...)
-  - pattern: $X.global_set_boolean(["feature", "autoUppercaseBlacklist", ...], ...)
-  - pattern: $X.global_set_float(["feature", "autoUppercaseBlacklist", ...], ...)
-  - pattern: $X.global_set_int(["feature", "autoUppercaseBlacklist", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: settings().$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
@@ -387,14 +522,20 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["serial", ...])
-  - pattern: $X.global_get_boolean(["serial", ...])
-  - pattern: $X.global_get_float(["serial", ...])
-  - pattern: $X.global_get_int(["serial", ...])
-  - pattern: $X.global_set(["serial", ...], ...)
-  - pattern: $X.global_set_boolean(["serial", ...], ...)
-  - pattern: $X.global_set_float(["serial", ...], ...)
-  - pattern: $X.global_set_int(["serial", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["serial", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["serial", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["serial", ...], ...)
+      - pattern: settings().$METHOD(["serial", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
@@ -407,14 +548,22 @@ rules:
   - python
   severity: CRITICAL
   pattern-either:
-  - pattern: $X.global_get(["server", "pluginBlacklist", ...])
-  - pattern: $X.global_get_boolean(["server", "pluginBlacklist", ...])
-  - pattern: $X.global_get_float(["server", "pluginBlacklist", ...])
-  - pattern: $X.global_get_int(["server", "pluginBlacklist", ...])
-  - pattern: $X.global_set(["server", "pluginBlacklist", ...], ...)
-  - pattern: $X.global_set_boolean(["server", "pluginBlacklist", ...], ...)
-  - pattern: $X.global_set_float(["server", "pluginBlacklist", ...], ...)
-  - pattern: $X.global_set_int(["server", "pluginBlacklist", ...], ...)
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: settings().$METHOD(["server", "pluginBlacklist", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
