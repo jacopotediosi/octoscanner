@@ -115,6 +115,7 @@ rules:
   pattern-either:
   - pattern: FileManager.list_files
   - pattern: $X._file_manager.list_files
+  - pattern: $X._file_manager._storage_managers[...].list_files
   metadata:
     type: deprecation
     since: 2.0.0
@@ -129,6 +130,7 @@ rules:
   pattern-either:
   - pattern: FileManager.get_file
   - pattern: $X._file_manager.get_file
+  - pattern: $X._file_manager._storage_managers[...].get_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -143,6 +145,7 @@ rules:
   pattern-either:
   - pattern: FileManager.add_link
   - pattern: $X._file_manager.add_link
+  - pattern: $X._file_manager._storage_managers[...].add_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -157,6 +160,7 @@ rules:
   pattern-either:
   - pattern: FileManager.remove_link
   - pattern: $X._file_manager.remove_link
+  - pattern: $X._file_manager._storage_managers[...].remove_link
   metadata:
     type: deprecation
     since: 2.0.0
@@ -253,6 +257,7 @@ rules:
   - pattern: PrinterMixin.get_connection_options
   - pattern: $X._printer.get_connection_options
   - pattern: printer.get_connection_options
+  - pattern: $X._printer._comm._callback.get_connection_options
   metadata:
     type: deprecation
     since: 2.0.0
@@ -269,6 +274,7 @@ rules:
   - pattern: PrinterMixin.select_file
   - pattern: $X._printer.select_file
   - pattern: printer.select_file
+  - pattern: $X._printer._comm._callback.select_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -285,6 +291,7 @@ rules:
   - pattern: PrinterMixin.unselect_file
   - pattern: $X._printer.unselect_file
   - pattern: printer.unselect_file
+  - pattern: $X._printer._comm._callback.unselect_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -302,6 +309,7 @@ rules:
   - pattern: PrinterMixin.fake_ack
   - pattern: $X._printer.fake_ack
   - pattern: printer.fake_ack
+  - pattern: $X._printer._comm._callback.fake_ack
   metadata:
     type: deprecation
     since: 2.0.0
@@ -319,6 +327,7 @@ rules:
   - pattern: PrinterMixin.get_transport
   - pattern: $X._printer.get_transport
   - pattern: printer.get_transport
+  - pattern: $X._printer._comm._callback.get_transport
   metadata:
     type: deprecation
     since: 2.0.0
@@ -336,6 +345,7 @@ rules:
   - pattern: PrinterMixin._comm
   - pattern: $X._printer._comm
   - pattern: printer._comm
+  - pattern: $X._printer._comm._callback._comm
   metadata:
     type: deprecation
     since: 2.0.0
@@ -352,6 +362,7 @@ rules:
   - pattern: PrinterMixin.get_current_connection
   - pattern: $X._printer.get_current_connection
   - pattern: printer.get_current_connection
+  - pattern: $X._printer._comm._callback.get_current_connection
   metadata:
     type: deprecation
     since: 2.0.0
@@ -368,6 +379,7 @@ rules:
   - pattern: PrinterMixin.is_sd_ready
   - pattern: $X._printer.is_sd_ready
   - pattern: printer.is_sd_ready
+  - pattern: $X._printer._comm._callback.is_sd_ready
   metadata:
     type: deprecation
     since: 2.0.0
@@ -384,6 +396,7 @@ rules:
   - pattern: PrinterMixin.init_sd_card
   - pattern: $X._printer.init_sd_card
   - pattern: printer.init_sd_card
+  - pattern: $X._printer._comm._callback.init_sd_card
   metadata:
     type: deprecation
     since: 2.0.0
@@ -400,6 +413,7 @@ rules:
   - pattern: PrinterMixin.release_sd_card
   - pattern: $X._printer.release_sd_card
   - pattern: printer.release_sd_card
+  - pattern: $X._printer._comm._callback.release_sd_card
   metadata:
     type: deprecation
     since: 2.0.0
@@ -417,6 +431,7 @@ rules:
   - pattern: PrinterMixin.can_modify_file
   - pattern: $X._printer.can_modify_file
   - pattern: printer.can_modify_file
+  - pattern: $X._printer._comm._callback.can_modify_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -433,6 +448,7 @@ rules:
   - pattern: PrinterMixin.is_current_file
   - pattern: $X._printer.is_current_file
   - pattern: printer.is_current_file
+  - pattern: $X._printer._comm._callback.is_current_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -449,6 +465,7 @@ rules:
   - pattern: PrinterMixin.get_sd_files
   - pattern: $X._printer.get_sd_files
   - pattern: printer.get_sd_files
+  - pattern: $X._printer._comm._callback.get_sd_files
   metadata:
     type: deprecation
     since: 2.0.0
@@ -465,6 +482,7 @@ rules:
   - pattern: PrinterMixin.add_sd_file
   - pattern: $X._printer.add_sd_file
   - pattern: printer.add_sd_file
+  - pattern: $X._printer._comm._callback.add_sd_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -481,6 +499,7 @@ rules:
   - pattern: PrinterMixin.delete_sd_file
   - pattern: $X._printer.delete_sd_file
   - pattern: printer.delete_sd_file
+  - pattern: $X._printer._comm._callback.delete_sd_file
   metadata:
     type: deprecation
     since: 2.0.0
@@ -497,6 +516,7 @@ rules:
   - pattern: PrinterMixin.refresh_sd_files
   - pattern: $X._printer.refresh_sd_files
   - pattern: printer.refresh_sd_files
+  - pattern: $X._printer._comm._callback.refresh_sd_files
   metadata:
     type: deprecation
     since: 2.0.0

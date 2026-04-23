@@ -37,6 +37,15 @@ _PLUGIN_SETTINGS_RECEIVERS = [
     "$SELF._settings",
 ]
 
+# Not official OctoPrint receivers, but common plugin rebinding patterns
+# (e.g. self.settings = self._settings).
+_EXTRA_PLUGIN_SETTINGS_RECEIVERS = [
+    "$SELF.settings",
+    "$SELF.get_settings()",
+    "$SELF._plugin._settings",
+]
+_PLUGIN_SETTINGS_RECEIVERS += _EXTRA_PLUGIN_SETTINGS_RECEIVERS
+
 _SETTINGS_METHODS = [
     "get",
     "getBoolean",

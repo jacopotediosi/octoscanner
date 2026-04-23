@@ -3634,6 +3634,7 @@ rules:
   - pattern: PrinterMixin._bedTemp
   - pattern: $X._printer._bedTemp
   - pattern: printer._bedTemp
+  - pattern: $X._printer._comm._callback._bedTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3649,6 +3650,7 @@ rules:
   - pattern: PrinterMixin._chamberTemp
   - pattern: $X._printer._chamberTemp
   - pattern: printer._chamberTemp
+  - pattern: $X._printer._comm._callback._chamberTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3664,6 +3666,7 @@ rules:
   - pattern: PrinterMixin._logBacklog
   - pattern: $X._printer._logBacklog
   - pattern: printer._logBacklog
+  - pattern: $X._printer._comm._callback._logBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -3679,6 +3682,7 @@ rules:
   - pattern: PrinterMixin._messageBacklog
   - pattern: $X._printer._messageBacklog
   - pattern: printer._messageBacklog
+  - pattern: $X._printer._comm._callback._messageBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -3694,6 +3698,7 @@ rules:
   - pattern: PrinterMixin._targetBedTemp
   - pattern: $X._printer._targetBedTemp
   - pattern: printer._targetBedTemp
+  - pattern: $X._printer._comm._callback._targetBedTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3709,6 +3714,7 @@ rules:
   - pattern: PrinterMixin._targetChamberTemp
   - pattern: $X._printer._targetChamberTemp
   - pattern: printer._targetChamberTemp
+  - pattern: $X._printer._comm._callback._targetChamberTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3724,6 +3730,7 @@ rules:
   - pattern: PrinterMixin._targetTemp
   - pattern: $X._printer._targetTemp
   - pattern: printer._targetTemp
+  - pattern: $X._printer._comm._callback._targetTemp
   metadata:
     type: removal
     since: 1.8.0
@@ -3739,6 +3746,7 @@ rules:
   - pattern: PrinterMixin._temp
   - pattern: $X._printer._temp
   - pattern: printer._temp
+  - pattern: $X._printer._comm._callback._temp
   metadata:
     type: removal
     since: 1.8.0
@@ -3754,6 +3762,7 @@ rules:
   - pattern: PrinterMixin._tempBacklog
   - pattern: $X._printer._tempBacklog
   - pattern: printer._tempBacklog
+  - pattern: $X._printer._comm._callback._tempBacklog
   metadata:
     type: removal
     since: 1.8.0
@@ -4032,6 +4041,7 @@ rules:
   - pattern: PrinterMixin._sdFilelistAvailable
   - pattern: $X._printer._sdFilelistAvailable
   - pattern: printer._sdFilelistAvailable
+  - pattern: $X._printer._comm._callback._sdFilelistAvailable
   metadata:
     type: removal
     since: 1.9.0
@@ -4047,6 +4057,7 @@ rules:
   - pattern: PrinterMixin.add_marking
   - pattern: $X._printer.add_marking
   - pattern: printer.add_marking
+  - pattern: $X._printer._comm._callback.add_marking
   metadata:
     type: removal
     since: 1.9.0
@@ -7135,6 +7146,7 @@ rules:
   - pattern: PrinterMixin._addLog
   - pattern: $X._printer._addLog
   - pattern: printer._addLog
+  - pattern: $X._printer._comm._callback._addLog
   metadata:
     type: removal
     since: 2.0.0
@@ -7150,6 +7162,7 @@ rules:
   - pattern: PrinterMixin._addMessage
   - pattern: $X._printer._addMessage
   - pattern: printer._addMessage
+  - pattern: $X._printer._comm._callback._addMessage
   metadata:
     type: removal
     since: 2.0.0
@@ -7165,6 +7178,7 @@ rules:
   - pattern: PrinterMixin._addTemperatureData
   - pattern: $X._printer._addTemperatureData
   - pattern: printer._addTemperatureData
+  - pattern: $X._printer._comm._callback._addTemperatureData
   metadata:
     type: removal
     since: 2.0.0
@@ -7180,6 +7194,7 @@ rules:
   - pattern: PrinterMixin._add_sd_file
   - pattern: $X._printer._add_sd_file
   - pattern: printer._add_sd_file
+  - pattern: $X._printer._comm._callback._add_sd_file
   metadata:
     type: removal
     since: 2.0.0
@@ -7195,6 +7210,7 @@ rules:
   - pattern: PrinterMixin._analysisQueue
   - pattern: $X._printer._analysisQueue
   - pattern: printer._analysisQueue
+  - pattern: $X._printer._comm._callback._analysisQueue
   metadata:
     type: removal
     since: 2.0.0
@@ -7211,6 +7227,7 @@ rules:
   - pattern: PrinterMixin._blacklisted_data_hooks
   - pattern: $X._printer._blacklisted_data_hooks
   - pattern: printer._blacklisted_data_hooks
+  - pattern: $X._printer._comm._callback._blacklisted_data_hooks
   metadata:
     type: removal
     since: 2.0.0
@@ -7226,6 +7243,7 @@ rules:
   - pattern: PrinterMixin._currentZ
   - pattern: $X._printer._currentZ
   - pattern: printer._currentZ
+  - pattern: $X._printer._comm._callback._currentZ
   metadata:
     type: removal
     since: 2.0.0
@@ -7241,6 +7259,7 @@ rules:
   - pattern: PrinterMixin._error_info
   - pattern: $X._printer._error_info
   - pattern: printer._error_info
+  - pattern: $X._printer._comm._callback._error_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7256,6 +7275,7 @@ rules:
   - pattern: PrinterMixin._fileManager
   - pattern: $X._printer._fileManager
   - pattern: printer._fileManager
+  - pattern: $X._printer._comm._callback._fileManager
   metadata:
     type: removal
     since: 2.0.0
@@ -7271,6 +7291,7 @@ rules:
   - pattern: PrinterMixin._firmware_info
   - pattern: $X._printer._firmware_info
   - pattern: printer._firmware_info
+  - pattern: $X._printer._comm._callback._firmware_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7286,6 +7307,7 @@ rules:
   - pattern: PrinterMixin._getStateFlags
   - pattern: $X._printer._getStateFlags
   - pattern: printer._getStateFlags
+  - pattern: $X._printer._comm._callback._getStateFlags
   metadata:
     type: removal
     since: 2.0.0
@@ -7301,6 +7323,7 @@ rules:
   - pattern: PrinterMixin._get_free_remote_name
   - pattern: $X._printer._get_free_remote_name
   - pattern: printer._get_free_remote_name
+  - pattern: $X._printer._comm._callback._get_free_remote_name
   metadata:
     type: removal
     since: 2.0.0
@@ -7316,6 +7339,7 @@ rules:
   - pattern: PrinterMixin._posAfterSelect
   - pattern: $X._printer._posAfterSelect
   - pattern: printer._posAfterSelect
+  - pattern: $X._printer._comm._callback._posAfterSelect
   metadata:
     type: removal
     since: 2.0.0
@@ -7331,6 +7355,7 @@ rules:
   - pattern: PrinterMixin._printAfterSelect
   - pattern: $X._printer._printAfterSelect
   - pattern: printer._printAfterSelect
+  - pattern: $X._printer._comm._callback._printAfterSelect
   metadata:
     type: removal
     since: 2.0.0
@@ -7346,6 +7371,7 @@ rules:
   - pattern: PrinterMixin._printerProfileManager
   - pattern: $X._printer._printerProfileManager
   - pattern: printer._printerProfileManager
+  - pattern: $X._printer._comm._callback._printerProfileManager
   metadata:
     type: removal
     since: 2.0.0
@@ -7362,6 +7388,7 @@ rules:
   - pattern: PrinterMixin._reportPrintProgressToPlugins
   - pattern: $X._printer._reportPrintProgressToPlugins
   - pattern: printer._reportPrintProgressToPlugins
+  - pattern: $X._printer._comm._callback._reportPrintProgressToPlugins
   metadata:
     type: removal
     since: 2.0.0
@@ -7377,6 +7404,7 @@ rules:
   - pattern: PrinterMixin._selectedFileMutex
   - pattern: $X._printer._selectedFileMutex
   - pattern: printer._selectedFileMutex
+  - pattern: $X._printer._comm._callback._selectedFileMutex
   metadata:
     type: removal
     since: 2.0.0
@@ -7392,6 +7420,7 @@ rules:
   - pattern: PrinterMixin._sendAddLogCallbacks
   - pattern: $X._printer._sendAddLogCallbacks
   - pattern: printer._sendAddLogCallbacks
+  - pattern: $X._printer._comm._callback._sendAddLogCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7408,6 +7437,7 @@ rules:
   - pattern: PrinterMixin._sendAddMessageCallbacks
   - pattern: $X._printer._sendAddMessageCallbacks
   - pattern: printer._sendAddMessageCallbacks
+  - pattern: $X._printer._comm._callback._sendAddMessageCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7424,6 +7454,7 @@ rules:
   - pattern: PrinterMixin._sendAddTemperatureCallbacks
   - pattern: $X._printer._sendAddTemperatureCallbacks
   - pattern: printer._sendAddTemperatureCallbacks
+  - pattern: $X._printer._comm._callback._sendAddTemperatureCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7440,6 +7471,7 @@ rules:
   - pattern: PrinterMixin._sendCurrentDataCallbacks
   - pattern: $X._printer._sendCurrentDataCallbacks
   - pattern: printer._sendCurrentDataCallbacks
+  - pattern: $X._printer._comm._callback._sendCurrentDataCallbacks
   metadata:
     type: removal
     since: 2.0.0
@@ -7456,6 +7488,7 @@ rules:
   - pattern: PrinterMixin._sendInitialStateUpdate
   - pattern: $X._printer._sendInitialStateUpdate
   - pattern: printer._sendInitialStateUpdate
+  - pattern: $X._printer._comm._callback._sendInitialStateUpdate
   metadata:
     type: removal
     since: 2.0.0
@@ -7471,6 +7504,7 @@ rules:
   - pattern: PrinterMixin._setCurrentZ
   - pattern: $X._printer._setCurrentZ
   - pattern: printer._setCurrentZ
+  - pattern: $X._printer._comm._callback._setCurrentZ
   metadata:
     type: removal
     since: 2.0.0
@@ -7486,6 +7520,7 @@ rules:
   - pattern: PrinterMixin._setJobData
   - pattern: $X._printer._setJobData
   - pattern: printer._setJobData
+  - pattern: $X._printer._comm._callback._setJobData
   metadata:
     type: removal
     since: 2.0.0
@@ -7501,6 +7536,7 @@ rules:
   - pattern: PrinterMixin._setOffsets
   - pattern: $X._printer._setOffsets
   - pattern: printer._setOffsets
+  - pattern: $X._printer._comm._callback._setOffsets
   metadata:
     type: removal
     since: 2.0.0
@@ -7516,6 +7552,7 @@ rules:
   - pattern: PrinterMixin._setState
   - pattern: $X._printer._setState
   - pattern: printer._setState
+  - pattern: $X._printer._comm._callback._setState
   metadata:
     type: removal
     since: 2.0.0
@@ -7531,6 +7568,7 @@ rules:
   - pattern: PrinterMixin._updateJobUser
   - pattern: $X._printer._updateJobUser
   - pattern: printer._updateJobUser
+  - pattern: $X._printer._comm._callback._updateJobUser
   metadata:
     type: removal
     since: 2.0.0
@@ -7546,6 +7584,7 @@ rules:
   - pattern: PrinterMixin._updateProgressData
   - pattern: $X._printer._updateProgressData
   - pattern: printer._updateProgressData
+  - pattern: $X._printer._comm._callback._updateProgressData
   metadata:
     type: removal
     since: 2.0.0
@@ -7562,6 +7601,7 @@ rules:
   - pattern: PrinterMixin._updateProgressDataCallback
   - pattern: $X._printer._updateProgressDataCallback
   - pattern: printer._updateProgressDataCallback
+  - pattern: $X._printer._comm._callback._updateProgressDataCallback
   metadata:
     type: removal
     since: 2.0.0
@@ -7578,6 +7618,7 @@ rules:
   - pattern: PrinterMixin._updateResendDataCallback
   - pattern: $X._printer._updateResendDataCallback
   - pattern: printer._updateResendDataCallback
+  - pattern: $X._printer._comm._callback._updateResendDataCallback
   metadata:
     type: removal
     since: 2.0.0
@@ -7593,6 +7634,7 @@ rules:
   - pattern: PrinterMixin._validateJob
   - pattern: $X._printer._validateJob
   - pattern: printer._validateJob
+  - pattern: $X._printer._comm._callback._validateJob
   metadata:
     type: removal
     since: 2.0.0
@@ -7608,6 +7650,7 @@ rules:
   - pattern: PrinterMixin.getTransport
   - pattern: $X._printer.getTransport
   - pattern: printer.getTransport
+  - pattern: $X._printer._comm._callback.getTransport
   metadata:
     type: removal
     since: 2.0.0
@@ -7623,6 +7666,7 @@ rules:
   - pattern: PrinterMixin.on_comm_error
   - pattern: $X._printer.on_comm_error
   - pattern: printer.on_comm_error
+  - pattern: $X._printer._comm._callback.on_comm_error
   metadata:
     type: removal
     since: 2.0.0
@@ -7638,6 +7682,7 @@ rules:
   - pattern: PrinterMixin.on_comm_file_selected
   - pattern: $X._printer.on_comm_file_selected
   - pattern: printer.on_comm_file_selected
+  - pattern: $X._printer._comm._callback.on_comm_file_selected
   metadata:
     type: removal
     since: 2.0.0
@@ -7654,6 +7699,7 @@ rules:
   - pattern: PrinterMixin.on_comm_file_transfer_done
   - pattern: $X._printer.on_comm_file_transfer_done
   - pattern: printer.on_comm_file_transfer_done
+  - pattern: $X._printer._comm._callback.on_comm_file_transfer_done
   metadata:
     type: removal
     since: 2.0.0
@@ -7670,6 +7716,7 @@ rules:
   - pattern: PrinterMixin.on_comm_file_transfer_failed
   - pattern: $X._printer.on_comm_file_transfer_failed
   - pattern: printer.on_comm_file_transfer_failed
+  - pattern: $X._printer._comm._callback.on_comm_file_transfer_failed
   metadata:
     type: removal
     since: 2.0.0
@@ -7686,6 +7733,7 @@ rules:
   - pattern: PrinterMixin.on_comm_file_transfer_started
   - pattern: $X._printer.on_comm_file_transfer_started
   - pattern: printer.on_comm_file_transfer_started
+  - pattern: $X._printer._comm._callback.on_comm_file_transfer_started
   metadata:
     type: removal
     since: 2.0.0
@@ -7701,6 +7749,7 @@ rules:
   - pattern: PrinterMixin.on_comm_firmware_info
   - pattern: $X._printer.on_comm_firmware_info
   - pattern: printer.on_comm_firmware_info
+  - pattern: $X._printer._comm._callback.on_comm_firmware_info
   metadata:
     type: removal
     since: 2.0.0
@@ -7717,6 +7766,7 @@ rules:
   - pattern: PrinterMixin.on_comm_force_disconnect
   - pattern: $X._printer.on_comm_force_disconnect
   - pattern: printer.on_comm_force_disconnect
+  - pattern: $X._printer._comm._callback.on_comm_force_disconnect
   metadata:
     type: removal
     since: 2.0.0
@@ -7732,6 +7782,7 @@ rules:
   - pattern: PrinterMixin.on_comm_log
   - pattern: $X._printer.on_comm_log
   - pattern: printer.on_comm_log
+  - pattern: $X._printer._comm._callback.on_comm_log
   metadata:
     type: removal
     since: 2.0.0
@@ -7747,6 +7798,7 @@ rules:
   - pattern: PrinterMixin.on_comm_message
   - pattern: $X._printer.on_comm_message
   - pattern: printer.on_comm_message
+  - pattern: $X._printer._comm._callback.on_comm_message
   metadata:
     type: removal
     since: 2.0.0
@@ -7763,6 +7815,7 @@ rules:
   - pattern: PrinterMixin.on_comm_position_update
   - pattern: $X._printer.on_comm_position_update
   - pattern: printer.on_comm_position_update
+  - pattern: $X._printer._comm._callback.on_comm_position_update
   metadata:
     type: removal
     since: 2.0.0
@@ -7779,6 +7832,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_cancelled
   - pattern: $X._printer.on_comm_print_job_cancelled
   - pattern: printer.on_comm_print_job_cancelled
+  - pattern: $X._printer._comm._callback.on_comm_print_job_cancelled
   metadata:
     type: removal
     since: 2.0.0
@@ -7795,6 +7849,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_cancelling
   - pattern: $X._printer.on_comm_print_job_cancelling
   - pattern: printer.on_comm_print_job_cancelling
+  - pattern: $X._printer._comm._callback.on_comm_print_job_cancelling
   metadata:
     type: removal
     since: 2.0.0
@@ -7810,6 +7865,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_done
   - pattern: $X._printer.on_comm_print_job_done
   - pattern: printer.on_comm_print_job_done
+  - pattern: $X._printer._comm._callback.on_comm_print_job_done
   metadata:
     type: removal
     since: 2.0.0
@@ -7826,6 +7882,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_paused
   - pattern: $X._printer.on_comm_print_job_paused
   - pattern: printer.on_comm_print_job_paused
+  - pattern: $X._printer._comm._callback.on_comm_print_job_paused
   metadata:
     type: removal
     since: 2.0.0
@@ -7842,6 +7899,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_resumed
   - pattern: $X._printer.on_comm_print_job_resumed
   - pattern: printer.on_comm_print_job_resumed
+  - pattern: $X._printer._comm._callback.on_comm_print_job_resumed
   metadata:
     type: removal
     since: 2.0.0
@@ -7858,6 +7916,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_started
   - pattern: $X._printer.on_comm_print_job_started
   - pattern: printer.on_comm_print_job_started
+  - pattern: $X._printer._comm._callback.on_comm_print_job_started
   metadata:
     type: removal
     since: 2.0.0
@@ -7873,6 +7932,7 @@ rules:
   - pattern: PrinterMixin.on_comm_progress
   - pattern: $X._printer.on_comm_progress
   - pattern: printer.on_comm_progress
+  - pattern: $X._printer._comm._callback.on_comm_progress
   metadata:
     type: removal
     since: 2.0.0
@@ -7889,6 +7949,7 @@ rules:
   - pattern: PrinterMixin.on_comm_record_fileposition
   - pattern: $X._printer.on_comm_record_fileposition
   - pattern: printer.on_comm_record_fileposition
+  - pattern: $X._printer._comm._callback.on_comm_record_fileposition
   metadata:
     type: removal
     since: 2.0.0
@@ -7904,6 +7965,7 @@ rules:
   - pattern: PrinterMixin.on_comm_sd_files
   - pattern: $X._printer.on_comm_sd_files
   - pattern: printer.on_comm_sd_files
+  - pattern: $X._printer._comm._callback.on_comm_sd_files
   metadata:
     type: removal
     since: 2.0.0
@@ -7920,6 +7982,7 @@ rules:
   - pattern: PrinterMixin.on_comm_sd_state_change
   - pattern: $X._printer.on_comm_sd_state_change
   - pattern: printer.on_comm_sd_state_change
+  - pattern: $X._printer._comm._callback.on_comm_sd_state_change
   metadata:
     type: removal
     since: 2.0.0
@@ -7935,6 +7998,7 @@ rules:
   - pattern: PrinterMixin.on_comm_state_change
   - pattern: $X._printer.on_comm_state_change
   - pattern: printer.on_comm_state_change
+  - pattern: $X._printer._comm._callback.on_comm_state_change
   metadata:
     type: removal
     since: 2.0.0
@@ -7951,6 +8015,7 @@ rules:
   - pattern: PrinterMixin.on_comm_temperature_update
   - pattern: $X._printer.on_comm_temperature_update
   - pattern: printer.on_comm_temperature_update
+  - pattern: $X._printer._comm._callback.on_comm_temperature_update
   metadata:
     type: removal
     since: 2.0.0
@@ -7966,6 +8031,7 @@ rules:
   - pattern: PrinterMixin.on_comm_z_change
   - pattern: $X._printer.on_comm_z_change
   - pattern: printer.on_comm_z_change
+  - pattern: $X._printer._comm._callback.on_comm_z_change
   metadata:
     type: removal
     since: 2.0.0
@@ -8028,6 +8094,7 @@ rules:
   - pattern: PrinterMixin.on_comm_print_job_failed
   - pattern: $X._printer.on_comm_print_job_failed
   - pattern: printer.on_comm_print_job_failed
+  - pattern: $X._printer._comm._callback.on_comm_print_job_failed
   metadata:
     type: removal
     since: 2.0.0

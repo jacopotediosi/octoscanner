@@ -60,9 +60,11 @@ _EXTRA_RECEIVERS = {
     "GroupManager": ["groupManager"],
     "PluginManager": ["pluginManager", "plugin_manager()"],
     "PrinterProfileManager": ["printerProfileManager"],
-    "PrinterInterface": ["printer"],
+    "PrinterInterface": ["printer", "_printer._comm._callback"],
+    "PrinterMixin": ["_printer._comm._callback"],
     "PluginInfo": ["plugin_info", "plugin"],
     "Settings": ["settings()"],
+    "FileManager": ["_file_manager._storage_managers[...]"],
 }
 """Additional variable names plugins commonly use beyond the injected
 ``self._xxx`` attributes - function parameters, local variables, and

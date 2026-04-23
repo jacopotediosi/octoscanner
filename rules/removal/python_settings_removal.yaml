@@ -11,6 +11,10 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["accessControl", "enabled", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["accessControl", "enabled", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["accessControl", "enabled", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["accessControl", "enabled", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -38,6 +42,10 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["devel", "virtualPrinter", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["devel", "virtualPrinter", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["devel", "virtualPrinter", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["devel", "virtualPrinter", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -64,6 +72,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["gcodeViewer", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["gcodeViewer", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["gcodeViewer", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["gcodeViewer", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -90,6 +101,12 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+      - pattern: $SELF.settings.$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["printerParameters", "defaultExtrusionLength",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["printerParameters", "defaultExtrusionLength",
           ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
@@ -119,6 +136,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -145,6 +165,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "flipH", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "flipH", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "flipH", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "flipH", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -170,6 +193,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "flipV", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "flipV", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "flipV", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "flipV", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -195,6 +221,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "rotate90", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "rotate90", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "rotate90", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "rotate90", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -220,6 +249,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshot", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -247,6 +279,12 @@ rules:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "snapshotSslValidation", ...],
           ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshotSslValidation", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -275,6 +313,11 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -302,6 +345,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "stream", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -327,6 +373,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamRatio", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -354,6 +403,10 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamTimeout", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -382,6 +435,12 @@ rules:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
           ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -410,6 +469,11 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["server", "incompleteStartup", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["server", "incompleteStartup", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["server", "incompleteStartup", ...],
+          ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["server", "incompleteStartup", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -438,6 +502,12 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+      - pattern: $SELF.settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["server", "reverseProxy", "trustedDownstream",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["server", "reverseProxy", "trustedDownstream",
           ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
@@ -469,6 +539,12 @@ rules:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["accessControl", "trustRemoteUser", ...],
           ...)
+      - pattern: $SELF.settings.$METHOD(["accessControl", "trustRemoteUser", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["accessControl", "trustRemoteUser",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["accessControl", "trustRemoteUser",
+          ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -498,6 +574,12 @@ rules:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
           ...)
+      - pattern: $SELF.settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -525,6 +607,9 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["serial", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["serial", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["serial", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["serial", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
@@ -551,6 +636,11 @@ rules:
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["server", "pluginBlacklist", ...],
+          ...)
     - metavariable-regex:
         metavariable: $METHOD
         regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
