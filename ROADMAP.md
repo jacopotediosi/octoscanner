@@ -91,12 +91,6 @@
       or detect OctoPrint dependencies removed between versions
 - [ ] Detect syntax errors / pycheck / linting suggestions
 
-## Multi-Plugin Scanning
-
-- [x] Support scanning multiple plugin directories in a single run
-    - [x] If plugin_paths are multiple paths, generate a report per-plugin and rule stats
-- [ ] Plugin downloads
-
 ## GitHub Integration
 
 - [ ] GitHub issue creation from scan results

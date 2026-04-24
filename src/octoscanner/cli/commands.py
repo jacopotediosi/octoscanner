@@ -7,12 +7,12 @@ from pathlib import Path
 from packaging.version import Version
 
 from .. import (
-    DOWNLOAD_DIR,
     OCTOPRINT_ALL_VERSION_BRANCHES,
     OCTOPRINT_ALL_VERSION_TAGS,
+    OCTOPRINT_SRC_DIR,
     RULES_DIR,
 )
-from ..downloader import download_octoprint_source
+from ..downloader import download_octoprint, download_plugins
 from ..generator import generate
 from ..scanner import scan
 from .formatter import format_scan_results_json, format_scan_results_text
@@ -34,21 +34,34 @@ def cmd_download_octoprint(args: argparse.Namespace) -> None:
 
     for ref, name, kind in refs:
         try:
-            download_octoprint_source(ref, name=name, kind=kind, force=args.force)
+            download_octoprint(ref=ref, kind=kind, name=name, force=args.force)
         except FileExistsError:
             print(f"{name}: already downloaded")
 
 
+def cmd_download_plugins(args: argparse.Namespace) -> None:
+    download_plugins(
+        identifiers=args.identifiers,
+        subfolder=args.subfolder,
+        max_workers=args.workers,
+        force=args.force,
+    )
+
+
 def cmd_generate(args: argparse.Namespace) -> None:
     if args.versions == ["all"]:
-        if not DOWNLOAD_DIR.is_dir():
-            raise FileNotFoundError(f"Download directory {DOWNLOAD_DIR} does not exist. Use 'download' command first.")
+        if not OCTOPRINT_SRC_DIR.is_dir():
+            raise FileNotFoundError(
+                f"Download directory {OCTOPRINT_SRC_DIR} does not exist. Use 'download' command first."
+            )
         dirs = sorted(
-            (d for d in DOWNLOAD_DIR.iterdir() if d.is_dir()),
+            (d for d in OCTOPRINT_SRC_DIR.iterdir() if d.is_dir()),
             key=lambda p: Version(p.name),
         )
         if not dirs:
-            raise FileNotFoundError(f"No version directories found in {DOWNLOAD_DIR}. Use 'download' command first.")
+            raise FileNotFoundError(
+                f"No version directories found in {OCTOPRINT_SRC_DIR}. Use 'download' command first."
+            )
         versions = [d.name for d in dirs]
     else:
         versions = args.versions

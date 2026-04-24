@@ -17,7 +17,7 @@ in two phases:
 
 from __future__ import annotations
 
-from .. import DOWNLOAD_DIR
+from .. import OCTOPRINT_SRC_DIR
 from .analyzers import ANALYZERS
 from .models import PipelineState, RuleFile
 from .processors import PROCESSORS
@@ -52,7 +52,7 @@ def generate(
 
     source_dirs = {}
     for version in versions:
-        version_dir = DOWNLOAD_DIR / version
+        version_dir = OCTOPRINT_SRC_DIR / version
         if not version_dir.is_dir():
             raise FileNotFoundError(f"Source not found: {version_dir}")
         source_dirs[version] = version_dir

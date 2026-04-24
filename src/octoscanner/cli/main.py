@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import argparse
 import sys
+from datetime import date
 from pathlib import Path
 
-from .commands import cmd_download_octoprint, cmd_generate, cmd_scan
+from .. import PLUGINS_SRC_DIR
+from .commands import cmd_download_octoprint, cmd_download_plugins, cmd_generate, cmd_scan
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -43,6 +45,34 @@ def main(argv: list[str] | None = None) -> None:
     )
     download_octoprint_all.add_argument(
         "--force", action="store_true", help="Re-download even if folders already exist"
+    )
+
+    download_plugins = download_what.add_parser(
+        "plugins", help="Download plugins from the official OctoPrint plugins repository"
+    )
+    download_plugins.set_defaults(func=cmd_download_plugins)
+    download_plugins.add_argument(
+        "identifiers",
+        nargs="+",
+        help="Plugin identifier(s) to download, or 'all' to download every plugin",
+    )
+    download_plugins.add_argument(
+        "--subfolder",
+        default=None,
+        metavar="NAME",
+        help=f"Optional subfolder name under {PLUGINS_SRC_DIR} to store the downloads (e.g. '{date.today().isoformat()}')",
+    )
+    download_plugins.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        metavar="N",
+        help="Max number of parallel download workers (default: 8)",
+    )
+    download_plugins.add_argument(
+        "--force",
+        action="store_true",
+        help="Re-download even if the folder already exists",
     )
 
     # --- generate sub-command ---

@@ -9,7 +9,7 @@ A static analysis tool for OctoPrint plugins. Detects usage of deprecated or fea
 
 - **Automatic rule generation** - Analyzes multiple OctoPrint versions to generate [Semgrep](https://semgrep.dev) rules for deprecations and removals
 - **Hand-written rules** - Includes additional rules for security issues and code quality problems commonly found in plugins
-- **Built-in downloader** - Fetches the most relevant OctoPrint versions (and plugins - TODO) with a single command
+- **Built-in downloader** - Fetches sources of multiple OctoPrint versions and plugins with a single command
 - **Integrated scanner** - Scans one or more plugins at once with clear, actionable output
 
 ## The Generator
@@ -35,6 +35,13 @@ pip install .
 ## Usage
 
 Below are the most common usages. For a complete list of commands and options, see `octoscanner --help`.
+
+
+### Download plugins
+```bash
+# Download Telegram plugin to plugins_src/telegram
+octoscanner download plugins telegram
+```
 
 ### Scan a plugin
 

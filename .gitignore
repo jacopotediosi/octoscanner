@@ -30,5 +30,6 @@ coverage_report
 node_modules
 *.map
 
-# OctoPrint sources
+# OctoPrint and plugin sources
 octoprint_src/
+plugins_src/

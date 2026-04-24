@@ -16,6 +16,10 @@ OCTOPRINT_ALL_VERSION_TAGS = [
 ]
 OCTOPRINT_ALL_VERSION_BRANCHES = {OCTOPRINT_DEV_VERSION: OCTOPRINT_DEV_BRANCH}
 
+# Plugins repository
+PLUGINS_REPO_URL = "https://plugins.octoprint.org/plugins.json"
+
 # Paths
-DOWNLOAD_DIR = Path("octoprint_src")
+OCTOPRINT_SRC_DIR = Path("octoprint_src")
+PLUGINS_SRC_DIR = Path("plugins_src")
 RULES_DIR = Path("rules")

@@ -8,6 +8,7 @@ from pathlib import Path
 
 from packaging.version import Version
 
+from . import PLUGINS_SRC_DIR
 from .models import Finding, Rule, RuleType, ScanResult
 
 SNIPPET_CONTEXT_LINES = 1
@@ -63,6 +64,14 @@ def _run_semgrep(
     configs = [arg for rf in rule_files for arg in ("--config", str(rf))]
     targets_str = [str(target) for target in targets]
 
+    extra_args = list(extra_args or [])
+
+    # Bypass octoscanner's own .gitignore when scanning PLUGINS_SRC_DIR
+    plugins_src_root = PLUGINS_SRC_DIR.resolve()
+    if any(plugins_src_root in target.resolve().parents or target.resolve() == plugins_src_root for target in targets):
+        if "--no-git-ignore" not in extra_args:
+            extra_args.append("--no-git-ignore")
+
     if use_opengrep:
         cmd = [
             "opengrep",
@@ -71,7 +80,7 @@ def _run_semgrep(
             "--json",
             "--no-rewrite-rule-ids",
             "--quiet",
-            *(extra_args or []),
+            *extra_args,
             *targets_str,
         ]
     else:
@@ -83,7 +92,7 @@ def _run_semgrep(
             "--metrics=off",
             "--no-rewrite-rule-ids",
             "--quiet",
-            *(extra_args or []),
+            *extra_args,
             *targets_str,
         ]
 
