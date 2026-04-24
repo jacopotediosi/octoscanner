@@ -10,6 +10,14 @@ from pathlib import Path
 
 from . import OCTOPRINT_SRC_DIR, PLUGINS_REPO_URL, PLUGINS_SRC_DIR
 
+_DOWNLOAD_TIMEOUT = 60
+
+
+def _download(url: str, dest: Path) -> None:
+    """Download ``url`` to ``dest``."""
+    with urllib.request.urlopen(url, timeout=_DOWNLOAD_TIMEOUT) as response, dest.open("wb") as out:
+        shutil.copyfileobj(response, out)
+
 
 def download_octoprint(ref: str, kind: str, name: str, force: bool = False) -> None:
     """Download and extract an OctoPrint source archive from GitHub.
@@ -56,7 +64,7 @@ def download_octoprint(ref: str, kind: str, name: str, force: bool = False) -> N
                 "branch": "https://github.com/OctoPrint/OctoPrint/archive/refs/heads/{}.zip",
             }
             zip_url = octoprint_zip_urls[kind].format(ref)
-            urllib.request.urlretrieve(zip_url, tmp_archive_filename)
+            _download(zip_url, tmp_archive_filename)
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
                 raise ValueError(f"{kind} '{ref}' not found on GitHub.")
@@ -118,7 +126,7 @@ def download_plugins(
         # Single-file plugin: just download it to dest/<plugin_id>.py
         if archive_ext == ".py":
             dest.mkdir(parents=True)
-            urllib.request.urlretrieve(archive_url, dest / f"{plugin_id}.py")
+            _download(archive_url, dest / f"{plugin_id}.py")
 
         # Plugin is a supported archive
         elif archive_ext in (".zip", ".tar.gz", ".tgz", ".tar", ".whl"):
@@ -127,7 +135,7 @@ def download_plugins(
             tmp_extract_dir = tmp_dir / f"{plugin_id}_extracted"
 
             # Download and extract the archive
-            urllib.request.urlretrieve(archive_url, tmp_archive_filename)
+            _download(archive_url, tmp_archive_filename)
             shutil.unpack_archive(
                 tmp_archive_filename,
                 tmp_extract_dir,
@@ -160,7 +168,7 @@ def download_plugins(
         # Download and parse plugins index
         index_path = tmp_dir / "plugins.json"
         print(f"Downloading plugins index from {PLUGINS_REPO_URL}...")
-        urllib.request.urlretrieve(PLUGINS_REPO_URL, index_path)
+        _download(PLUGINS_REPO_URL, index_path)
         with index_path.open("r", encoding="utf-8") as index_file:
             index = json.load(index_file)
 
