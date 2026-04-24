@@ -3,63 +3,86 @@
 ## Publishing
 
 - [x] Write README.md
-    - [ ] Describe the current rulesets and what's yet to do
-- [ ] Generate and manually review/fix all rules
-- [x] Check for Snyk / Semgrep warnings
+    - [ ] Describe better the current rulesets and what's yet to do
 - [ ] Implement Octoscanner (and rules) versioning and show versions in cli/json scan results
 - [ ] Publish first release
-- [ ] Evaluate splitting rules and downloader/generator into a separate project
+- [ ] Consider splitting rule files into a separate project/repository
 
 ## Rules generation
 
-- [x] Packaging rules (manually written)
+### Handcrafted rules
 
-- [ ] Python rules
-    - [ ] Generate all Python deprecation rules
-        - [x] Detect and generate rules for all OctoPrint deprecation patterns
-        - [ ] Detect access to deprecated settings paths
-    - [ ] Diff between OctoPrint versions to generate Python removal rules
+- [x] Packaging rules, e.g. plugins still not using `pyproject.yaml`
+- [ ] Security rules - some TODOs in security.yaml
+- [ ] Common code quality issues - TBD
+- [ ] Check if all rule texts are well written or can be improved
+
+### Automatically generated rules
+
+- [ ] Setting paths
+    - [ ] Access to deprecated setting paths
+        - [ ] Python - currently settings with a compatibility layer are still considered removed even if get is working - TBD
+            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+        - [ ] JS
+            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+        - [ ] Access to global API Key `["api","key"]`
+    - [ ] Access to removed setting paths, e.g. `["serial", ...]`
+        - [ ] Python
+            - [x] Access to removed global setting paths (e.g. `global_get(["serial", ...])`, etc)
+            - [ ] Access to removed built-in plugins setting paths (e.g., under `global_get(["plugins"])`)
+        - [ ] JS
+
+- [ ] HTTP APIs
+    - [ ] Call to deprecated HTTP APIs, e.g. `POST /api/system`
+        - [ ] Python
+            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+        - [ ] JS
+            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+    - [ ] Call to removed HTTP APIs, e.g. `/api/logs/*`, `/api/users/*`, `/api/plugin/pluginmanager`
+        - [ ] Python
+        - [ ] JS
+
+- [ ] Frontend changes
+    - [ ] JS deprecations
+        - [ ] Usage of any deprecated function (notice that there are many different ways to deprecated things in OctoPrint).
+            Check to detect at least:
+            - `SlicingViewModel.gcodeFilename`
+            - `OctoPrintClient.access.users.update(admin=)`
+            - `OctoPrintClient.printer.{issueSdCommand,getSdState,initSd,releaseSd,refreshSd}`
+            - `AccessViewModel.isCurrentUser`
+            - `FilesViewModel.{initSdCard,releaseSdCard,refreshSdFiles}`
+            - `OctoPrintClient.plugins.appkeys.revokeKey`
+            - Usage of `SettingsViewModel.users`
+    - [ ] JS breaking changes
+        - [ ] Diff between OctoPrint versions to generate all JavaScript removal rules. Perhaps use jsdoc and diff the longnames.
+            Check to detect at least:
+            - `usersViewModel` -> `accessViewModel.users`
+            - `FilesViewModel.requestData(focus, switchToPath, force)` signature change
+            - `FilesViewModel.fromResponse` signature change
+            - `SettingsViewModel.requestData(callback)` signature change
+            - `onWizardTabChange` -> `onBeforeWizardTabChange`
+            - `OctoPrintClient.logs` -> `OctoPrintClient.plugins.logging`
+            - `OctoPrintClient.users` -> `OctoPrintClient.access.users`
+            - `OctoPrintClient.getRequestHeaders` signature change
+            - `OctoPrintClient.deprecatedMethod` removed
+            - `OctoPrintClient.deprecatedVariable` signature change
+        - [ ] Detect usage of removed viewmodels (e.g. `usersViewModel`) (e.g., if a plugin pushes it to `OCTOPRINT_VIEWMODELS`)
+    - [ ] Jinja usage of removed viewmodels or deprecated/removed viewmodel members,
+            e.g. `bedlevelvisualizer_tab.jinja2` uses the removed `settingsViewModel.webcam_rotate90()`
+
+- [ ] Backend changes
+    - [x] Python deprecations
+        - [x] Usage of any deprecated function (notice that there are many different ways to deprecated things in OctoPrint)
         - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
-        - [x] Import path changes
+    - [ ] Python breaking changes
+        - [x] Import classes/modules path changes
         - [x] Class/method/attribute renames (both private and non-private)
-        - [ ] Removed HTTP APIs
-        - [x] Removed settings paths, e.g. `global_get(["serial", ...])` returns `None` in 2.0.0 (serial migrated to
-              `plugins.serial_connector`)
-            - [ ] Detect settings paths for built-in plugins (under `global_get(["plugins"])`)
-        - [ ] Breaking signature changes: to detect `PrinterInterface.connect` in
-              `/tmp/OctoPrint-Telegram/.../cmd_con.py:365` which changed signature in 2.0.0 (parameters renamed:
-              `port` -> `connector`, `baudrate` -> `parameters`). This is a signature change, not a removal, and
-              is not covered by the current generator. It would require a "parameter diff" feature. Consider
-              combining with `griffe.find_breaking_changes()` which should be able to report parameter signature
-              changes.
-    - [ ] Investigate whether we could simplify our Semgrep pattern generation:
-        - [ ] Semgrep import resolution: Semgrep resolves imports automatically, so the pattern
-                `octoprint.server.admin_permission` matches
-                `from octoprint.server import admin_permission; admin_permission.can()`.
-                This might let us reduce the number of patterns we generate in `import_patterns()`
-                and `receiver_patterns()`.
-        - [ ] Typed metavariables: Semgrep supports typed metavariables like
-                `(Logger $X).log` to constrain matches by type. Currently we generate many patterns
-                (`$X._printer.method`, `printer.method`, etc.) to match all ways a plugin might
-                access an OctoPrint object. Could typed metavariables like `(PrinterInterface $X).method`
-                replace our `_CLASS_TO_MIXIN_ATTR` and `_EXTRA_RECEIVERS` Python dicts?
+        - [ ] Signature changes, e.g. to detect `octoprint.util.commandline.clean_ansi()` which doesn't accept `bytes`
+                arguments anymore, or `PrinterInterface.connect`, which changed signature in 2.0.0.
+                Consider extending `_griffe_breaking_changes` to report also signature changes.
 
-- [ ] Security rules (manually written)
-    - [ ] TODO in security.yaml
-
-- [ ] Support multiple languages beyond Python for rule generation.
-    - [ ] JavaScript rules
-        - [ ] Generate all JavaScript deprecation rules (check whether OctoPrint versions signal deprecations
-              differently)
-            - [ ] Detect access to deprecated settings paths
-        - [ ] Diff between OctoPrint versions to generate all JavaScript removal rules. Perhaps use jsdoc and diff
-              the longnames.
-            - [ ] Detect access to removed settings paths
-    - [ ] Jinja rules (?)
-
-- [ ] Check if autogenerated rule texts are well written or can be improved
-
-- [ ] Check rules against "Migrating to OctoPrint 2.0.0" documentation
+- [ ] Generate and manually review/fix/improve all rules
+- [ ] Check if all rule texts are well written or can be improved
 
 ## Advanced scanning
 

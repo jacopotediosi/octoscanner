@@ -1,12 +1,14 @@
 # OctoPrint security rules
 
 # TODO:
-# - Add since attribute
+# - Add `since` attribute to all rules
+# - Plugin does not implement `TemplatePlugin.is_template_autoescaped`
+# - Plugin does implement `TemplatePlugin.is_template_autoescaped` as `False`
 # - Plugin implements `BlueprintPlugin.csrf_exempt`
 # - Plugin does not implement `BlueprintPlugin.is_blueprint_csrf_protected`
 # - Plugin does implement `BlueprintPlugin.is_blueprint_csrf_protected` as `False`
 # - Plugin does implement `BlueprintPlugin.is_blueprint_protected` as `False`
-# - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` check (?)
+# - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` checks (?)
 # - Pnotify XSS (?)
 # - Plugin implements custom route defined by `route_hook` w/o authentication (?)
 # - `data-bind="html"` in jinja templates (?)
