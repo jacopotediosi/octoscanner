@@ -125,6 +125,10 @@ def _griffe_breaking_changes(v_old: str, old_mod: griffe.Module, v_new: str, new
         if kind == SymbolKind.CLASS and parent_is_class:
             continue
 
+        # Skip __init__: the class is still instantiable via the inherited constructor
+        if removed.name == "__init__":
+            continue
+
         # Add to removals
         removals.append(
             Removal(
@@ -304,6 +308,10 @@ def _custom_octoprint_breaking_changes(
                 # Skip nested classes (e.g. BaseModel.Config) - they can't be imported
                 # directly and are usually internal implementation details
                 if old_member.is_class and parent_is_class:
+                    continue
+
+                # Skip __init__: the class is still instantiable via the inherited constructor
+                if old_member.name == "__init__":
                     continue
 
                 # Add member to removals
