@@ -106,7 +106,6 @@ def _griffe_breaking_changes(v_old: str, old_mod: griffe.Module, v_new: str, new
     removals = []
 
     for breakage in griffe.find_breaking_changes(old_mod, new_mod):
-        # We are currently interested only in OBJECT_REMOVED breakages
         if breakage.kind != griffe.BreakageKind.OBJECT_REMOVED:
             continue
 

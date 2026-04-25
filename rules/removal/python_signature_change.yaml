@@ -1,0 +1,1072 @@
+# OctoPrint removal rules
+
+rules:
+- id: SIG-0001
+  message: '`octoprint.plugin.core.PluginManager.is_plugin_marked` (commonly accessed
+    by plugins as `self._plugin_manager.is_plugin_marked`) no longer accepts the keyword
+    argument `key`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: PluginManager.is_plugin_marked(..., key=$V, ...)
+  - pattern: $X._plugin_manager.is_plugin_marked(..., key=$V, ...)
+  - pattern: pluginManager.is_plugin_marked(..., key=$V, ...)
+  - pattern: plugin_manager().is_plugin_marked(..., key=$V, ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Update the call to `octoprint.plugin.core.PluginManager.is_plugin_marked`
+      (commonly accessed by plugins as `self._plugin_manager.is_plugin_marked`) to
+      match its new signature.
+    _removed_param: key
+    _ref: octoprint.plugin.core.PluginManager.is_plugin_marked
+- id: SIG-0005
+  message: '`octoprint.server.util.flask.collect_core_assets` no longer accepts the
+    keyword argument `enable_gcodeviewer`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.server.util.flask.collect_core_assets(..., enable_gcodeviewer=$V,
+    ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Update the call to `octoprint.server.util.flask.collect_core_assets`
+      to match its new signature.
+    _removed_param: enable_gcodeviewer
+    _ref: octoprint.server.util.flask.collect_core_assets
+- id: SIG-0006
+  message: '`octoprint.server.util.flask.collect_plugin_assets` no longer accepts
+    the keyword argument `enable_gcodeviewer`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.server.util.flask.collect_plugin_assets(..., enable_gcodeviewer=$V,
+    ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Update the call to `octoprint.server.util.flask.collect_plugin_assets`
+      to match its new signature.
+    _removed_param: enable_gcodeviewer
+    _ref: octoprint.server.util.flask.collect_plugin_assets
+- id: SIG-0007
+  message: '`octoprint.vendor.sockjs.tornado.stats.StatsCollector` constructor no
+    longer accepts the keyword argument `io_loop`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: StatsCollector(..., io_loop=$V, ...)
+  metadata:
+    type: removal
+    since: 1.5.0
+    suggestion: Update the call to `octoprint.vendor.sockjs.tornado.stats.StatsCollector(...)`
+      to match its new signature.
+    _removed_param: io_loop
+    _ref: octoprint.vendor.sockjs.tornado.stats.StatsCollector
+- id: SIG-0008
+  message: '`octoprint.util.version.get_comparable_version` no longer accepts the
+    keyword argument `base`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.version.get_comparable_version(..., base=$V, ...)
+  metadata:
+    type: removal
+    since: 1.6.0
+    suggestion: Update the call to `octoprint.util.version.get_comparable_version`
+      to match its new signature.
+    _removed_param: base
+    _ref: octoprint.util.version.get_comparable_version
+- id: SIG-0009
+  message: '`octoprint.util.version.get_octoprint_version` no longer accepts the keyword
+    argument `base`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.version.get_octoprint_version(..., base=$V, ...)
+  metadata:
+    type: removal
+    since: 1.6.0
+    suggestion: Update the call to `octoprint.util.version.get_octoprint_version`
+      to match its new signature.
+    _removed_param: base
+    _ref: octoprint.util.version.get_octoprint_version
+- id: SIG-0010
+  message: '`octoprint.settings.Settings.getBaseFolder` no longer accepts the keyword
+    argument `log_error`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: settings().getBaseFolder(..., log_error=$V, ...)
+  metadata:
+    type: removal
+    since: 1.7.0
+    suggestion: Update the call to `octoprint.settings.Settings.getBaseFolder` to
+      match its new signature.
+    _removed_param: log_error
+    _ref: octoprint.settings.Settings.getBaseFolder
+- id: SIG-0011
+  message: '`octoprint.util.version.is_prerelease` no longer accepts the keyword argument
+    `version_string`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.version.is_prerelease(..., version_string=$V, ...)
+  metadata:
+    type: removal
+    since: 1.8.0
+    suggestion: Update the call to `octoprint.util.version.is_prerelease` to match
+      its new signature.
+    _removed_param: version_string
+    _ref: octoprint.util.version.is_prerelease
+- id: SIG-0012
+  message: '`octoprint.access.users.User.check_password` no longer accepts the keyword
+    argument `passwordHash`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: current_user.check_password(..., passwordHash=$V, ...)
+  - pattern: user.check_password(..., passwordHash=$V, ...)
+  metadata:
+    type: removal
+    since: 1.9.0
+    suggestion: Update the call to `octoprint.access.users.User.check_password` to
+      match its new signature.
+    _removed_param: passwordHash
+    _ref: octoprint.access.users.User.check_password
+- id: SIG-0013
+  message: '`octoprint.filemanager.FileManager.add_file` (commonly accessed by plugins
+    as `self._file_manager.add_file`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.add_file(..., destination=$V, ...)
+  - pattern: $X._file_manager.add_file(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].add_file(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.add_file` (commonly
+      accessed by plugins as `self._file_manager.add_file`) to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.add_file
+- id: SIG-0014
+  message: '`octoprint.filemanager.FileManager.add_folder` (commonly accessed by plugins
+    as `self._file_manager.add_folder`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.add_folder(..., destination=$V, ...)
+  - pattern: $X._file_manager.add_folder(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].add_folder(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.add_folder`
+      (commonly accessed by plugins as `self._file_manager.add_folder`) to match its
+      new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.add_folder
+- id: SIG-0015
+  message: '`octoprint.filemanager.FileManager.add_link` (commonly accessed by plugins
+    as `self._file_manager.add_link`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.add_link(..., destination=$V, ...)
+  - pattern: $X._file_manager.add_link(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].add_link(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.add_link` (commonly
+      accessed by plugins as `self._file_manager.add_link`) to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.add_link
+- id: SIG-0016
+  message: '`octoprint.filemanager.FileManager.canonicalize` (commonly accessed by
+    plugins as `self._file_manager.canonicalize`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.canonicalize(..., destination=$V, ...)
+  - pattern: $X._file_manager.canonicalize(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].canonicalize(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.canonicalize`
+      (commonly accessed by plugins as `self._file_manager.canonicalize`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.canonicalize
+- id: SIG-0017
+  message: '`octoprint.filemanager.FileManager.copy_file` (commonly accessed by plugins
+    as `self._file_manager.copy_file`) no longer accepts the keyword argument `dst`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.copy_file(..., dst=$V, ...)
+  - pattern: $X._file_manager.copy_file(..., dst=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].copy_file(..., dst=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.copy_file` (commonly
+      accessed by plugins as `self._file_manager.copy_file`) to match its new signature.
+    _removed_param: dst
+    _ref: octoprint.filemanager.FileManager.copy_file
+- id: SIG-0018
+  message: '`octoprint.filemanager.FileManager.copy_folder` (commonly accessed by
+    plugins as `self._file_manager.copy_folder`) no longer accepts the keyword argument
+    `dst`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.copy_folder(..., dst=$V, ...)
+  - pattern: $X._file_manager.copy_folder(..., dst=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].copy_folder(..., dst=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.copy_folder`
+      (commonly accessed by plugins as `self._file_manager.copy_folder`) to match
+      its new signature.
+    _removed_param: dst
+    _ref: octoprint.filemanager.FileManager.copy_folder
+- id: SIG-0019
+  message: '`octoprint.filemanager.FileManager.get_additional_metadata` (commonly
+    accessed by plugins as `self._file_manager.get_additional_metadata`) no longer
+    accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.get_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager.get_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].get_additional_metadata(...,
+      destination=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.get_additional_metadata`
+      (commonly accessed by plugins as `self._file_manager.get_additional_metadata`)
+      to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.get_additional_metadata
+- id: SIG-0020
+  message: '`octoprint.filemanager.FileManager.get_metadata` (commonly accessed by
+    plugins as `self._file_manager.get_metadata`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.get_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager.get_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].get_metadata(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.get_metadata`
+      (commonly accessed by plugins as `self._file_manager.get_metadata`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.get_metadata
+- id: SIG-0021
+  message: '`octoprint.filemanager.FileManager.has_analysis` (commonly accessed by
+    plugins as `self._file_manager.has_analysis`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.has_analysis(..., destination=$V, ...)
+  - pattern: $X._file_manager.has_analysis(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].has_analysis(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.has_analysis`
+      (commonly accessed by plugins as `self._file_manager.has_analysis`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.has_analysis
+- id: SIG-0022
+  message: '`octoprint.filemanager.FileManager.join_path` (commonly accessed by plugins
+    as `self._file_manager.join_path`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.join_path(..., destination=$V, ...)
+  - pattern: $X._file_manager.join_path(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].join_path(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.join_path` (commonly
+      accessed by plugins as `self._file_manager.join_path`) to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.join_path
+- id: SIG-0023
+  message: '`octoprint.filemanager.FileManager.last_modified` (commonly accessed by
+    plugins as `self._file_manager.last_modified`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.last_modified(..., destination=$V, ...)
+  - pattern: $X._file_manager.last_modified(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].last_modified(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.last_modified`
+      (commonly accessed by plugins as `self._file_manager.last_modified`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.last_modified
+- id: SIG-0024
+  message: '`octoprint.filemanager.FileManager.list_files` (commonly accessed by plugins
+    as `self._file_manager.list_files`) no longer accepts the keyword argument `destinations`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.list_files(..., destinations=$V, ...)
+  - pattern: $X._file_manager.list_files(..., destinations=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].list_files(..., destinations=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.list_files`
+      (commonly accessed by plugins as `self._file_manager.list_files`) to match its
+      new signature.
+    _removed_param: destinations
+    _ref: octoprint.filemanager.FileManager.list_files
+- id: SIG-0025
+  message: '`octoprint.filemanager.FileManager.log_print` (commonly accessed by plugins
+    as `self._file_manager.log_print`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.log_print(..., destination=$V, ...)
+  - pattern: $X._file_manager.log_print(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].log_print(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.log_print` (commonly
+      accessed by plugins as `self._file_manager.log_print`) to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.log_print
+- id: SIG-0026
+  message: '`octoprint.filemanager.FileManager.move_file` (commonly accessed by plugins
+    as `self._file_manager.move_file`) no longer accepts the keyword argument `dst`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.move_file(..., dst=$V, ...)
+  - pattern: $X._file_manager.move_file(..., dst=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].move_file(..., dst=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.move_file` (commonly
+      accessed by plugins as `self._file_manager.move_file`) to match its new signature.
+    _removed_param: dst
+    _ref: octoprint.filemanager.FileManager.move_file
+- id: SIG-0027
+  message: '`octoprint.filemanager.FileManager.move_folder` (commonly accessed by
+    plugins as `self._file_manager.move_folder`) no longer accepts the keyword argument
+    `dst`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.move_folder(..., dst=$V, ...)
+  - pattern: $X._file_manager.move_folder(..., dst=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].move_folder(..., dst=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.move_folder`
+      (commonly accessed by plugins as `self._file_manager.move_folder`) to match
+      its new signature.
+    _removed_param: dst
+    _ref: octoprint.filemanager.FileManager.move_folder
+- id: SIG-0028
+  message: '`octoprint.filemanager.FileManager.path_in_storage` (commonly accessed
+    by plugins as `self._file_manager.path_in_storage`) no longer accepts the keyword
+    argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.path_in_storage(..., destination=$V, ...)
+  - pattern: $X._file_manager.path_in_storage(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].path_in_storage(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.path_in_storage`
+      (commonly accessed by plugins as `self._file_manager.path_in_storage`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.path_in_storage
+- id: SIG-0029
+  message: '`octoprint.filemanager.FileManager.path_on_disk` (commonly accessed by
+    plugins as `self._file_manager.path_on_disk`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.path_on_disk(..., destination=$V, ...)
+  - pattern: $X._file_manager.path_on_disk(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].path_on_disk(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.path_on_disk`
+      (commonly accessed by plugins as `self._file_manager.path_on_disk`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.path_on_disk
+- id: SIG-0030
+  message: '`octoprint.filemanager.FileManager.remove_additional_metadata` (commonly
+    accessed by plugins as `self._file_manager.remove_additional_metadata`) no longer
+    accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager.remove_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_additional_metadata(...,
+      destination=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_additional_metadata`
+      (commonly accessed by plugins as `self._file_manager.remove_additional_metadata`)
+      to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.remove_additional_metadata
+- id: SIG-0031
+  message: '`octoprint.filemanager.FileManager.remove_file` (commonly accessed by
+    plugins as `self._file_manager.remove_file`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_file(..., destination=$V, ...)
+  - pattern: $X._file_manager.remove_file(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_file(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_file`
+      (commonly accessed by plugins as `self._file_manager.remove_file`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.remove_file
+- id: SIG-0032
+  message: '`octoprint.filemanager.FileManager.remove_folder` (commonly accessed by
+    plugins as `self._file_manager.remove_folder`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_folder(..., destination=$V, ...)
+  - pattern: $X._file_manager.remove_folder(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_folder(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_folder`
+      (commonly accessed by plugins as `self._file_manager.remove_folder`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.remove_folder
+- id: SIG-0033
+  message: '`octoprint.filemanager.FileManager.remove_link` (commonly accessed by
+    plugins as `self._file_manager.remove_link`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_link(..., destination=$V, ...)
+  - pattern: $X._file_manager.remove_link(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_link(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_link`
+      (commonly accessed by plugins as `self._file_manager.remove_link`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.remove_link
+- id: SIG-0034
+  message: '`octoprint.filemanager.FileManager.sanitize` (commonly accessed by plugins
+    as `self._file_manager.sanitize`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.sanitize(..., destination=$V, ...)
+  - pattern: $X._file_manager.sanitize(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].sanitize(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize` (commonly
+      accessed by plugins as `self._file_manager.sanitize`) to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.sanitize
+- id: SIG-0035
+  message: '`octoprint.filemanager.FileManager.sanitize_name` (commonly accessed by
+    plugins as `self._file_manager.sanitize_name`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.sanitize_name(..., destination=$V, ...)
+  - pattern: $X._file_manager.sanitize_name(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].sanitize_name(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize_name`
+      (commonly accessed by plugins as `self._file_manager.sanitize_name`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.sanitize_name
+- id: SIG-0036
+  message: '`octoprint.filemanager.FileManager.sanitize_path` (commonly accessed by
+    plugins as `self._file_manager.sanitize_path`) no longer accepts the keyword argument
+    `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.sanitize_path(..., destination=$V, ...)
+  - pattern: $X._file_manager.sanitize_path(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].sanitize_path(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize_path`
+      (commonly accessed by plugins as `self._file_manager.sanitize_path`) to match
+      its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.sanitize_path
+- id: SIG-0037
+  message: '`octoprint.filemanager.FileManager.save_recovery_data` (commonly accessed
+    by plugins as `self._file_manager.save_recovery_data`) no longer accepts the keyword
+    argument `origin`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.save_recovery_data(..., origin=$V, ...)
+  - pattern: $X._file_manager.save_recovery_data(..., origin=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].save_recovery_data(..., origin=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.save_recovery_data`
+      (commonly accessed by plugins as `self._file_manager.save_recovery_data`) to
+      match its new signature.
+    _removed_param: origin
+    _ref: octoprint.filemanager.FileManager.save_recovery_data
+- id: SIG-0038
+  message: '`octoprint.filemanager.FileManager.set_additional_metadata` (commonly
+    accessed by plugins as `self._file_manager.set_additional_metadata`) no longer
+    accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.set_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager.set_additional_metadata(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].set_additional_metadata(...,
+      destination=$V, ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.set_additional_metadata`
+      (commonly accessed by plugins as `self._file_manager.set_additional_metadata`)
+      to match its new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.set_additional_metadata
+- id: SIG-0039
+  message: '`octoprint.filemanager.FileManager.split_path` (commonly accessed by plugins
+    as `self._file_manager.split_path`) no longer accepts the keyword argument `destination`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.split_path(..., destination=$V, ...)
+  - pattern: $X._file_manager.split_path(..., destination=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].split_path(..., destination=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 1.10.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.split_path`
+      (commonly accessed by plugins as `self._file_manager.split_path`) to match its
+      new signature.
+    _removed_param: destination
+    _ref: octoprint.filemanager.FileManager.split_path
+- id: SIG-0040
+  message: '`octoprint.settings.InvalidYaml` constructor no longer accepts the keyword
+    argument `column`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: InvalidYaml(..., column=$V, ...)
+  metadata:
+    type: removal
+    since: 1.11.0
+    suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
+      its new signature.
+    _removed_param: column
+    _ref: octoprint.settings.InvalidYaml
+- id: SIG-0041
+  message: '`octoprint.settings.InvalidYaml` constructor no longer accepts the keyword
+    argument `details`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: InvalidYaml(..., details=$V, ...)
+  metadata:
+    type: removal
+    since: 1.11.0
+    suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
+      its new signature.
+    _removed_param: details
+    _ref: octoprint.settings.InvalidYaml
+- id: SIG-0042
+  message: '`octoprint.settings.InvalidYaml` constructor no longer accepts the keyword
+    argument `line`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: InvalidYaml(..., line=$V, ...)
+  metadata:
+    type: removal
+    since: 1.11.0
+    suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
+      its new signature.
+    _removed_param: line
+    _ref: octoprint.settings.InvalidYaml
+- id: SIG-0043
+  message: '`octoprint.vendor.sockjs.tornado.util.bytes_to_str` no longer accepts
+    the keyword argument `s`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.vendor.sockjs.tornado.util.bytes_to_str(..., s=$V, ...)
+  metadata:
+    type: removal
+    since: 1.11.0
+    suggestion: Update the call to `octoprint.vendor.sockjs.tornado.util.bytes_to_str`
+      to match its new signature.
+    _removed_param: s
+    _ref: octoprint.vendor.sockjs.tornado.util.bytes_to_str
+- id: SIG-0044
+  message: '`octoprint.util.parse_mime_type` no longer accepts the keyword argument
+    `mime`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.parse_mime_type(..., mime=$V, ...)
+  metadata:
+    type: removal
+    since: 1.11.7
+    suggestion: Update the call to `octoprint.util.parse_mime_type` to match its new
+      signature.
+    _removed_param: mime
+    _ref: octoprint.util.parse_mime_type
+- id: SIG-0045
+  message: '`octoprint.cli.server.run_server` no longer accepts the keyword argument
+    `ignore_blacklist`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.cli.server.run_server(..., ignore_blacklist=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.cli.server.run_server` to match its
+      new signature.
+    _removed_param: ignore_blacklist
+    _ref: octoprint.cli.server.run_server
+- id: SIG-0046
+  message: '`octoprint.filemanager.FileManager.add_folder` (commonly accessed by plugins
+    as `self._file_manager.add_folder`) no longer accepts the keyword argument `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.add_folder(..., location=$V, ...)
+  - pattern: $X._file_manager.add_folder(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].add_folder(..., location=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.add_folder`
+      (commonly accessed by plugins as `self._file_manager.add_folder`) to match its
+      new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.add_folder
+- id: SIG-0047
+  message: '`octoprint.filemanager.FileManager.copy_file` (commonly accessed by plugins
+    as `self._file_manager.copy_file`) no longer accepts the keyword argument `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.copy_file(..., location=$V, ...)
+  - pattern: $X._file_manager.copy_file(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].copy_file(..., location=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.copy_file` (commonly
+      accessed by plugins as `self._file_manager.copy_file`) to match its new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.copy_file
+- id: SIG-0048
+  message: '`octoprint.filemanager.FileManager.copy_folder` (commonly accessed by
+    plugins as `self._file_manager.copy_folder`) no longer accepts the keyword argument
+    `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.copy_folder(..., location=$V, ...)
+  - pattern: $X._file_manager.copy_folder(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].copy_folder(..., location=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.copy_folder`
+      (commonly accessed by plugins as `self._file_manager.copy_folder`) to match
+      its new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.copy_folder
+- id: SIG-0049
+  message: '`octoprint.filemanager.FileManager.move_file` (commonly accessed by plugins
+    as `self._file_manager.move_file`) no longer accepts the keyword argument `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.move_file(..., location=$V, ...)
+  - pattern: $X._file_manager.move_file(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].move_file(..., location=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.move_file` (commonly
+      accessed by plugins as `self._file_manager.move_file`) to match its new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.move_file
+- id: SIG-0050
+  message: '`octoprint.filemanager.FileManager.move_folder` (commonly accessed by
+    plugins as `self._file_manager.move_folder`) no longer accepts the keyword argument
+    `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.move_folder(..., location=$V, ...)
+  - pattern: $X._file_manager.move_folder(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].move_folder(..., location=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.move_folder`
+      (commonly accessed by plugins as `self._file_manager.move_folder`) to match
+      its new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.move_folder
+- id: SIG-0051
+  message: '`octoprint.filemanager.FileManager.remove_folder` (commonly accessed by
+    plugins as `self._file_manager.remove_folder`) no longer accepts the keyword argument
+    `location`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_folder(..., location=$V, ...)
+  - pattern: $X._file_manager.remove_folder(..., location=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_folder(..., location=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_folder`
+      (commonly accessed by plugins as `self._file_manager.remove_folder`) to match
+      its new signature.
+    _removed_param: location
+    _ref: octoprint.filemanager.FileManager.remove_folder
+- id: SIG-0052
+  message: '`octoprint.filemanager.FileManager.remove_storage` (commonly accessed
+    by plugins as `self._file_manager.remove_storage`) no longer accepts the keyword
+    argument `type`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: FileManager.remove_storage(..., type=$V, ...)
+  - pattern: $X._file_manager.remove_storage(..., type=$V, ...)
+  - pattern: $X._file_manager._storage_managers[...].remove_storage(..., type=$V,
+      ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.filemanager.FileManager.remove_storage`
+      (commonly accessed by plugins as `self._file_manager.remove_storage`) to match
+      its new signature.
+    _removed_param: type
+    _ref: octoprint.filemanager.FileManager.remove_storage
+- id: SIG-0053
+  message: '`octoprint.init_platform` no longer accepts the keyword argument `ignore_blacklist`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.init_platform(..., ignore_blacklist=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.init_platform` to match its new signature.
+    _removed_param: ignore_blacklist
+    _ref: octoprint.init_platform
+- id: SIG-0054
+  message: '`octoprint.init_pluginsystem` no longer accepts the keyword argument `ignore_blacklist`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.init_pluginsystem(..., ignore_blacklist=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.init_pluginsystem` to match its new
+      signature.
+    _removed_param: ignore_blacklist
+    _ref: octoprint.init_pluginsystem
+- id: SIG-0055
+  message: '`octoprint.plugin.core.PluginManager` constructor no longer accepts the
+    keyword argument `plugin_blacklist`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: PluginManager(..., plugin_blacklist=$V, ...)
+  - pattern: _plugin_manager(..., plugin_blacklist=$V, ...)
+  - pattern: pluginManager(..., plugin_blacklist=$V, ...)
+  - pattern: plugin_manager()(..., plugin_blacklist=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.plugin.core.PluginManager(...)` to match
+      its new signature.
+    _removed_param: plugin_blacklist
+    _ref: octoprint.plugin.core.PluginManager
+- id: SIG-0056
+  message: '`octoprint.plugin.plugin_manager` no longer accepts the keyword argument
+    `plugin_blacklist`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.plugin.plugin_manager(..., plugin_blacklist=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.plugin.plugin_manager` to match its
+      new signature.
+    _removed_param: plugin_blacklist
+    _ref: octoprint.plugin.plugin_manager
+- id: SIG-0057
+  message: '`octoprint.printer.standard.Printer` constructor no longer accepts the
+    keyword argument `analysisQueue`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: Printer(..., analysisQueue=$V, ...)
+  - pattern: PrinterInterface(..., analysisQueue=$V, ...)
+  - pattern: PrinterMixin(..., analysisQueue=$V, ...)
+  - pattern: _printer(..., analysisQueue=$V, ...)
+  - pattern: printer(..., analysisQueue=$V, ...)
+  - pattern: _printer._comm._callback(..., analysisQueue=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
+      its new signature.
+    _removed_param: analysisQueue
+    _ref: octoprint.printer.standard.Printer
+- id: SIG-0058
+  message: '`octoprint.printer.standard.Printer` constructor no longer accepts the
+    keyword argument `fileManager`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: Printer(..., fileManager=$V, ...)
+  - pattern: PrinterInterface(..., fileManager=$V, ...)
+  - pattern: PrinterMixin(..., fileManager=$V, ...)
+  - pattern: _printer(..., fileManager=$V, ...)
+  - pattern: printer(..., fileManager=$V, ...)
+  - pattern: _printer._comm._callback(..., fileManager=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
+      its new signature.
+    _removed_param: fileManager
+    _ref: octoprint.printer.standard.Printer
+- id: SIG-0059
+  message: '`octoprint.printer.standard.Printer` constructor no longer accepts the
+    keyword argument `printerProfileManager`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern-either:
+  - pattern: Printer(..., printerProfileManager=$V, ...)
+  - pattern: PrinterInterface(..., printerProfileManager=$V, ...)
+  - pattern: PrinterMixin(..., printerProfileManager=$V, ...)
+  - pattern: _printer(..., printerProfileManager=$V, ...)
+  - pattern: printer(..., printerProfileManager=$V, ...)
+  - pattern: _printer._comm._callback(..., printerProfileManager=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
+      its new signature.
+    _removed_param: printerProfileManager
+    _ref: octoprint.printer.standard.Printer
+- id: SIG-0060
+  message: '`octoprint.printer.standard.StateMonitor` constructor no longer accepts
+    the keyword argument `on_get_resends`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: StateMonitor(..., on_get_resends=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.printer.standard.StateMonitor(...)`
+      to match its new signature.
+    _removed_param: on_get_resends
+    _ref: octoprint.printer.standard.StateMonitor
+- id: SIG-0061
+  message: '`octoprint.server.api.files.gcodeFileCommand` no longer accepts the keyword
+    argument `filename`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.server.api.files.gcodeFileCommand(..., filename=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.server.api.files.gcodeFileCommand` to
+      match its new signature.
+    _removed_param: filename
+    _ref: octoprint.server.api.files.gcodeFileCommand
+- id: SIG-0062
+  message: '`octoprint.server.api.files.gcodeFileCommand` no longer accepts the keyword
+    argument `target`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.server.api.files.gcodeFileCommand(..., target=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.server.api.files.gcodeFileCommand` to
+      match its new signature.
+    _removed_param: target
+    _ref: octoprint.server.api.files.gcodeFileCommand
+- id: SIG-0063
+  message: '`octoprint.server.load_user` no longer accepts the keyword argument `id`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.server.load_user(..., id=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.server.load_user` to match its new signature.
+    _removed_param: id
+    _ref: octoprint.server.load_user
+- id: SIG-0064
+  message: '`octoprint.util.files.get_dos_filename` no longer accepts the keyword
+    argument `whitelisted_extensions`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.files.get_dos_filename(..., whitelisted_extensions=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.util.files.get_dos_filename` to match
+      its new signature.
+    _removed_param: whitelisted_extensions
+    _ref: octoprint.util.files.get_dos_filename
+- id: SIG-0065
+  message: '`octoprint.util.get_bom` no longer accepts the keyword argument `filename`.'
+  languages:
+  - python
+  severity: HIGH
+  pattern: octoprint.util.get_bom(..., filename=$V, ...)
+  metadata:
+    type: removal
+    since: 2.0.0
+    suggestion: Update the call to `octoprint.util.get_bom` to match its new signature.
+    _removed_param: filename
+    _ref: octoprint.util.get_bom

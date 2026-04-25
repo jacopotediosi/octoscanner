@@ -35,6 +35,7 @@ class RuleFile(StrEnum):
 
     python_deprecation = "deprecation/python_deprecation.yaml"
     python_removal = "removal/python_removal.yaml"
+    python_signature_change = "removal/python_signature_change.yaml"
     python_settings_removal = "removal/python_settings_removal.yaml"
 
     @property
@@ -139,3 +140,32 @@ class Removal:
     since: str
     class_name: str | None
     module_path: str
+
+
+@dataclass(frozen=True)
+class SignatureChange:
+    """A function/method whose signature lost a keyword parameter.
+
+    Attributes:
+        name (str): Callable name (e.g. ``"add_file"``).
+        since (str): OctoPrint version where the parameter was removed (e.g. ``"1.8.0"``).
+        class_name (str | None): Enclosing class name, or ``None`` for
+            module-level functions.
+        module_path (str): Dotted module path (e.g. ``"octoprint.filemanager"``).
+        removed_param (str): Name of the removed keyword parameter.
+
+    Examples:
+        >>> sc = SignatureChange(
+        ...     name="add_file",
+        ...     since="1.10.0",
+        ...     class_name="FileManager",
+        ...     module_path="octoprint.filemanager",
+        ...     removed_param="destination",
+        ... )
+    """
+
+    name: str
+    since: str
+    class_name: str | None
+    module_path: str
+    removed_param: str

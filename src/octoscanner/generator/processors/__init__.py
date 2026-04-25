@@ -10,10 +10,12 @@ from .python_deprecation import PythonDeprecationProcessor
 from .python_normalization import PythonNormalizationProcessor
 from .python_removal import PythonRemovalProcessor
 from .python_settings_removal import PythonSettingsRemovalProcessor
+from .python_signature_change import PythonSignatureChangeProcessor
 
 PROCESSORS: list[Processor] = [
     PythonDeprecationProcessor(),
     PythonRemovalProcessor(),
+    PythonSignatureChangeProcessor(),
     PythonSettingsRemovalProcessor(),
     PythonNormalizationProcessor(),
 ]

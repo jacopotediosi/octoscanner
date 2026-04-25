@@ -70,16 +70,14 @@
     - [ ] Jinja usage of removed viewmodels or deprecated/removed viewmodel members,
             e.g. `bedlevelvisualizer_tab.jinja2` uses the removed `settingsViewModel.webcam_rotate90()`
 
-- [ ] Backend changes
+- [x] Python changes
     - [x] Python deprecations
         - [x] Usage of any deprecated function (notice that there are many different ways to deprecated things in OctoPrint)
         - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
-    - [ ] Python breaking changes
+    - [x] Python breaking changes
         - [x] Import classes/modules path changes
         - [x] Class/method/attribute renames (both private and non-private)
-        - [ ] Signature changes, e.g. to detect `octoprint.util.commandline.clean_ansi()` which doesn't accept `bytes`
-                arguments anymore, or `PrinterInterface.connect`, which changed signature in 2.0.0.
-                Consider extending `_griffe_breaking_changes` to report also signature changes.
+        - [x] Signature changes
 
 - [ ] Generate and manually review/fix/improve all rules
 - [ ] Check if all rule texts are well written or can be improved

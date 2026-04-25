@@ -1,6 +1,6 @@
 # Octoscanner
 
-A static analysis tool for OctoPrint plugins. Detects usage of deprecated or features removed between OctoPrint versions, security issues, and common bad practices.
+A static analysis tool for OctoPrint plugins. A static analysis tool for OctoPrint plugins. Detects usage of features deprecated or removed between OctoPrint versions, security issues, and common bad practices.
 
 > [!WARNING]
 > Please note that this tool is still a very early version and false positives are possible, as well as false negatives (the tool does not yet detect all deprecations/removals, especially not frontend related things).

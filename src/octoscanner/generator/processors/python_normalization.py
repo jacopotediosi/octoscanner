@@ -1,18 +1,26 @@
 """Post-generation normalization of Semgrep rules.
 
-Three cleanup passes:
+The following cleanup passes are applied in order:
 
 1. **Superseded deprecations**: remove deprecation rules for symbols that
    were later fully removed (a removal rule replaces the deprecation).
 2. **Stale deprecations**: remove deprecation rules for symbols that exist
    in the latest OctoPrint version but are no longer marked as deprecated.
    This handles cases where deprecations were reverted in a later version.
-3. **Superseded settings**: remove settings removal rules whose path is
+3. **Superseded signature changes**: remove signature change rules for
+   callables that were later fully removed (a removal rule already covers
+   any call to them).
+4. **Stale signature changes**: remove signature change rules whose removed
+   keyword parameter is present again in the latest OctoPrint version.
+   This handles cases where a parameter was removed and later reintroduced.
+5. **Superseded settings**: remove settings removal rules whose path is
    covered by a more general ancestor rule (e.g. ``serial.capabilities.foo``
    is redundant if ``serial`` is already covered).
 """
 
 from __future__ import annotations
+
+import griffe
 
 from ..models import Deprecation, PipelineState, RuleFile
 from ..rules import ref_earliest_since_map, ref_from_rule
@@ -111,6 +119,98 @@ def _clean_stale_deprecations(
     return kept_rules, removed_ids
 
 
+def _clean_superseded_signature_changes(
+    signature_change_rules: list[dict],
+    removal_rules: list[dict],
+) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Remove signature change rules superseded by a corresponding removal rule.
+
+    When a callable whose signature changed is later fully removed, the removal
+    rule already covers any call to it, so the signature change rule becomes
+    redundant.
+
+    Args:
+        signature_change_rules (list[dict]): List of signature change rule dicts.
+        removal_rules (list[dict]): List of removal rule dicts.
+
+    Returns:
+        tuple[list[dict], list[tuple[str, str]]]: A
+        ``(cleaned_rules, removed_pairs)`` tuple where ``cleaned_rules`` is the
+        filtered list of signature change rules and ``removed_pairs`` is a list
+        of ``(sig_rule_id, superseding_rem_rule_id)`` for each removed pair.
+    """
+    cleaned_rules, removed_pairs = [], []
+
+    removal_by_ref = {ref_from_rule(rem): rem.get("id") for rem in removal_rules}
+
+    for sig_rule in signature_change_rules:
+        sig_rule_ref = ref_from_rule(sig_rule)
+        if sig_rule_ref in removal_by_ref:
+            removed_pairs.append((sig_rule.get("id"), removal_by_ref[sig_rule_ref]))
+        else:
+            cleaned_rules.append(sig_rule)
+
+    return cleaned_rules, removed_pairs
+
+
+def _clean_stale_signature_changes(
+    signature_change_rules: list[dict],
+    latest_module: griffe.Module,
+) -> tuple[list[dict], list[str]]:
+    """Remove signature change rules whose removed parameter is back in the latest
+    OctoPrint version.
+
+    Rules without ``_removed_param`` metadata, or whose callable cannot be
+    resolved in ``latest_module``, are kept unchanged.
+
+    Args:
+        signature_change_rules (list[dict]): List of signature change rule dicts.
+        latest_module (griffe.Module): Griffe module for the latest OctoPrint version.
+
+    Returns:
+        tuple[list[dict], list[str]]: A ``(kept_rules, removed_ids)`` tuple
+        where ``kept_rules`` is the filtered list and ``removed_ids`` the IDs
+        of the rules dropped as stale.
+    """
+    kept_rules, removed_ids = [], []
+
+    root_parts = latest_module.path.split(".")
+
+    for sig_rule in signature_change_rules:
+        removed_param = sig_rule.get("metadata", {}).get("_removed_param")
+        if not removed_param:
+            kept_rules.append(sig_rule)
+            continue
+
+        # Strip the module root prefix from the rule's FQN to get the path
+        # relative to ``latest_module``
+        ref_parts = ref_from_rule(sig_rule).split(".")
+        if ref_parts[: len(root_parts)] == root_parts:
+            ref_parts = ref_parts[len(root_parts) :]
+
+        # Walk the griffe module tree following the relative path
+        obj = latest_module
+        try:
+            for part in ref_parts:
+                obj = obj.members[part]
+        except (KeyError, AttributeError, griffe.AliasResolutionError):
+            kept_rules.append(sig_rule)
+            continue
+
+        parameters = getattr(obj, "parameters", None)
+        if parameters is None:
+            kept_rules.append(sig_rule)
+            continue
+
+        current_param_names = {p.name for p in parameters if getattr(p, "name", None)}
+        if removed_param in current_param_names:
+            removed_ids.append(sig_rule.get("id"))
+        else:
+            kept_rules.append(sig_rule)
+
+    return kept_rules, removed_ids
+
+
 def _clean_superseded_settings(
     settings_removal_rules: list[dict],
 ) -> tuple[list[dict], list[tuple[str, str]]]:
@@ -156,52 +256,84 @@ class PythonNormalizationProcessor(Processor):
     title = "Python rules normalization"
 
     def run(self, state: PipelineState) -> list[str]:
+        def emit_section(output_lines: list[str], header: str, items: list[str]) -> None:
+            """Append a header line followed by indented items (or "None" if empty)."""
+            output_lines.append(f"  {header}")
+            if items:
+                output_lines.extend(f"    {item}" for item in items)
+            else:
+                output_lines.append("    None")
+
         output_lines = []
 
-        dep_rules = state.rules[RuleFile.python_deprecation]
-        rem_rules = state.rules[RuleFile.python_removal]
+        latest_version = state.versions[-1]
+        latest_results = state.python_analysis_results[latest_version]
 
-        # Clean deprecations from superseded rules
-        cleaned_dep, removed_deps_pairs = _clean_superseded_deprecations(dep_rules, rem_rules)
-        if removed_deps_pairs:
-            output_lines.append(
-                f"  Deprecation -> Removal ({len(removed_deps_pairs)} deprecated APIs removed in later versions):"
-            )
-            for dep_id, rem_id in removed_deps_pairs:
-                output_lines.append(f"    {dep_id} -> {rem_id}")
-        else:
-            output_lines.append("  No superseded deprecations found")
+        deprecation_rules = state.rules[RuleFile.python_deprecation]
+        removal_rules = state.rules[RuleFile.python_removal]
+        signature_change_rules = state.rules[RuleFile.python_signature_change]
+        settings_rules = state.rules[RuleFile.python_settings_removal]
 
-        # Clean deprecations from stale rules
-        cleaned_dep, stale_ids = _clean_stale_deprecations(
-            cleaned_dep,
-            state.python_analysis_results[state.versions[-1]].deprecations,
+        # ---------------------------------------------------------------
+        # Clean deprecation rules
+        # ---------------------------------------------------------------
+
+        # Deprecations superseded by removals
+        cleaned_dep, superseded_dep_pairs = _clean_superseded_deprecations(deprecation_rules, removal_rules)
+        emit_section(
+            output_lines,
+            f"Deprecations superseded by removals ({len(superseded_dep_pairs)} deprecated APIs removed in later versions):",
+            [f"{dep_id} -> {rem_id}" for dep_id, rem_id in superseded_dep_pairs],
         )
-        if stale_ids:
-            output_lines.append(
-                f"  Stale deprecations ({len(stale_ids)} rules no longer deprecated in {state.versions[-1]}):"
-            )
-            for stale_id in stale_ids:
-                output_lines.append(f"    {stale_id}")
-        else:
-            output_lines.append("  No stale deprecations found")
 
-        # Assign cleaned deprecations
+        # Stale deprecations (no longer deprecated in the latest version)
+        cleaned_dep, stale_dep_ids = _clean_stale_deprecations(cleaned_dep, latest_results.deprecations)
+        emit_section(
+            output_lines,
+            f"Stale deprecations ({len(stale_dep_ids)} rules no longer deprecated in {latest_version}):",
+            list(stale_dep_ids),
+        )
+
         state.rules[RuleFile.python_deprecation] = cleaned_dep
 
-        # Clean settings from superseded rules
-        settings_rules = state.rules[RuleFile.python_settings_removal]
-        cleaned_settings, superseded_settings_pairs = _clean_superseded_settings(settings_rules)
-        if superseded_settings_pairs:
-            output_lines.append(
-                f"  Superseded settings ({len(superseded_settings_pairs)} rules covered by a parent rule):"
-            )
-            for child_path, ancestor_path in superseded_settings_pairs:
-                output_lines.append(f"    {child_path} -> {ancestor_path}")
-        else:
-            output_lines.append("  No superseded settings found")
+        # ---------------------------------------------------------------
+        # Clean signature change rules
+        # ---------------------------------------------------------------
 
-        # Assign cleaned settings
+        # Signature changes superseded by removals
+        cleaned_sig, superseded_sig_pairs = _clean_superseded_signature_changes(signature_change_rules, removal_rules)
+        emit_section(
+            output_lines,
+            f"Signature changes superseded by removals ({len(superseded_sig_pairs)} signatures whose callable was later removed):",
+            [f"{sig_id} -> {rem_id}" for sig_id, rem_id in superseded_sig_pairs],
+        )
+
+        # Stale signature changes (removed params are back in the latest version)
+        cleaned_sig, stale_sig_ids = _clean_stale_signature_changes(cleaned_sig, latest_results.griffe_module)
+        emit_section(
+            output_lines,
+            f"Stale signature changes ({len(stale_sig_ids)} rules whose removed params are back in {latest_version}):",
+            list(stale_sig_ids),
+        )
+
+        state.rules[RuleFile.python_signature_change] = cleaned_sig
+
+        # ---------------------------------------------------------------
+        # Clean settings removal rules
+        # ---------------------------------------------------------------
+
+        # Settings superseded by a parent path
+        cleaned_settings, superseded_settings_pairs = _clean_superseded_settings(settings_rules)
+        emit_section(
+            output_lines,
+            f"Superseded settings ({len(superseded_settings_pairs)} rules covered by a parent rule):",
+            [f"{child} -> {ancestor}" for child, ancestor in superseded_settings_pairs],
+        )
+
         state.rules[RuleFile.python_settings_removal] = cleaned_settings
+
+        # ---------------------------------------------------------------
+        # Return
+        # ---------------------------------------------------------------
 
         return output_lines
