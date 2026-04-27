@@ -1,12 +1,6 @@
 # OctoPrint security rules
 
 # TODO:
-# - Plugin does not implement `TemplatePlugin.is_template_autoescaped`
-# - Plugin does implement `TemplatePlugin.is_template_autoescaped` as `False`
-# - Plugin implements `BlueprintPlugin.csrf_exempt`
-# - Plugin does not implement `BlueprintPlugin.is_blueprint_csrf_protected`
-# - Plugin does implement `BlueprintPlugin.is_blueprint_csrf_protected` as `False`
-# - Plugin does implement `BlueprintPlugin.is_blueprint_protected` as `False`
 # - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` checks (?)
 # - Pnotify XSS (?)
 # - Plugin implements custom route defined by `route_hook` w/o authentication (?)
@@ -71,3 +65,162 @@ rules:
       suggestion: >
         Ensure this is intentional. Consider returning `True` and adding explicit
         permission checks in each API handler.
+  - id: SEC-0003
+    message: >
+      Plugin implements `is_blueprint_protected()` but explicitly returns `False`,
+      leaving the blueprint's dynamic endpoints accessible without authentication.
+    languages: [python]
+    severity: CRITICAL
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
+                  ...
+                  def is_blueprint_protected(self, ...):
+                      ...
+                      return False
+                  ...
+          - pattern: |
+              class $CLASS(..., BlueprintPlugin, ...):
+                  ...
+                  def is_blueprint_protected(self, ...):
+                      ...
+                      return False
+                  ...
+    metadata:
+      type: security
+      since: 1.2.0
+      suggestion: >
+        Ensure this is intentional. Consider returning `True` and adding explicit
+        permission checks in each endpoint handler (e.g. `Permissions.PLUGIN_MYPLUGIN_ACCESS`).
+  - id: SEC-0004
+    message: >
+      Plugin implements `BlueprintPlugin` but does not override
+      `is_blueprint_csrf_protected()`. Until OctoPrint 2.0.0, the default
+      implementation returns `False`, leaving the blueprint's endpoints
+      exposed to CSRF attacks.
+    languages: [python]
+    severity: HIGH
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
+                  ...
+          - pattern: |
+              class $CLASS(..., BlueprintPlugin, ...):
+                  ...
+      - pattern-not: |
+          class $CLASS(...):
+              ...
+              def is_blueprint_csrf_protected(self, ...):
+                  ...
+              ...
+    metadata:
+      type: security
+      since: 1.8.3
+      suggestion: >
+        Override `is_blueprint_csrf_protected()` to return `True` and exempt only
+        the endpoints that must not use CSRF protection via the
+        `@octoprint.plugin.BlueprintPlugin.csrf_exempt()` decorator.
+  - id: SEC-0005
+    message: >
+      Plugin implements `is_blueprint_csrf_protected()` but explicitly returns
+      `False`, leaving the blueprint's endpoints exposed to CSRF attacks.
+    languages: [python]
+    severity: HIGH
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
+                  ...
+                  def is_blueprint_csrf_protected(self, ...):
+                      ...
+                      return False
+                  ...
+          - pattern: |
+              class $CLASS(..., BlueprintPlugin, ...):
+                  ...
+                  def is_blueprint_csrf_protected(self, ...):
+                      ...
+                      return False
+                  ...
+    metadata:
+      type: security
+      since: 1.8.3
+      suggestion: >
+        Return `True` and exempt only the endpoints that genuinely cannot use CSRF
+        protection via the `@octoprint.plugin.BlueprintPlugin.csrf_exempt()` decorator.
+  - id: SEC-0006
+    message: >
+      Endpoint exempted from CSRF protection via `BlueprintPlugin.csrf_exempt()`.
+      Ensure that the exemption is necessary and that the endpoint uses an
+      alternative anti-CSRF mechanism (e.g. token in header).
+    languages: [python]
+    severity: MEDIUM
+    pattern-either:
+      - pattern: "@octoprint.plugin.BlueprintPlugin.csrf_exempt()"
+      - pattern: "@BlueprintPlugin.csrf_exempt()"
+    metadata:
+      type: security
+      since: 1.8.3
+      suggestion: >
+        Remove the decorator if not strictly required. Otherwise, document why
+        the endpoint cannot use CSRF protection and ensure another anti-CSRF
+        mechanism is in place.
+  - id: SEC-0007
+    message: >
+      Plugin implements `TemplatePlugin` but does not override
+      `is_template_autoescaped()`. Until OctoPrint 2.1.0, the default
+      implementation returns `False`, exposing the templates to XSS via
+      unescaped variables.
+    languages: [python]
+    severity: HIGH
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.TemplatePlugin, ...):
+                  ...
+          - pattern: |
+              class $CLASS(..., TemplatePlugin, ...):
+                  ...
+      - pattern-not: |
+          class $CLASS(...):
+              ...
+              def is_template_autoescaped(self, ...):
+                  ...
+              ...
+    metadata:
+      type: security
+      since: 1.11.0
+      suggestion: >
+        Override `is_template_autoescaped()` to return `True` and use the `safe`
+        Jinja filter only for variables that legitimately need to render HTML.
+        See https://faq.octoprint.org/plugin-autoescape.
+  - id: SEC-0008
+    message: >
+      Plugin implements `is_template_autoescaped()` but explicitly returns
+      `False`, exposing the templates to XSS via unescaped variables.
+    languages: [python]
+    severity: HIGH
+    patterns:
+      - pattern-either:
+          - pattern: |
+              class $CLASS(..., octoprint.plugin.TemplatePlugin, ...):
+                  ...
+                  def is_template_autoescaped(self, ...):
+                      ...
+                      return False
+                  ...
+          - pattern: |
+              class $CLASS(..., TemplatePlugin, ...):
+                  ...
+                  def is_template_autoescaped(self, ...):
+                      ...
+                      return False
+                  ...
+    metadata:
+      type: security
+      since: 1.11.0
+      suggestion: >
+        Return `True` and use the `safe` Jinja filter only for variables that
+        legitimately need to render HTML. See https://faq.octoprint.org/plugin-autoescape.
