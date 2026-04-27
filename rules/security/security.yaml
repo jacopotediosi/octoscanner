@@ -1,7 +1,6 @@
 # OctoPrint security rules
 
 # TODO:
-# - Add `since` attribute to all rules
 # - Plugin does not implement `TemplatePlugin.is_template_autoescaped`
 # - Plugin does implement `TemplatePlugin.is_template_autoescaped` as `False`
 # - Plugin implements `BlueprintPlugin.csrf_exempt`
@@ -13,6 +12,7 @@
 # - Plugin implements custom route defined by `route_hook` w/o authentication (?)
 # - `data-bind="html"` in jinja templates (?)
 # - `{{var}}` without sanitization in jinja templates (?)
+# - Ensure all rules have a `since` attribute
 
 rules:
   - id: SEC-0001
@@ -38,6 +38,7 @@ rules:
               ...
     metadata:
       type: security
+      since: 1.11.2
       suggestion: >
         Override `is_api_protected()` to explicitly return `True`. Note that this only
         controls authentication; you should also verify permissions explicitly in
@@ -66,6 +67,7 @@ rules:
                   ...
     metadata:
       type: security
+      since: 1.11.2
       suggestion: >
         Ensure this is intentional. Consider returning `True` and adding explicit
         permission checks in each API handler.
