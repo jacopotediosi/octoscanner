@@ -4,7 +4,6 @@
 # - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` checks (?)
 # - Pnotify XSS (?)
 # - Plugin implements custom route defined by `route_hook` w/o authentication (?)
-# - `data-bind="html"` in jinja templates (?)
 # - `{{var}}` without sanitization in jinja templates (?)
 # - Ensure all rules have a `since` attribute
 
@@ -224,3 +223,40 @@ rules:
       suggestion: >
         Return `True` and use the `safe` Jinja filter only for variables that
         legitimately need to render HTML. See https://faq.octoprint.org/plugin-autoescape.
+  - id: SEC-0009
+    message: >
+      Knockout `html:` binding bound to a non-literal value in a Jinja/HTML
+      template. The bound expression is rendered as raw HTML, so any
+      attacker-controllable data flowing into it results in DOM XSS.
+    languages: [generic]
+    severity: WARNING
+    paths:
+      include:
+        - "*.jinja2"
+        - "*.html"
+    patterns:
+      # Match the entire data-bind attribute (double- or single-quoted) that
+      # contains an `html:` binding. Capturing the whole attribute lets the
+      # `pattern-not-regex` filters below inspect the actual bound value.
+      - pattern-either:
+          - pattern-regex: 'data-bind\s*=\s*"[^"]*\bhtml\s*:[^"]*"'
+          - pattern-regex: "data-bind\\s*=\\s*'[^']*\\bhtml\\s*:[^']*'"
+      # Exclude Bootstrap popover sub-option `html: true|false`.
+      - pattern-not-regex: '\bhtml\s*:\s*(true|false)\b'
+      # Exclude `html: '<literal>'` / `html: "<literal>"` (terminator: comma,
+      # closing brace, or end-of-attribute quote).
+      - pattern-not-regex: '\bhtml\s*:\s*"[^"]*"\s*[,}]'
+      - pattern-not-regex: "\\bhtml\\s*:\\s*'[^']*'\\s*[,}]"
+      - pattern-not-regex: '\bhtml\s*:\s*"[^"]*"\s*$'
+      - pattern-not-regex: "\\bhtml\\s*:\\s*'[^']*'\\s*$"
+      # Exclude `html: gettext('...')` / `html: _('...')` with a literal arg.
+      - pattern-not-regex: '\bhtml\s*:\s*(gettext|_)\(\s*[''"][^''"]*[''"]\s*\)'
+      # Exclude any html value that pipes through an escaping/sanitizing call.
+      - pattern-not-regex: '\bhtml\s*:[^,}]*\b(escape|sanitize)\s*\('
+    metadata:
+      type: security
+      suggestion: >
+        Prefer the Knockout `text:` binding, which renders the value as plain
+        text and is safe by default. Use `html:` only when raw HTML output is
+        strictly required, and only with values that are either fully static
+        or that have been properly sanitized.
