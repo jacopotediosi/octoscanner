@@ -28,7 +28,7 @@ The generator runs a two-phase pipeline:
 git clone https://github.com/jacopotediosi/octoscanner.git
 cd octoscanner
 python -m venv venv
-source ./venv/bin/activate
+source ./venv/bin/activate # On Windows: ./venv/Scripts/activate
 pip install .
 ```
 
