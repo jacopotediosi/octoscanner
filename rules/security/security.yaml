@@ -100,7 +100,7 @@ rules:
       implementation returns `False`, leaving the blueprint's endpoints
       exposed to CSRF attacks.
     languages: [python]
-    severity: HIGH
+    severity: CRITICAL
     patterns:
       - pattern-either:
           - pattern: |
@@ -127,7 +127,7 @@ rules:
       Plugin implements `is_blueprint_csrf_protected()` but explicitly returns
       `False`, leaving the blueprint's endpoints exposed to CSRF attacks.
     languages: [python]
-    severity: HIGH
+    severity: CRITICAL
     patterns:
       - pattern-either:
           - pattern: |
@@ -156,7 +156,7 @@ rules:
       Ensure that the exemption is necessary and that the endpoint uses an
       alternative anti-CSRF mechanism (e.g. token in header).
     languages: [python]
-    severity: MEDIUM
+    severity: CRITICAL
     pattern-either:
       - pattern: "@octoprint.plugin.BlueprintPlugin.csrf_exempt()"
       - pattern: "@BlueprintPlugin.csrf_exempt()"
@@ -174,7 +174,7 @@ rules:
       implementation returns `False`, exposing the templates to XSS via
       unescaped variables.
     languages: [python]
-    severity: HIGH
+    severity: CRITICAL
     patterns:
       - pattern-either:
           - pattern: |
@@ -201,7 +201,7 @@ rules:
       Plugin implements `is_template_autoescaped()` but explicitly returns
       `False`, exposing the templates to XSS via unescaped variables.
     languages: [python]
-    severity: HIGH
+    severity: CRITICAL
     patterns:
       - pattern-either:
           - pattern: |
