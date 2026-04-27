@@ -3,8 +3,6 @@
 # TODO:
 # - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` checks (?)
 # - Pnotify XSS (?)
-# - Plugin implements custom route defined by `route_hook` w/o authentication (?)
-# - `{{var}}` without sanitization in jinja templates (?)
 # - Ensure all rules have a `since` attribute
 
 rules:
@@ -260,3 +258,47 @@ rules:
         text and is safe by default. Use `html:` only when raw HTML output is
         strictly required, and only with values that are either fully static
         or that have been properly sanitized.
+  - id: SEC-0010
+    message: >
+      HTTP route registered with an OctoPrint-shipped handler that supports an
+      `access_validation` kwarg, but no `access_validation` is passed. Routes
+      registered this way (e.g. via the `octoprint.server.http.routes` hook)
+      have no authentication and no CSRF protection by default, so any client
+      - including unauthenticated remote attackers - can reach the handler.
+    languages: [python]
+    severity: CRITICAL
+    patterns:
+      # Anchor on a route tuple `(path, HandlerClass, kwargs)` whose handler is
+      # one of the OctoPrint-shipped handlers that natively support an
+      # `access_validation` kwarg (see `octoprint.server.util.tornado`).
+      - pattern-either:
+          - pattern: ($P, LargeResponseHandler, $K)
+          - pattern: ($P, UrlProxyHandler, $K)
+          - pattern: ($P, UrlForwardHandler, $K)
+          - pattern: ($P, StaticDataHandler, $K)
+          - pattern: ($P, GeneratingDataHandler, $K)
+          - pattern: ($P, WebcamSnapshotHandler, $K)
+          - pattern: ($P, DeprecatedEndpointHandler, $K)
+          - pattern: ($P, StaticZipBundleHandler, $K)
+          - pattern: ($P, DynamicZipBundleHandler, $K)
+          - pattern: ($P, SystemInfoBundleHandler, $K)
+      # Exclude routes that already pass an `access_validation` handler kwarg,
+      # in either dict-literal or `dict(...)` form.
+      - metavariable-pattern:
+          metavariable: $K
+          patterns:
+            - pattern-not: |
+                {..., "access_validation": ..., ...}
+            - pattern-not: |
+                dict(..., access_validation=..., ...)
+    metadata:
+      type: security
+      since: 1.2.0
+      suggestion: >
+        Pass an `access_validation` callable in the handler kwargs, typically
+        built via `octoprint.server.util.tornado.access_validation_factory(app,
+        validator, *permissions)` with a validator from
+        `octoprint.server.util.flask` (e.g. `permission_validator` or
+        `permission_and_fresh_credentials_validator`). If the route is
+        intentionally public (e.g. serving static plugin assets), document the
+        decision explicitly.
