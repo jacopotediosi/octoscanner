@@ -13,7 +13,7 @@
 ### Handcrafted rules
 
 - [x] Packaging rules, e.g. plugins still not using `pyproject.yaml`
-- [ ] Security rules - some TODOs in security.yaml
+- [x] Security rules, e.g. routes without authentication, PNotify and Knockout HTML binding XSS, etc
 - [ ] Common code quality issues - TBD
 - [ ] Check if all rule texts are well written or can be improved
 

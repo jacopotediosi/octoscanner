@@ -1,10 +1,5 @@
 # OctoPrint security rules
 
-# TODO:
-# - Plugin implements APIs `SimpleApi`/`BlueprintPlugin` without `Permissions` checks (?)
-# - Pnotify XSS (?)
-# - Ensure all rules have a `since` attribute
-
 rules:
   - id: SEC-0001
     message: >
@@ -302,3 +297,74 @@ rules:
         `permission_and_fresh_credentials_validator`). If the route is
         intentionally public (e.g. serving static plugin assets), document the
         decision explicitly.
+  - id: SEC-0011
+    message: >
+      `PNotify` invocation passing a non-literal value as `text` without
+      `text_escape: true`. PNotify v3 (the version shipped with OctoPrint)
+      renders `text` as raw HTML by default, so any attacker-controllable data
+      flowing into it (push messages, backend errors, printer responses, etc.)
+      results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      - pattern: new PNotify($OPTS)
+      - metavariable-pattern:
+          metavariable: $OPTS
+          patterns:
+            - pattern: "{..., text: $X, ...}"
+            - pattern-not: "{..., text_escape: true, ...}"
+            - metavariable-pattern:
+                metavariable: $X
+                patterns:
+                  # Exclude string literals (single-, double-, template-quoted).
+                  - pattern-not: '"..."'
+                  - pattern-not: "'...'"
+                  - pattern-not: "`...`"
+                  # Exclude i18n helpers.
+                  - pattern-not: "gettext(...)"
+                  - pattern-not: "_(...)"
+                  # Exclude common HTML-escape/sanitize wrappers.
+                  - pattern-not: "escape(...)"
+                  - pattern-not: "sanitize(...)"
+    metadata:
+      type: security
+      suggestion: >
+        Set `text_escape: true` in the PNotify options so the value is rendered
+        as plain text. If the value must contain HTML, escape any
+        user-controllable substring via `_.escape(...)` before
+        interpolating it into the markup.
+  - id: SEC-0012
+    message: >
+      `PNotify` invocation passing a non-literal value as `title` without
+      `title_escape: true`. PNotify v3 (the version shipped with OctoPrint)
+      renders `title` as raw HTML by default, so any user-controllable
+      data flowing into it results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      - pattern: new PNotify($OPTS)
+      - metavariable-pattern:
+          metavariable: $OPTS
+          patterns:
+            - pattern: "{..., title: $X, ...}"
+            - pattern-not: "{..., title_escape: true, ...}"
+            - metavariable-pattern:
+                metavariable: $X
+                patterns:
+                  # Exclude string literals (single-, double-, template-quoted).
+                  - pattern-not: '"..."'
+                  - pattern-not: "'...'"
+                  - pattern-not: "`...`"
+                  # Exclude i18n helpers.
+                  - pattern-not: "gettext(...)"
+                  - pattern-not: "_(...)"
+                  # Exclude common HTML-escape/sanitize wrappers.
+                  - pattern-not: "escape(...)"
+                  - pattern-not: "sanitize(...)"
+    metadata:
+      type: security
+      suggestion: >
+        Set `title_escape: true` in the PNotify options so the value is
+        rendered as plain text. If the value must contain HTML, escape any
+        user-controllable substring via `_.escape(...)` before
+        interpolating it into the markup.
