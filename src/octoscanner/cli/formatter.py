@@ -254,14 +254,16 @@ def format_scan_results_text(
             >>> stats = build_rule_stats_panel(scan_results)
         """
         rule_counter = Counter()
+        plugins_by_rule = {}
         rule_info = {}
         plugins_with_matches = 0
 
-        for _, scan_result in scan_results:
+        for plugin_path, scan_result in scan_results:
             if scan_result.findings:
                 plugins_with_matches += 1
             for finding in scan_result.findings:
                 rule_counter[finding.rule.id] += 1
+                plugins_by_rule.setdefault(finding.rule.id, set()).add(plugin_path)
                 rule_info[finding.rule.id] = finding.rule.message.strip().split("\n")[0]
 
         if not rule_counter:
@@ -272,11 +274,17 @@ def format_scan_results_text(
         total_plugins = len(scan_results)
 
         table = Table(box=None, show_header=True, padding=(0, 2, 0, 0))
-        table.add_column("Matches", justify="right")
+        table.add_column("Total\nmatches", justify="right")
+        table.add_column("Plugins\nmatched", justify="right")
         table.add_column("Rule ID")
         table.add_column("Message")
         for rule_id, count in rule_counter.most_common():
-            table.add_row(str(count), rule_id, _style_code_fragments(rule_info[rule_id]))
+            table.add_row(
+                str(count),
+                str(len(plugins_by_rule[rule_id])),
+                rule_id,
+                _style_code_fragments(rule_info[rule_id]),
+            )
 
         return Panel(
             table,
@@ -345,12 +353,14 @@ def format_scan_results_json(
         >>> format_scan_results_json(results, args, out=open("out.json", "w"))
     """
     rule_counter = Counter()
+    plugins_by_rule = {}
     rule_info = {}
 
     plugins_data = []
     for plugin_path, scan_result in scan_results:
         for finding in scan_result.findings:
             rule_counter[finding.rule.id] += 1
+            plugins_by_rule.setdefault(finding.rule.id, set()).add(plugin_path)
             rule_info[finding.rule.id] = finding.rule.message
 
         plugins_data.append(
@@ -368,7 +378,12 @@ def format_scan_results_json(
         )
 
     rule_stats = [
-        {"rule_id": rule_id, "count": count, "message": rule_info[rule_id]}
+        {
+            "rule_id": rule_id,
+            "total_matches": count,
+            "plugins_matched": len(plugins_by_rule[rule_id]),
+            "message": rule_info[rule_id],
+        }
         for rule_id, count in rule_counter.most_common()
     ]
 
