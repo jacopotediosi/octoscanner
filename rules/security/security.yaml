@@ -325,7 +325,9 @@ rules:
                   - pattern-not: "_(...)"
                   # Exclude common HTML-escape/sanitize wrappers.
                   - pattern-not: "escape(...)"
+                  - pattern-not: "$H.escape(...)"
                   - pattern-not: "sanitize(...)"
+                  - pattern-not: "$H.sanitize(...)"
     metadata:
       type: security
       suggestion: >
@@ -360,7 +362,9 @@ rules:
                   - pattern-not: "_(...)"
                   # Exclude common HTML-escape/sanitize wrappers.
                   - pattern-not: "escape(...)"
+                  - pattern-not: "$H.escape(...)"
                   - pattern-not: "sanitize(...)"
+                  - pattern-not: "$H.sanitize(...)"
     metadata:
       type: security
       suggestion: >
