@@ -93,9 +93,9 @@ def cmd_scan(args: argparse.Namespace) -> None:
     )
 
     if args.format == "json":
-        format_scan_results_json(results, args)
+        format_scan_results_json(results, args, rule_files)
     else:
-        format_scan_results_text(results, args)
+        format_scan_results_text(results, args, rule_files)
 
     if any(result.has_issues for _, result in results):
         sys.exit(1)

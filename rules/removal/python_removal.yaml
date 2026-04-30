@@ -1,4 +1,20 @@
-# OctoPrint removal rules
+# OctoPrint Python removal rules
+
+_octoscanner:
+  octoscanner_version: 0.1.0
+  generated_at: '2026-04-30T15:52:51+00:00'
+  octoprint_versions:
+  - 1.4.0
+  - 1.5.0
+  - 1.6.0
+  - 1.7.0
+  - 1.8.0
+  - 1.9.0
+  - 1.10.0
+  - 1.11.0
+  - 1.11.7
+  - 2.0.0 (next branch)
+  - 2.1.0 (dev branch)
 
 rules:
 - id: REM-0001

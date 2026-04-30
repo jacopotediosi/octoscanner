@@ -25,6 +25,9 @@ class RuleFileSpec:
     Attributes:
         path (str): Relative path under ``RULES_DIR``
             (e.g. ``"deprecation/python_deprecation.yaml"``).
+        title (str): Human-readable header title written as the first comment
+            line of the generated YAML file.
+        rules_type (str): Rules type (e.g. ``"deprecation"``, ``"removal"``).
         id_prefix (str): Rule ID prefix used when generating new rules
             (e.g. ``"DEP"``, ``"STG-REM"``).
         severity (str): Default Semgrep severity for rules in this file
@@ -33,24 +36,18 @@ class RuleFileSpec:
     Examples:
         >>> spec = RuleFileSpec(
         ...     path="deprecation/python_deprecation.yaml",
+        ...     title="OctoPrint Python deprecations",
+        ...     rules_type="deprecation",
         ...     id_prefix="DEP",
         ...     severity="MEDIUM",
         ... )
     """
 
     path: str
+    title: str
+    rules_type: str
     id_prefix: str
     severity: str
-
-    @property
-    def rules_type(self) -> str:
-        """Return the rules type (subdirectory name)."""
-        return self.path.split("/")[0]
-
-    @property
-    def filename(self) -> str:
-        """Return the filename within the subdirectory."""
-        return self.path.split("/")[1]
 
 
 class RuleFile(Enum):
@@ -70,26 +67,36 @@ class RuleFile(Enum):
 
     python_deprecation = RuleFileSpec(
         path="deprecation/python_deprecation.yaml",
+        title="OctoPrint Python deprecation rules",
+        rules_type="deprecation",
         id_prefix="DEP",
         severity="MEDIUM",
     )
     python_removal = RuleFileSpec(
         path="removal/python_removal.yaml",
+        title="OctoPrint Python removal rules",
+        rules_type="removal",
         id_prefix="REM",
         severity="CRITICAL",
     )
     python_signature_change = RuleFileSpec(
         path="removal/python_signature_change.yaml",
+        title="OctoPrint Python signature change rules",
+        rules_type="removal",
         id_prefix="SIG",
         severity="HIGH",
     )
     python_settings_deprecation = RuleFileSpec(
         path="deprecation/python_settings_deprecation.yaml",
+        title="OctoPrint Python settings deprecation rules",
+        rules_type="deprecation",
         id_prefix="STG-DEP",
         severity="MEDIUM",
     )
     python_settings_removal = RuleFileSpec(
         path="removal/python_settings_removal.yaml",
+        title="OctoPrint Python settings removal rules",
+        rules_type="removal",
         id_prefix="STG-REM",
         severity="CRITICAL",
     )

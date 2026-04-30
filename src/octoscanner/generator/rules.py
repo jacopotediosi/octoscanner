@@ -14,6 +14,7 @@ import yaml
 from packaging.version import Version
 
 from .. import RULES_DIR
+from ..models import RuleFileMetadata
 from .models import Deprecation, Removal, RuleFile, SymbolKind
 
 DeprecationOrRemovalType = TypeVar("T", Deprecation, Removal)
@@ -515,17 +516,82 @@ def load_rule_file(rule_file: RuleFile) -> list[dict]:
     return data["rules"]
 
 
-def write_semgrep_file(rule_file: RuleFile, rules: list[dict]) -> None:
-    """Write Semgrep rules to a file in the appropriate `RULES_DIR` subdirectory.
+def read_rule_file_metadata(yaml_path: Path) -> RuleFileMetadata | None:
+    """Read generation metadata from a rule YAML file.
+
+    Args:
+        yaml_path (Path): Path to a rule YAML file.
+
+    Returns:
+        RuleFileMetadata | None: Parsed metadata, or ``None`` if the file
+        has no readable metadata.
+
+    Examples:
+        >>> read_rule_file_metadata(Path("rules/deprecation/python_deprecation.yaml"))
+        RuleFileMetadata(octoscanner_version='0.1.0',
+                         generated_at='2026-04-30T12:00:00+00:00',
+                         octoprint_versions=['1.11.7', '2.0.0 (dev branch)'])
+    """
+    if not yaml_path.is_file():
+        return None
+
+    try:
+        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8"))
+    except yaml.YAMLError:
+        return None
+
+    if not isinstance(data, dict):
+        return None
+    block = data.get("_octoscanner")
+    if not isinstance(block, dict):
+        return None
+
+    return RuleFileMetadata(
+        octoscanner_version=block.get("octoscanner_version"),
+        generated_at=block.get("generated_at"),
+        octoprint_versions=list(block.get("octoprint_versions") or []),
+    )
+
+
+def write_rule_file(
+    rule_file: RuleFile,
+    rules: list[dict],
+    metadata: RuleFileMetadata,
+) -> None:
+    """Write a rule file to disk.
 
     Args:
         rule_file (RuleFile): The rule file to write.
-        rules (list[dict]): List of rule dicts to write.
+        rules (list[dict]): Rules to include.
+        metadata (RuleFileMetadata): Generation metadata to embed.
+
+    Examples:
+        >>> write_rule_file(
+        ...     RuleFile.python_deprecation,
+        ...     [{"id": "DEP-0001", "message": "...", "pattern": "..."}],
+        ...     RuleFileMetadata(
+        ...         octoscanner_version="0.1.0",
+        ...         generated_at="2026-04-30T12:00:00+00:00",
+        ...         octoprint_versions=["1.11.7", "2.0.0 (dev branch)"],
+        ...     ),
+        ... )
     """
     path = RULES_DIR / rule_file.value.path
     path.parent.mkdir(parents=True, exist_ok=True)
-    header = f"OctoPrint {rule_file.value.rules_type} rules"
-    text = yaml.dump(
+
+    metadata_block = {
+        "_octoscanner": {
+            "octoscanner_version": metadata.octoscanner_version,
+            "generated_at": metadata.generated_at,
+            "octoprint_versions": list(metadata.octoprint_versions),
+        },
+    }
+    metadata_text = yaml.dump(
+        metadata_block, Dumper=_NoAliasDumper, default_flow_style=False, sort_keys=False, allow_unicode=True
+    )
+
+    rules_text = yaml.dump(
         {"rules": rules}, Dumper=_NoAliasDumper, default_flow_style=False, sort_keys=False, allow_unicode=True
     )
-    path.write_text(f"# {header}\n\n{text}", encoding="utf-8")
+
+    path.write_text(f"# {rule_file.value.title}\n\n{metadata_text}\n{rules_text}", encoding="utf-8")

@@ -14,6 +14,13 @@ class RuleType(Enum):
 
 
 @dataclass(frozen=True)
+class RuleFileMetadata:
+    octoscanner_version: str | None
+    generated_at: str | None
+    octoprint_versions: list[str]
+
+
+@dataclass(frozen=True)
 class Rule:
     id: str
     type: RuleType
