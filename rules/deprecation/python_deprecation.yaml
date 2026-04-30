@@ -265,9 +265,10 @@ rules:
       by plugins as `self._plugin_info.blocklisted`) instead.
     _ref: octoprint.plugin.core.PluginInfo.blacklisted
 - id: DEP-0060
-  message: get_connection_option has been deprecated and will be removed in a future
-    version. Please use ConnectedPrinter.all() in combination with get_connection_option
-    on the returned ConnectedPrinter instances instead.
+  message: '`octoprint.printer.PrinterMixin.get_connection_options` (commonly accessed
+    by plugins as `self._printer.get_connection_options`) has been deprecated and
+    will be removed in a future version. Please use ConnectedPrinter.all() in combination
+    with get_connection_options on the returned ConnectedPrinter instances instead.'
   languages:
   - python
   severity: MEDIUM
