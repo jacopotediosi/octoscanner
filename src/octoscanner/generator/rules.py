@@ -504,7 +504,7 @@ def load_rule_file(rule_file: RuleFile) -> list[dict]:
         >>> load_rule_file(RuleFile.python_deprecation)
         [{'id': 'DEP-0001', 'message': '...', ...}, ...]
     """
-    path = RULES_DIR / rule_file.value
+    path = RULES_DIR / rule_file.value.path
     if not path.is_file():
         return []
 
@@ -522,9 +522,9 @@ def write_semgrep_file(rule_file: RuleFile, rules: list[dict]) -> None:
         rule_file (RuleFile): The rule file to write.
         rules (list[dict]): List of rule dicts to write.
     """
-    path = RULES_DIR / rule_file.value
+    path = RULES_DIR / rule_file.value.path
     path.parent.mkdir(parents=True, exist_ok=True)
-    header = f"OctoPrint {rule_file.rules_type} rules"
+    header = f"OctoPrint {rule_file.value.rules_type} rules"
     text = yaml.dump(
         {"rules": rules}, Dumper=_NoAliasDumper, default_flow_style=False, sort_keys=False, allow_unicode=True
     )

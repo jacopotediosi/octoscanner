@@ -191,7 +191,7 @@ def _make_rule(
             "suggestion": suggestion,
             "_removed_param": change.removed_param,
         },
-        severity="HIGH",
+        severity=RuleFile.python_signature_change.value.severity,
     )
 
 
@@ -234,13 +234,13 @@ def _generate_rules(
     existing_patterns = {pattern_sig_from_rule(r) for r in existing_rules}
 
     receivers_map = get_receivers_map(class_hierarchy)
-    next_id = next_rule_id(existing_rules, "SIG")
+    next_id = next_rule_id(existing_rules, RuleFile.python_signature_change.value.id_prefix)
     generated_patterns = set()
 
     sorted_changes = sorted(changes, key=lambda c: (build_fqn(c.name, c.class_name, c.module_path), c.removed_param))
 
     for change in sorted_changes:
-        rule = _make_rule(change, f"SIG-{next_id:04d}", receivers_map)
+        rule = _make_rule(change, f"{RuleFile.python_signature_change.value.id_prefix}-{next_id:04d}", receivers_map)
 
         if rule is None:
             continue

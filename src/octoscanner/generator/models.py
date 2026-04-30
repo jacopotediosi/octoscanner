@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import StrEnum
+from enum import Enum, StrEnum
 
 import griffe
 
@@ -18,36 +18,81 @@ class SymbolKind(StrEnum):
     MODULE = "module"
 
 
-class RuleFile(StrEnum):
-    """Rule file identifiers with relative paths under `RULES_DIR`.
+@dataclass(frozen=True)
+class RuleFileSpec:
+    """Metadata describing a Semgrep rule file.
 
-    The value is the relative path (e.g. ``"deprecation/python_deprecation.yaml"``).
-    Use :attr:`rules_type` and :attr:`filename` to extract components.
+    Attributes:
+        path (str): Relative path under ``RULES_DIR``
+            (e.g. ``"deprecation/python_deprecation.yaml"``).
+        id_prefix (str): Rule ID prefix used when generating new rules
+            (e.g. ``"DEP"``, ``"STG-REM"``).
+        severity (str): Default Semgrep severity for rules in this file
+            (e.g. ``"MEDIUM"``, ``"HIGH"``, ``"CRITICAL"``).
 
     Examples:
-        >>> RuleFile.python_deprecation.value
-        'deprecation/python_deprecation.yaml'
-        >>> RuleFile.python_deprecation.rules_type
-        'deprecation'
-        >>> RuleFile.python_deprecation.filename
-        'python_deprecation.yaml'
+        >>> spec = RuleFileSpec(
+        ...     path="deprecation/python_deprecation.yaml",
+        ...     id_prefix="DEP",
+        ...     severity="MEDIUM",
+        ... )
     """
 
-    python_deprecation = "deprecation/python_deprecation.yaml"
-    python_removal = "removal/python_removal.yaml"
-    python_signature_change = "removal/python_signature_change.yaml"
-    python_settings_deprecation = "deprecation/python_settings_deprecation.yaml"
-    python_settings_removal = "removal/python_settings_removal.yaml"
+    path: str
+    id_prefix: str
+    severity: str
 
     @property
     def rules_type(self) -> str:
         """Return the rules type (subdirectory name)."""
-        return self.value.split("/")[0]
+        return self.path.split("/")[0]
 
     @property
     def filename(self) -> str:
         """Return the filename within the subdirectory."""
-        return self.value.split("/")[1]
+        return self.path.split("/")[1]
+
+
+class RuleFile(Enum):
+    """Rule file registry.
+
+    Each member's value is a :class:`RuleFileSpec` carrying the file's
+    relative path, rule ID prefix and default severity.
+
+    Examples:
+        >>> RuleFile.python_deprecation.value.path
+        'deprecation/python_deprecation.yaml'
+        >>> RuleFile.python_deprecation.value.id_prefix
+        'DEP'
+        >>> RuleFile.python_deprecation.value.severity
+        'MEDIUM'
+    """
+
+    python_deprecation = RuleFileSpec(
+        path="deprecation/python_deprecation.yaml",
+        id_prefix="DEP",
+        severity="MEDIUM",
+    )
+    python_removal = RuleFileSpec(
+        path="removal/python_removal.yaml",
+        id_prefix="REM",
+        severity="CRITICAL",
+    )
+    python_signature_change = RuleFileSpec(
+        path="removal/python_signature_change.yaml",
+        id_prefix="SIG",
+        severity="HIGH",
+    )
+    python_settings_deprecation = RuleFileSpec(
+        path="deprecation/python_settings_deprecation.yaml",
+        id_prefix="STG-DEP",
+        severity="MEDIUM",
+    )
+    python_settings_removal = RuleFileSpec(
+        path="removal/python_settings_removal.yaml",
+        id_prefix="STG-REM",
+        severity="CRITICAL",
+    )
 
 
 @dataclass

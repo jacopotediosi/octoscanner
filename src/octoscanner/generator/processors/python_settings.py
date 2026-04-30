@@ -226,7 +226,7 @@ def make_rule(
     since: str,
     rule_id: str,
     methods_kind: str,
-    rule_kind: str,
+    target_file: RuleFile,
     compat_message: str | None = None,
 ) -> dict | None:
     """Create a Semgrep rule for a settings removal or deprecation.
@@ -237,10 +237,9 @@ def make_rule(
         rule_id (str): Unique rule ID (e.g. ``"STG-REM-0001"`` or ``"STG-DEP-0001"``).
         methods_kind (str): One of ``"all"``, ``"get"``, ``"set"``. Selects
             which subset of accessor methods the rule's pattern matches.
-        rule_kind (str): One of ``"removal"``, ``"deprecation"``.
-        compat_message (str | None): If ``rule_kind == "deprecation"``, the
-            human-readable deprecation message extracted from the compat
-            overlay.
+        target_file (RuleFile): The rule file the rule will be written to.
+        compat_message (str | None): For deprecation rules, the human-readable
+            deprecation message extracted from the compat overlay.
 
     Returns:
         dict | None: Semgrep rule dict, or ``None`` if the settings path is
@@ -292,7 +291,7 @@ def make_rule(
         ]
     }
 
-    if rule_kind == "removal":
+    if target_file is RuleFile.python_settings_removal:
         if methods_kind == "set":
             message = (
                 f"Writes to the `{removed_path_str}` settings path are silently dropped "
@@ -301,18 +300,14 @@ def make_rule(
         else:
             message = f"The `{removed_path_str}` settings path has been removed in OctoPrint {since}."
         suggestion = f"Remove usage of settings paths under `{removed_path_str}`."
-        metadata_type = "removal"
-        severity = "CRITICAL"
-    elif rule_kind == "deprecation":
+    elif target_file is RuleFile.python_settings_deprecation:
         message = (
             f"The `{removed_path_str}` settings path is deprecated since OctoPrint {since} "
             f"and only kept reachable via a compatibility overlay. {compat_message or ''}".strip()
         )
         suggestion = f"Migrate away from `{removed_path_str}`. {compat_message or ''}".strip()
-        metadata_type = "deprecation"
-        severity = "MEDIUM"
     else:
-        raise ValueError(f"Unknown rule_kind: {rule_kind!r}")
+        raise ValueError(f"Unsupported target_file: {target_file!r}")
 
     return build_rule(
         rule_id=rule_id,
@@ -320,11 +315,11 @@ def make_rule(
         message=message,
         pattern_body=pattern_body,
         metadata={
-            "type": metadata_type,
+            "type": target_file.value.rules_type,
             "since": since,
             "suggestion": suggestion,
         },
-        severity=severity,
+        severity=target_file.value.severity,
     )
 
 
@@ -363,44 +358,49 @@ def _generate_rules(
     new_deprecation_rules = []
     skipped_count = 0
 
+    removal_file = RuleFile.python_settings_removal
+    deprecation_file = RuleFile.python_settings_deprecation
+
     existing_removal_patterns = {pattern_sig_from_rule(r) for r in existing_removal_rules}
     existing_deprecation_patterns = {pattern_sig_from_rule(r) for r in existing_deprecation_rules}
-    next_removal_id = next_rule_id(existing_removal_rules, "STG-REM")
-    next_deprecation_id = next_rule_id(existing_deprecation_rules, "STG-DEP")
+    next_removal_id = next_rule_id(existing_removal_rules, removal_file.value.id_prefix)
+    next_deprecation_id = next_rule_id(existing_deprecation_rules, deprecation_file.value.id_prefix)
 
     for path in sorted(removed_paths):
         compat_message = _compat_message_for(path, compat_settings_paths)
 
         if compat_message is None:
-            rule_variants = [("all", "removal")]
+            rule_variants = [("all", removal_file)]
         else:
-            rule_variants = [("get", "deprecation"), ("set", "removal")]
+            rule_variants = [("get", deprecation_file), ("set", removal_file)]
 
-        for methods_kind, rule_kind in rule_variants:
-            if rule_kind == "removal":
-                rule_id = f"STG-REM-{next_removal_id:04d}"
+        for methods_kind, target_file in rule_variants:
+            if target_file is removal_file:
+                rule_id = f"{removal_file.value.id_prefix}-{next_removal_id:04d}"
             else:
-                rule_id = f"STG-DEP-{next_deprecation_id:04d}"
+                rule_id = f"{deprecation_file.value.id_prefix}-{next_deprecation_id:04d}"
 
             rule = make_rule(
                 removed_path=path,
                 since=since,
                 rule_id=rule_id,
                 methods_kind=methods_kind,
-                rule_kind=rule_kind,
+                target_file=target_file,
                 compat_message=compat_message,
             )
             if rule is None:
                 continue
 
             sig = pattern_sig_from_rule(rule)
-            target_existing = existing_removal_patterns if rule_kind == "removal" else existing_deprecation_patterns
+            target_existing = (
+                existing_removal_patterns if target_file is removal_file else existing_deprecation_patterns
+            )
             if sig in target_existing:
                 skipped_count += 1
                 continue
             target_existing.add(sig)
 
-            if rule_kind == "removal":
+            if target_file is removal_file:
                 new_removal_rules.append(rule)
                 next_removal_id += 1
             else:

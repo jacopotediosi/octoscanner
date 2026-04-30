@@ -162,7 +162,7 @@ def _make_rule(dep: Deprecation, rule_id: str, receivers_map: dict[str, list[str
             "since": dep.since,
             "suggestion": _create_suggestion(dep.message, dep.name, dep.class_name, dep.module_path),
         },
-        severity="MEDIUM",
+        severity=RuleFile.python_deprecation.value.severity,
     )
 
 
@@ -209,11 +209,11 @@ def _generate_rules(
     existing_patterns |= {pattern_sig_from_rule(r) for r in existing_removal_rules or []}
 
     receivers_map = get_receivers_map(class_hierarchy)
-    next_id = next_rule_id(existing_deprecations_rules, "DEP")
+    next_id = next_rule_id(existing_deprecations_rules, RuleFile.python_deprecation.value.id_prefix)
     generated_patterns = set()
 
     for dep in deprecations:
-        rule = _make_rule(dep, f"DEP-{next_id:04d}", receivers_map)
+        rule = _make_rule(dep, f"{RuleFile.python_deprecation.value.id_prefix}-{next_id:04d}", receivers_map)
         if rule is None:
             continue
 

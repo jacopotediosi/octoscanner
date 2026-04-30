@@ -88,16 +88,16 @@ def generate(
         print("Nothing to update.")
         print("Current rules:")
         for rule_file, rule_list in pipeline_state.rules.items():
-            print(f"  {rule_file.value} ({len(rule_list)} rules)")
+            print(f"  {rule_file.value.path} ({len(rule_list)} rules)")
         return
 
     if save:
         print("Saved:")
         for rule_file, rule_list in pipeline_state.rules.items():
             write_semgrep_file(rule_file, rule_list)
-            print(f"  {rule_file.value} ({len(rule_list)} rules)")
+            print(f"  {rule_file.value.path} ({len(rule_list)} rules)")
     else:
         print("Generated:")
         for rule_file, rule_list in pipeline_state.rules.items():
-            print(f"  {rule_file.value} ({len(rule_list)} rules)")
+            print(f"  {rule_file.value.path} ({len(rule_list)} rules)")
         print("Use --save to write to disk.")

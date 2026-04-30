@@ -261,16 +261,17 @@ def _promote_stale_settings_deprecations(
     updated_removal_rules = [r for r in settings_removal_rules if ref_from_rule(r) not in refs_to_promote]
 
     # Append fresh full-coverage removal rules
-    next_id = next_rule_id(settings_removal_rules, "STG-REM")
+    removal_file = RuleFile.python_settings_removal
+    next_id = next_rule_id(settings_removal_rules, removal_file.value.id_prefix)
     for ref in sorted(refs_to_promote):
         path = tuple(ref.split("."))
-        rule_id = f"STG-REM-{next_id:04d}"
+        rule_id = f"{removal_file.value.id_prefix}-{next_id:04d}"
         rule = make_rule(
             removed_path=path,
             since=latest_version,
             rule_id=rule_id,
             methods_kind="all",
-            rule_kind="removal",
+            target_file=removal_file,
         )
         if rule is None:
             continue

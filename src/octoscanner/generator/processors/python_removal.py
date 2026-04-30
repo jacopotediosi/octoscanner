@@ -490,7 +490,7 @@ def _make_rule(
         receivers_map,
         message,
         metadata={"type": "removal", "since": rem.since, "suggestion": suggestion},
-        severity="CRITICAL",
+        severity=RuleFile.python_removal.value.severity,
     )
 
 
@@ -538,7 +538,7 @@ def _generate_rules(
     existing_patterns = {pattern_sig_from_rule(r) for r in existing_removal_rules}
 
     receivers_map = get_receivers_map(class_hierarchy)
-    next_id = next_rule_id(existing_removal_rules, "REM")
+    next_id = next_rule_id(existing_removal_rules, RuleFile.python_removal.value.id_prefix)
     generated_patterns = set()
 
     removed_classes = {r.name for r in removals if r.kind == SymbolKind.CLASS}
@@ -575,7 +575,9 @@ def _generate_rules(
         ref = build_fqn(rem.name, rem.class_name, rem.module_path)
         was_deprecated = ref in deprecated_refs_since_map
         dep_since = deprecated_refs_since_map.get(ref) if was_deprecated else None
-        rule = _make_rule(rem, f"REM-{next_id:04d}", receivers_map, was_deprecated, dep_since)
+        rule = _make_rule(
+            rem, f"{RuleFile.python_removal.value.id_prefix}-{next_id:04d}", receivers_map, was_deprecated, dep_since
+        )
 
         if rule is None:
             continue
