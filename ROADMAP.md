@@ -24,7 +24,7 @@
             - [x] Access to removed global setting paths which still have a compatibility overlay (e.g. `global_get(["serial", ...])`, etc)
             - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
         - [ ] JS
-            - [] Access to removed global setting paths which still have a compatibility overlay
+            - [ ] Access to removed global setting paths which still have a compatibility overlay
             - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
         - [ ] Access to global API Key `["api","key"]`
     - [ ] Access to removed setting paths, e.g. `["serial", ...]`
