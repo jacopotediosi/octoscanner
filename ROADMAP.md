@@ -20,15 +20,17 @@
 ### Automatically generated rules
 
 - [ ] Setting paths
-    - [ ] Access to deprecated setting paths
-        - [ ] Python - currently settings with a compatibility layer are still considered removed even if get is working - TBD
-            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+    - [ ] Access to deprecated setting paths (paths removed which still have a compatibility overlay)
+        - [x] Python
+            - [x] Access to removed global setting paths which still have a compatibility overlay (e.g. `global_get(["serial", ...])`, etc)
+            - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
         - [ ] JS
+            - [] Access to removed global setting paths which still have a compatibility overlay
             - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
         - [ ] Access to global API Key `["api","key"]`
     - [ ] Access to removed setting paths, e.g. `["serial", ...]`
         - [ ] Python
-            - [x] Access to removed global setting paths (e.g. `global_get(["serial", ...])`, etc)
+            - [x] Access to removed global setting paths (e.g. `global_set(["serial", ...])`, etc)
             - [ ] Access to removed built-in plugins setting paths (e.g., under `global_get(["plugins"])`)
         - [ ] JS
 

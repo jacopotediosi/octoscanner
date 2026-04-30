@@ -1,0 +1,391 @@
+# OctoPrint deprecation rules
+
+rules:
+- id: STG-DEP-0001
+  message: The `webcam.cacheBuster` settings path is deprecated since OctoPrint 1.9.0
+    and only kept reachable via a compatibility overlay. Please use the webcam system
+    introduced with 1.9.0, this compatibility layer will be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "cacheBuster", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "cacheBuster", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.cacheBuster`. Please use the webcam system
+      introduced with 1.9.0, this compatibility layer will be removed in a future
+      release.
+    _ref: webcam.cacheBuster
+- id: STG-DEP-0002
+  message: The `webcam.snapshot` settings path is deprecated since OctoPrint 1.9.0
+    and only kept reachable via a compatibility overlay. Please use the webcam system
+    introduced with 1.9.0, this compatibility layer will be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshot", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshot", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "snapshot", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.snapshot`. Please use the webcam system
+      introduced with 1.9.0, this compatibility layer will be removed in a future
+      release.
+    _ref: webcam.snapshot
+- id: STG-DEP-0003
+  message: The `webcam.snapshotSslValidation` settings path is deprecated since OctoPrint
+    1.9.0 and only kept reachable via a compatibility overlay. Please use the webcam
+    system introduced with 1.9.0, this compatibility layer will be removed in a future
+    release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotSslValidation", ...],
+          ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshotSslValidation", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotSslValidation",
+          ...], ...)
+      - pattern: settings().$METHOD(["webcam", "snapshotSslValidation", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.snapshotSslValidation`. Please use the webcam
+      system introduced with 1.9.0, this compatibility layer will be removed in a
+      future release.
+    _ref: webcam.snapshotSslValidation
+- id: STG-DEP-0004
+  message: The `webcam.snapshotTimeout` settings path is deprecated since OctoPrint
+    1.9.0 and only kept reachable via a compatibility overlay. Please use the webcam
+    system introduced with 1.9.0, this compatibility layer will be removed in a future
+    release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "snapshotTimeout", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "snapshotTimeout", ...],
+          ...)
+      - pattern: settings().$METHOD(["webcam", "snapshotTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.snapshotTimeout`. Please use the webcam
+      system introduced with 1.9.0, this compatibility layer will be removed in a
+      future release.
+    _ref: webcam.snapshotTimeout
+- id: STG-DEP-0005
+  message: The `webcam.stream` settings path is deprecated since OctoPrint 1.9.0 and
+    only kept reachable via a compatibility overlay. Please use the webcam system
+    introduced with 1.9.0, this compatibility layer will be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "stream", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "stream", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "stream", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "stream", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.stream`. Please use the webcam system introduced
+      with 1.9.0, this compatibility layer will be removed in a future release.
+    _ref: webcam.stream
+- id: STG-DEP-0006
+  message: The `webcam.streamRatio` settings path is deprecated since OctoPrint 1.9.0
+    and only kept reachable via a compatibility overlay. Please use the webcam system
+    introduced with 1.9.0, this compatibility layer will be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamRatio", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamRatio", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamRatio", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamRatio", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.streamRatio`. Please use the webcam system
+      introduced with 1.9.0, this compatibility layer will be removed in a future
+      release.
+    _ref: webcam.streamRatio
+- id: STG-DEP-0007
+  message: The `webcam.streamTimeout` settings path is deprecated since OctoPrint
+    1.9.0 and only kept reachable via a compatibility overlay. Please use the webcam
+    system introduced with 1.9.0, this compatibility layer will be removed in a future
+    release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamTimeout", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamTimeout", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamTimeout", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.streamTimeout`. Please use the webcam system
+      introduced with 1.9.0, this compatibility layer will be removed in a future
+      release.
+    _ref: webcam.streamTimeout
+- id: STG-DEP-0008
+  message: The `webcam.streamWebrtcIceServers` settings path is deprecated since OctoPrint
+    1.9.0 and only kept reachable via a compatibility overlay. Please use the webcam
+    system introduced with 1.9.0, this compatibility layer will be removed in a future
+    release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
+          ...)
+      - pattern: $SELF.settings.$METHOD(["webcam", "streamWebrtcIceServers", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["webcam", "streamWebrtcIceServers",
+          ...], ...)
+      - pattern: settings().$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 1.9.0
+    suggestion: Migrate away from `webcam.streamWebrtcIceServers`. Please use the
+      webcam system introduced with 1.9.0, this compatibility layer will be removed
+      in a future release.
+    _ref: webcam.streamWebrtcIceServers
+- id: STG-DEP-0009
+  message: The `feature.autoUppercaseBlacklist` settings path is deprecated since
+    OctoPrint 2.0.0 and only kept reachable via a compatibility overlay. "Blacklist"
+    in settings keys has been changed to "blocklist". This compatibility layer will
+    be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
+          ...)
+      - pattern: $SELF.settings.$METHOD(["feature", "autoUppercaseBlacklist", ...],
+          ...)
+      - pattern: $SELF.get_settings().$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["feature", "autoUppercaseBlacklist",
+          ...], ...)
+      - pattern: settings().$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 2.0.0
+    suggestion: Migrate away from `feature.autoUppercaseBlacklist`. "Blacklist" in
+      settings keys has been changed to "blocklist". This compatibility layer will
+      be removed in a future release.
+    _ref: feature.autoUppercaseBlacklist
+- id: STG-DEP-0010
+  message: The `serial` settings path is deprecated since OctoPrint 2.0.0 and only
+    kept reachable via a compatibility overlay. Serial settings have been moved. Use
+    plugins.serial_connector.*, printerConnection.*, or feature.notifySuppressedCommands
+    as appropriate. This compatibility layer will be removed in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["serial", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["serial", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["serial", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["serial", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["serial", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["serial", ...], ...)
+      - pattern: settings().$METHOD(["serial", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 2.0.0
+    suggestion: Migrate away from `serial`. Serial settings have been moved. Use plugins.serial_connector.*,
+      printerConnection.*, or feature.notifySuppressedCommands as appropriate. This
+      compatibility layer will be removed in a future release.
+    _ref: serial
+- id: STG-DEP-0011
+  message: The `server.pluginBlacklist` settings path is deprecated since OctoPrint
+    2.0.0 and only kept reachable via a compatibility overlay. "Blacklist" in settings
+    keys has been changed to "blocklist". This compatibility layer will be removed
+    in a future release.
+  languages:
+  - python
+  severity: MEDIUM
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["server", "pluginBlacklist", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: $SETTINGS.settings().$METHOD(["server", "pluginBlacklist", ...],
+          ...)
+      - pattern: settings().$METHOD(["server", "pluginBlacklist", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has)$
+  metadata:
+    type: deprecation
+    since: 2.0.0
+    suggestion: Migrate away from `server.pluginBlacklist`. "Blacklist" in settings
+      keys has been changed to "blocklist". This compatibility layer will be removed
+      in a future release.
+    _ref: server.pluginBlacklist

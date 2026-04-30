@@ -1,7 +1,7 @@
 # OctoPrint removal rules
 
 rules:
-- id: STG-0001
+- id: STG-REM-0001
   message: The `accessControl.enabled` settings path has been removed in OctoPrint
     1.5.0.
   languages:
@@ -32,7 +32,7 @@ rules:
     since: 1.5.0
     suggestion: Remove usage of settings paths under `accessControl.enabled`.
     _ref: accessControl.enabled
-- id: STG-0002
+- id: STG-REM-0002
   message: The `devel.virtualPrinter` settings path has been removed in OctoPrint
     1.5.0.
   languages:
@@ -63,7 +63,7 @@ rules:
     since: 1.5.0
     suggestion: Remove usage of settings paths under `devel.virtualPrinter`.
     _ref: devel.virtualPrinter
-- id: STG-0003
+- id: STG-REM-0003
   message: The `gcodeViewer` settings path has been removed in OctoPrint 1.5.0.
   languages:
   - python
@@ -91,7 +91,7 @@ rules:
     since: 1.5.0
     suggestion: Remove usage of settings paths under `gcodeViewer`.
     _ref: gcodeViewer
-- id: STG-0005
+- id: STG-REM-0005
   message: The `printerParameters.defaultExtrusionLength` settings path has been removed
     in OctoPrint 1.8.0.
   languages:
@@ -127,8 +127,9 @@ rules:
     since: 1.8.0
     suggestion: Remove usage of settings paths under `printerParameters.defaultExtrusionLength`.
     _ref: printerParameters.defaultExtrusionLength
-- id: STG-0006
-  message: The `webcam.cacheBuster` settings path has been removed in OctoPrint 1.9.0.
+- id: STG-REM-0006
+  message: Writes to the `webcam.cacheBuster` settings path are silently dropped by
+    the OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -141,7 +142,7 @@ rules:
       - pattern: $SELF._plugin._settings.$METHOD(["webcam", "cacheBuster", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "cacheBuster", ...],
@@ -150,13 +151,13 @@ rules:
       - pattern: settings().$METHOD(["webcam", "cacheBuster", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.cacheBuster`.
     _ref: webcam.cacheBuster
-- id: STG-0007
+- id: STG-REM-0007
   message: The `webcam.flipH` settings path has been removed in OctoPrint 1.9.0.
   languages:
   - python
@@ -184,7 +185,7 @@ rules:
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.flipH`.
     _ref: webcam.flipH
-- id: STG-0008
+- id: STG-REM-0008
   message: The `webcam.flipV` settings path has been removed in OctoPrint 1.9.0.
   languages:
   - python
@@ -212,7 +213,7 @@ rules:
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.flipV`.
     _ref: webcam.flipV
-- id: STG-0009
+- id: STG-REM-0009
   message: The `webcam.rotate90` settings path has been removed in OctoPrint 1.9.0.
   languages:
   - python
@@ -240,8 +241,9 @@ rules:
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.rotate90`.
     _ref: webcam.rotate90
-- id: STG-0010
-  message: The `webcam.snapshot` settings path has been removed in OctoPrint 1.9.0.
+- id: STG-REM-0010
+  message: Writes to the `webcam.snapshot` settings path are silently dropped by the
+    OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -254,7 +256,7 @@ rules:
       - pattern: $SELF._plugin._settings.$METHOD(["webcam", "snapshot", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshot", ...], ...)
@@ -262,15 +264,16 @@ rules:
       - pattern: settings().$METHOD(["webcam", "snapshot", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshot`.
     _ref: webcam.snapshot
-- id: STG-0011
-  message: The `webcam.snapshotSslValidation` settings path has been removed in OctoPrint
-    1.9.0.
+- id: STG-REM-0011
+  message: Writes to the `webcam.snapshotSslValidation` settings path are silently
+    dropped by the OctoPrint 1.9.0 compatibility overlay. The path was removed in
+    OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -287,7 +290,7 @@ rules:
           ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotSslValidation",
@@ -297,14 +300,15 @@ rules:
       - pattern: settings().$METHOD(["webcam", "snapshotSslValidation", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshotSslValidation`.
     _ref: webcam.snapshotSslValidation
-- id: STG-0012
-  message: The `webcam.snapshotTimeout` settings path has been removed in OctoPrint
+- id: STG-REM-0012
+  message: Writes to the `webcam.snapshotTimeout` settings path are silently dropped
+    by the OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint
     1.9.0.
   languages:
   - python
@@ -320,7 +324,7 @@ rules:
           ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "snapshotTimeout", ...],
@@ -330,14 +334,15 @@ rules:
       - pattern: settings().$METHOD(["webcam", "snapshotTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshotTimeout`.
     _ref: webcam.snapshotTimeout
-- id: STG-0013
-  message: The `webcam.stream` settings path has been removed in OctoPrint 1.9.0.
+- id: STG-REM-0013
+  message: Writes to the `webcam.stream` settings path are silently dropped by the
+    OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -350,7 +355,7 @@ rules:
       - pattern: $SELF._plugin._settings.$METHOD(["webcam", "stream", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "stream", ...], ...)
@@ -358,14 +363,15 @@ rules:
       - pattern: settings().$METHOD(["webcam", "stream", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.stream`.
     _ref: webcam.stream
-- id: STG-0014
-  message: The `webcam.streamRatio` settings path has been removed in OctoPrint 1.9.0.
+- id: STG-REM-0014
+  message: Writes to the `webcam.streamRatio` settings path are silently dropped by
+    the OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -378,7 +384,7 @@ rules:
       - pattern: $SELF._plugin._settings.$METHOD(["webcam", "streamRatio", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamRatio", ...],
@@ -387,14 +393,15 @@ rules:
       - pattern: settings().$METHOD(["webcam", "streamRatio", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamRatio`.
     _ref: webcam.streamRatio
-- id: STG-0015
-  message: The `webcam.streamTimeout` settings path has been removed in OctoPrint
+- id: STG-REM-0015
+  message: Writes to the `webcam.streamTimeout` settings path are silently dropped
+    by the OctoPrint 1.9.0 compatibility overlay. The path was removed in OctoPrint
     1.9.0.
   languages:
   - python
@@ -409,7 +416,7 @@ rules:
           ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamTimeout", ...],
@@ -418,15 +425,16 @@ rules:
       - pattern: settings().$METHOD(["webcam", "streamTimeout", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamTimeout`.
     _ref: webcam.streamTimeout
-- id: STG-0016
-  message: The `webcam.streamWebrtcIceServers` settings path has been removed in OctoPrint
-    1.9.0.
+- id: STG-REM-0016
+  message: Writes to the `webcam.streamWebrtcIceServers` settings path are silently
+    dropped by the OctoPrint 1.9.0 compatibility overlay. The path was removed in
+    OctoPrint 1.9.0.
   languages:
   - python
   severity: CRITICAL
@@ -443,7 +451,7 @@ rules:
           ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["webcam", "streamWebrtcIceServers",
@@ -453,13 +461,13 @@ rules:
       - pattern: settings().$METHOD(["webcam", "streamWebrtcIceServers", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamWebrtcIceServers`.
     _ref: webcam.streamWebrtcIceServers
-- id: STG-0017
+- id: STG-REM-0017
   message: The `server.incompleteStartup` settings path has been removed in OctoPrint
     1.10.0.
   languages:
@@ -492,7 +500,7 @@ rules:
     since: 1.10.0
     suggestion: Remove usage of settings paths under `server.incompleteStartup`.
     _ref: server.incompleteStartup
-- id: STG-0018
+- id: STG-REM-0018
   message: The `server.reverseProxy.trustedDownstream` settings path has been removed
     in OctoPrint 1.11.0.
   languages:
@@ -528,7 +536,7 @@ rules:
     since: 1.11.0
     suggestion: Remove usage of settings paths under `server.reverseProxy.trustedDownstream`.
     _ref: server.reverseProxy.trustedDownstream
-- id: STG-0019
+- id: STG-REM-0019
   message: The `accessControl.trustRemoteUser` settings path has been removed in OctoPrint
     2.0.0.
   languages:
@@ -563,8 +571,9 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of settings paths under `accessControl.trustRemoteUser`.
     _ref: accessControl.trustRemoteUser
-- id: STG-0020
-  message: The `feature.autoUppercaseBlacklist` settings path has been removed in
+- id: STG-REM-0020
+  message: Writes to the `feature.autoUppercaseBlacklist` settings path are silently
+    dropped by the OctoPrint 2.0.0 compatibility overlay. The path was removed in
     OctoPrint 2.0.0.
   languages:
   - python
@@ -582,7 +591,7 @@ rules:
           ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["feature", "autoUppercaseBlacklist",
@@ -592,14 +601,15 @@ rules:
       - pattern: settings().$METHOD(["feature", "autoUppercaseBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
     suggestion: Remove usage of settings paths under `feature.autoUppercaseBlacklist`.
     _ref: feature.autoUppercaseBlacklist
-- id: STG-0021
-  message: The `serial` settings path has been removed in OctoPrint 2.0.0.
+- id: STG-REM-0021
+  message: Writes to the `serial` settings path are silently dropped by the OctoPrint
+    2.0.0 compatibility overlay. The path was removed in OctoPrint 2.0.0.
   languages:
   - python
   severity: CRITICAL
@@ -612,7 +622,7 @@ rules:
       - pattern: $SELF._plugin._settings.$METHOD(["serial", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["serial", ...], ...)
@@ -620,14 +630,15 @@ rules:
       - pattern: settings().$METHOD(["serial", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0
     suggestion: Remove usage of settings paths under `serial`.
     _ref: serial
-- id: STG-0022
-  message: The `server.pluginBlacklist` settings path has been removed in OctoPrint
+- id: STG-REM-0022
+  message: Writes to the `server.pluginBlacklist` settings path are silently dropped
+    by the OctoPrint 2.0.0 compatibility overlay. The path was removed in OctoPrint
     2.0.0.
   languages:
   - python
@@ -643,7 +654,7 @@ rules:
           ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+        regex: ^(global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
   - patterns:
     - pattern-either:
       - pattern: $SELF._settings.settings.$METHOD(["server", "pluginBlacklist", ...],
@@ -653,7 +664,7 @@ rules:
       - pattern: settings().$METHOD(["server", "pluginBlacklist", ...], ...)
     - metavariable-regex:
         metavariable: $METHOD
-        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+        regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
     type: removal
     since: 2.0.0

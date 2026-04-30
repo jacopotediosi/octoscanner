@@ -13,7 +13,10 @@ The following cleanup passes are applied in order:
 4. **Stale signature changes**: remove signature change rules whose removed
    keyword parameter is present again in the latest OctoPrint version.
    This handles cases where a parameter was removed and later reintroduced.
-5. **Superseded settings**: remove settings removal rules whose path is
+5. **Promoted settings deprecations**: when the compat overlay that kept a
+   deprecated settings path reachable disappears in a later OctoPrint
+   version, promote the deprecation rule to a removal rule.
+6. **Superseded settings**: remove settings removal rules whose path is
    covered by a more general ancestor rule (e.g. ``serial.capabilities.foo``
    is redundant if ``serial`` is already covered).
 """
@@ -23,8 +26,9 @@ from __future__ import annotations
 import griffe
 
 from ..models import Deprecation, PipelineState, RuleFile
-from ..rules import ref_earliest_since_map, ref_from_rule
+from ..rules import next_rule_id, ref_earliest_since_map, ref_from_rule
 from .base import Processor
+from .python_settings import is_covered_by_compat, make_rule
 
 
 def _clean_superseded_deprecations(
@@ -211,6 +215,72 @@ def _clean_stale_signature_changes(
     return kept_rules, removed_ids
 
 
+def _promote_stale_settings_deprecations(
+    settings_deprecation_rules: list[dict],
+    settings_removal_rules: list[dict],
+    latest_compat_settings_paths: dict[tuple[str, ...], str],
+    latest_version: str,
+) -> tuple[list[dict], list[dict], list[tuple[str, str]]]:
+    """Promote settings deprecations whose compat layer is gone in the latest version.
+
+    For each settings deprecation rule whose path is no longer covered by the
+    compat overlay in ``latest_version``:
+
+    - The deprecation rule is dropped.
+    - The corresponding ``set``-only removal rule for the same path (if any) is
+      dropped too.
+    - A new full-coverage removal rule is appended to the removal list.
+
+    Args:
+        settings_deprecation_rules (list[dict]): Current settings deprecation rules.
+        settings_removal_rules (list[dict]): Current settings removal rules.
+        latest_compat_settings_paths (dict[tuple[str, ...], str]): Compat overlay
+            mapping for the latest analyzed OctoPrint version.
+        latest_version (str): The latest analyzed OctoPrint version (used as the
+            ``since`` of the promoted removal rule).
+
+    Returns:
+        tuple[list[dict], list[dict], list[tuple[str, str]]]: A
+        ``(remaining_dep_rules, updated_removal_rules, promoted_pairs)`` tuple.
+        ``promoted_pairs`` lists ``(path, new_removal_rule_id)`` for each
+        promoted entry.
+    """
+    remaining_dep_rules = []
+    promoted_pairs = []
+    refs_to_promote = set()
+
+    for dep_rule in settings_deprecation_rules:
+        ref = ref_from_rule(dep_rule)
+        path = tuple(ref.split("."))
+        if is_covered_by_compat(path, latest_compat_settings_paths):
+            remaining_dep_rules.append(dep_rule)
+        else:
+            refs_to_promote.add(ref)
+
+    # Drop the existing set-only removal rules for the promoted paths
+    updated_removal_rules = [r for r in settings_removal_rules if ref_from_rule(r) not in refs_to_promote]
+
+    # Append fresh full-coverage removal rules
+    next_id = next_rule_id(settings_removal_rules, "STG-REM")
+    for ref in sorted(refs_to_promote):
+        path = tuple(ref.split("."))
+        rule_id = f"STG-REM-{next_id:04d}"
+        rule = make_rule(
+            removed_path=path,
+            since=latest_version,
+            rule_id=rule_id,
+            methods_kind="all",
+            rule_kind="removal",
+        )
+        if rule is None:
+            continue
+        updated_removal_rules.append(rule)
+        promoted_pairs.append((ref, rule_id))
+        next_id += 1
+
+    return remaining_dep_rules, updated_removal_rules, promoted_pairs
+
+
 def _clean_superseded_settings(
     settings_removal_rules: list[dict],
 ) -> tuple[list[dict], list[tuple[str, str]]]:
@@ -272,7 +342,8 @@ class PythonNormalizationProcessor(Processor):
         deprecation_rules = state.rules[RuleFile.python_deprecation]
         removal_rules = state.rules[RuleFile.python_removal]
         signature_change_rules = state.rules[RuleFile.python_signature_change]
-        settings_rules = state.rules[RuleFile.python_settings_removal]
+        settings_removal_rules = state.rules[RuleFile.python_settings_removal]
+        settings_deprecation_rules = state.rules[RuleFile.python_settings_deprecation]
 
         # ---------------------------------------------------------------
         # Clean deprecation rules
@@ -319,11 +390,26 @@ class PythonNormalizationProcessor(Processor):
         state.rules[RuleFile.python_signature_change] = cleaned_sig
 
         # ---------------------------------------------------------------
-        # Clean settings removal rules
+        # Clean settings rules
         # ---------------------------------------------------------------
 
+        # Promote settings deprecations whose compat layer is gone in the latest version
+        cleaned_settings_deps, settings_removal_rules, promoted_pairs = _promote_stale_settings_deprecations(
+            settings_deprecation_rules,
+            settings_removal_rules,
+            latest_results.compat_settings_paths,
+            latest_version,
+        )
+        emit_section(
+            output_lines,
+            f"Promoted settings deprecations ({len(promoted_pairs)} paths whose compat layer was dropped in {latest_version}):",
+            [f"{path} -> {rule_id}" for path, rule_id in promoted_pairs],
+        )
+
+        state.rules[RuleFile.python_settings_deprecation] = cleaned_settings_deps
+
         # Settings superseded by a parent path
-        cleaned_settings, superseded_settings_pairs = _clean_superseded_settings(settings_rules)
+        cleaned_settings, superseded_settings_pairs = _clean_superseded_settings(settings_removal_rules)
         emit_section(
             output_lines,
             f"Superseded settings ({len(superseded_settings_pairs)} rules covered by a parent rule):",

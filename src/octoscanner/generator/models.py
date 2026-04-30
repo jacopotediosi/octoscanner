@@ -36,6 +36,7 @@ class RuleFile(StrEnum):
     python_deprecation = "deprecation/python_deprecation.yaml"
     python_removal = "removal/python_removal.yaml"
     python_signature_change = "removal/python_signature_change.yaml"
+    python_settings_deprecation = "deprecation/python_settings_deprecation.yaml"
     python_settings_removal = "removal/python_settings_removal.yaml"
 
     @property
@@ -60,12 +61,16 @@ class PythonAnalysisResult:
         griffe_module (griffe.Module): The loaded Griffe module tree.
         settings_paths (set[tuple[str, ...]]): All leaf settings paths extracted
             from the configuration schema, e.g. ``{("serial", "port"), ...}``.
+        compat_settings_paths (dict[tuple[str, ...], str]): Settings paths covered
+            by a deprecated compatibility overlay. Maps the path (or wildcard prefix
+            ending in ``"*"``) to the deprecation message declared on the overlay.
     """
 
     deprecations: list[Deprecation]
     class_hierarchy: dict[str, list[str]]
     griffe_module: griffe.Module
     settings_paths: set[tuple[str, ...]]
+    compat_settings_paths: dict[tuple[str, ...], str]
 
 
 @dataclass
