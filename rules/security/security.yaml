@@ -300,7 +300,7 @@ rules:
   - id: SEC-0011
     message: >
       `PNotify` invocation passing a non-literal value as `text` without
-      `text_escape: true`. PNotify v3 (the version shipped with OctoPrint)
+      `text_escape: true`. PNotify v2 (the version shipped with OctoPrint)
       renders `text` as raw HTML by default, so any attacker-controllable data
       flowing into it (push messages, backend errors, printer responses, etc.)
       results in DOM XSS.
@@ -338,7 +338,7 @@ rules:
   - id: SEC-0012
     message: >
       `PNotify` invocation passing a non-literal value as `title` without
-      `title_escape: true`. PNotify v3 (the version shipped with OctoPrint)
+      `title_escape: true`. PNotify v2 (the version shipped with OctoPrint)
       renders `title` as raw HTML by default, so any user-controllable
       data flowing into it results in DOM XSS.
     languages: [js]
