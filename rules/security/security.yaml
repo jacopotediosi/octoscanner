@@ -316,18 +316,30 @@ rules:
             - metavariable-pattern:
                 metavariable: $X
                 patterns:
-                  # Exclude string literals (single-, double-, template-quoted).
+                  # Exclude string literals, taking advantage of Semgrep's AST
+                  # constant propagation.
                   - pattern-not: '"..."'
                   - pattern-not: "'...'"
-                  - pattern-not: "`...`"
-                  # Exclude i18n helpers.
-                  - pattern-not: "gettext(...)"
-                  - pattern-not: "_(...)"
-                  # Exclude common HTML-escape/sanitize wrappers.
-                  - pattern-not: "escape(...)"
-                  - pattern-not: "$H.escape(...)"
-                  - pattern-not: "sanitize(...)"
-                  - pattern-not: "$H.sanitize(...)"
+                  # Exclude expressions made entirely of string literals and/or
+                  # safe-wrapper calls (escape/sanitize/gettext/_), optionally
+                  # joined by `+`. The expression must consist exclusively of
+                  # such atoms; anything else (bare identifier, property access,
+                  # unknown call, template literal with `${...}`, ...) trips it.
+                  - pattern-not-regex: |-
+                      (?x)
+                      \A \s*
+                      (?<atom>
+                          " (?: [^"\\] | \\. )* "                                              # "..." with \-escape support
+                        | ' (?: [^'\\] | \\. )* '                                              # '...' with \-escape support
+                        | ` (?: [^`$] | \$ (?!\{) | \$\{ \s* (?&safe_call) \s* \}? )* `?       # `...` with optional ${SAFE_CALL} interpolations
+                        | (?<safe_call>
+                              [\w.]*                                                            # optional obj. prefix
+                              (?: escape | sanitize | gettext | _ )                             # safe call names
+                              (?<paren> \( (?: [^()] | (?&paren) )* \) )                        # balanced parentheses, any depth
+                          )
+                      )
+                      (?: \s* \+ \s* (?&atom) )*
+                      \s* \z
     metadata:
       type: security
       suggestion: >
@@ -353,18 +365,30 @@ rules:
             - metavariable-pattern:
                 metavariable: $X
                 patterns:
-                  # Exclude string literals (single-, double-, template-quoted).
+                  # Exclude string literals, taking advantage of Semgrep's AST
+                  # constant propagation.
                   - pattern-not: '"..."'
                   - pattern-not: "'...'"
-                  - pattern-not: "`...`"
-                  # Exclude i18n helpers.
-                  - pattern-not: "gettext(...)"
-                  - pattern-not: "_(...)"
-                  # Exclude common HTML-escape/sanitize wrappers.
-                  - pattern-not: "escape(...)"
-                  - pattern-not: "$H.escape(...)"
-                  - pattern-not: "sanitize(...)"
-                  - pattern-not: "$H.sanitize(...)"
+                  # Exclude expressions made entirely of string literals and/or
+                  # safe-wrapper calls (escape/sanitize/gettext/_), optionally
+                  # joined by `+`. The expression must consist exclusively of
+                  # such atoms; anything else (bare identifier, property access,
+                  # unknown call, template literal with `${...}`, ...) trips it.
+                  - pattern-not-regex: |-
+                      (?x)
+                      \A \s*
+                      (?<atom>
+                          " (?: [^"\\] | \\. )* "                                              # "..." with \-escape support
+                        | ' (?: [^'\\] | \\. )* '                                              # '...' with \-escape support
+                        | ` (?: [^`$] | \$ (?!\{) | \$\{ \s* (?&safe_call) \s* \}? )* `?       # `...` with optional ${SAFE_CALL} interpolations
+                        | (?<safe_call>
+                              [\w.]*                                                            # optional obj. prefix
+                              (?: escape | sanitize | gettext | _ )                             # safe call names
+                              (?<paren> \( (?: [^()] | (?&paren) )* \) )                        # balanced parentheses, any depth
+                          )
+                      )
+                      (?: \s* \+ \s* (?&atom) )*
+                      \s* \z
     metadata:
       type: security
       suggestion: >
