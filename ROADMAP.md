@@ -26,7 +26,6 @@
         - [ ] JS
             - [ ] Access to removed global setting paths which still have a compatibility overlay
             - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
-        - [ ] Access to global API Key `["api","key"]`
     - [ ] Access to removed setting paths, e.g. `["serial", ...]`
         - [ ] Python
             - [x] Access to removed global setting paths (e.g. `global_set(["serial", ...])`, etc)

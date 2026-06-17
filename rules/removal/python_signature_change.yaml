@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-04-30T15:52:51+00:00'
+  generated_at: '2026-06-17T17:09:32+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -81,20 +81,6 @@ rules:
       to match its new signature.
     _removed_param: io_loop
     _ref: octoprint.vendor.sockjs.tornado.stats.StatsCollector
-- id: SIG-0008
-  message: '`octoprint.util.version.get_comparable_version` no longer accepts the
-    keyword argument `base`.'
-  languages:
-  - python
-  severity: HIGH
-  pattern: octoprint.util.version.get_comparable_version(..., base=$V, ...)
-  metadata:
-    type: removal
-    since: 1.6.0
-    suggestion: Update the call to `octoprint.util.version.get_comparable_version`
-      to match its new signature.
-    _removed_param: base
-    _ref: octoprint.util.version.get_comparable_version
 - id: SIG-0009
   message: '`octoprint.util.version.get_octoprint_version` no longer accepts the keyword
     argument `base`.'

@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-04-30T15:52:51+00:00'
+  generated_at: '2026-06-17T17:09:32+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -686,3 +686,31 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of settings paths under `server.pluginBlacklist`.
     _ref: server.pluginBlacklist
+- id: STG-REM-0023
+  message: The `api.key` settings path has been removed in OctoPrint 2.1.0.
+  languages:
+  - python
+  severity: CRITICAL
+  pattern-either:
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.$METHOD(["api", "key", ...], ...)
+      - pattern: $SELF.settings.$METHOD(["api", "key", ...], ...)
+      - pattern: $SELF.get_settings().$METHOD(["api", "key", ...], ...)
+      - pattern: $SELF._plugin._settings.$METHOD(["api", "key", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(global_get|global_get_boolean|global_get_float|global_get_int|global_has|global_remove|global_set|global_set_boolean|global_set_float|global_set_int)$
+  - patterns:
+    - pattern-either:
+      - pattern: $SELF._settings.settings.$METHOD(["api", "key", ...], ...)
+      - pattern: $SETTINGS.settings().$METHOD(["api", "key", ...], ...)
+      - pattern: settings().$METHOD(["api", "key", ...], ...)
+    - metavariable-regex:
+        metavariable: $METHOD
+        regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
+  metadata:
+    type: removal
+    since: 2.1.0
+    suggestion: Remove usage of settings paths under `api.key`.
+    _ref: api.key
