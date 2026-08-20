@@ -27,6 +27,9 @@ octoscanner = "octoscanner.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"octoscanner.generator" = ["ignored_refs.yaml"]
+
 [tool.ruff]
 line-length = 120
 fix = true

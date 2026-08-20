@@ -228,7 +228,7 @@ def make_rule(
     methods_kind: str,
     target_file: RuleFile,
     compat_message: str | None = None,
-) -> dict | None:
+) -> dict:
     """Create a Semgrep rule for a settings removal or deprecation.
 
     Args:
@@ -242,8 +242,7 @@ def make_rule(
             deprecation message extracted from the compat overlay.
 
     Returns:
-        dict | None: Semgrep rule dict, or ``None`` if the settings path is
-        in the ignored refs list.
+        dict: Semgrep rule dict.
     """
     removed_path_str = ".".join(removed_path)
     list_pattern = "[" + ", ".join(f'"{seg}"' for seg in removed_path) + ", ...]"
@@ -388,8 +387,6 @@ def _generate_rules(
                 target_file=target_file,
                 compat_message=compat_message,
             )
-            if rule is None:
-                continue
 
             sig = pattern_sig_from_rule(rule)
             target_existing = (

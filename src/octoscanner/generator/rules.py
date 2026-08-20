@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import fnmatch
-import functools
 import json
 import re
 from collections.abc import Iterable
@@ -165,52 +163,6 @@ def ref_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> dict[st
 
 
 # ---------------------------------------------------------------------------
-# Ignored refs
-# ---------------------------------------------------------------------------
-
-
-@functools.cache
-def _load_ignored_refs() -> dict[str, list[str]]:
-    """Load ignored refs from the configuration file `ignored_refs.yaml`.
-
-    Returns:
-        dict[str, list[str]]: Mapping of rule type to list of ref patterns.
-    """
-    patterns_file = Path(__file__).parent / "ignored_refs.yaml"
-
-    if not patterns_file.exists():
-        return {}
-
-    with open(patterns_file) as f:
-        return yaml.safe_load(f) or {}
-
-
-def is_ignored_ref(ref: str, rule_type: str) -> bool:
-    """Check if a ref matches any ignored pattern for the given rule type.
-
-    Supports wildcards:
-      - ``*`` matches any single path component
-      - ``**`` matches any number of path components
-
-    Args:
-        ref (str): The ref to check (FQN, dotted settings path, etc.).
-        rule_type (str): The rule type to check against (e.g. ``"removal"``).
-
-    Returns:
-        bool: True if the ref matches any ignored pattern.
-    """
-    patterns = _load_ignored_refs().get(rule_type, [])
-
-    for pattern in patterns:
-        # Convert ** to placeholder, * to single-component match, then ** to multi-component
-        glob_pattern = pattern.replace("**", "\x00").replace("*", "[^.]*").replace("\x00", "*")
-        if fnmatch.fnmatch(ref, glob_pattern):
-            return True
-
-    return False
-
-
-# ---------------------------------------------------------------------------
 # Semgrep pattern helpers
 # ---------------------------------------------------------------------------
 
@@ -306,11 +258,8 @@ def build_rule(
     pattern_body: dict,
     metadata: dict,
     severity: str,
-) -> dict | None:
+) -> dict:
     """Assemble a complete Semgrep rule dict.
-
-    Returns ``None`` if ``ref`` matches an entry in ``ignored_refs.yaml``
-    for the rule type declared in ``metadata["type"]``.
 
     The ``ref`` argument is stored under ``metadata._ref`` and used as
     the unique identity of the rule (FQN for Python symbols, dotted path for
@@ -328,8 +277,7 @@ def build_rule(
         severity (str): Semgrep severity.
 
     Returns:
-        dict | None: A complete Semgrep rule dict, or ``None`` if the ref
-        is in the ignored refs list for the given rule type.
+        dict: A complete Semgrep rule dict.
 
     Examples:
         >>> build_rule(
@@ -369,10 +317,6 @@ def build_rule(
                       'since': '2.0.0',
                       '_ref': 'octoprint.access.User.getApiKey'}}
     """
-    rule_type = metadata.get("type")
-    if rule_type is not None and is_ignored_ref(ref, rule_type):
-        return None
-
     metadata = metadata.copy()
     metadata["_ref"] = ref
     if "suggestion" in metadata:
@@ -401,8 +345,7 @@ def build_python_symbol_rule(
 ) -> dict | None:
     """Build a Semgrep rule for a Python symbol.
 
-    Returns ``None`` if the symbol cannot produce a valid pattern or if
-    its ref is in the ignored refs list.
+    Returns ``None`` if the symbol cannot produce a valid pattern.
 
     Args:
         rule_id (str): Unique rule identifier (e.g. ``"DEP-0001"``).
@@ -420,7 +363,7 @@ def build_python_symbol_rule(
 
     Returns:
         dict | None: A Semgrep rule dict, or ``None`` if no valid pattern
-        can be built or the ref is in the ignored refs list.
+        can be built.
 
     Examples:
         >>> receivers = get_receivers_map({"UserManager": []})

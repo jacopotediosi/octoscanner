@@ -4,8 +4,12 @@
 # Useful for excluding known false positives that cannot be easily resolved
 # in another way.
 #
-# Format: list of refs (FQNs for Python symbols, dotted paths for settings,
-# etc.) per rule type.
+# Keys are paths relative to the rules directory: a directory (e.g. `removal`)
+# covers every rule file below it, a single file (e.g.
+# `removal/python_removal.yaml`) covers that file alone.
+#
+# Values are lists of refs (FQNs for Python symbols, dotted paths for settings,
+# etc.).
 # Supports wildcards: * matches any single component, ** matches any path.
 #
 # Examples:
@@ -13,7 +17,7 @@
 #   - "octoprint.module.*.member"          # Any class in module
 #   - "octoprint.**.is_authenticated"      # Any is_authenticated anywhere
 
-removal:
+removal/python_removal.yaml:
   # flask_login.UserMixin provides these members.
   # OctoPrint's User class inherits from UserMixin, so below symbols are not removed
   # even when OctoPrint stops overriding them explicitly.

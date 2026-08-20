@@ -2,9 +2,14 @@
 
 from __future__ import annotations
 
+from dataclasses import fields
+from typing import TypeVar
+
 import griffe
 
-from .models import SymbolKind
+from .models import Removal, SignatureChange, SymbolKind
+
+ClassMemberChangeType = TypeVar("ClassMemberChangeType", Removal, SignatureChange)
 
 # ---------------------------------------------------------------------------
 # Class hierarchy helpers
@@ -83,6 +88,60 @@ def is_subclass_of(cls: str, base: str, hierarchy: dict[str, list[str]], seen: s
 
     # Check transitive inheritance through ancestors
     return any(is_subclass_of(b, base, hierarchy, set(seen)) for b in bases)
+
+
+def filter_subclass_duplicates(
+    items: list[ClassMemberChangeType],
+    hierarchy: dict[str, list[str]],
+) -> list[ClassMemberChangeType]:
+    """Filter out items describing the same change on both a base class and a subclass.
+
+    If a member is removed from class A and class B, and B is a subclass of A,
+    keep only the removal for A (the base).
+
+    Args:
+        items (list[ClassMemberChangeType]): Items to filter.
+        hierarchy (dict[str, list[str]]): Class -> base-names mapping.
+
+    Returns:
+        list[ClassMemberChangeType]: Filtered list with subclass duplicates removed.
+
+    Examples:
+        >>> hierarchy = {"ApiUser": ["User"]}
+        >>> removals = [
+        ...     Removal(name="is_anonymous", kind=SymbolKind.ATTRIBUTE, since="2.0.0", class_name="User", module_path="octoprint.access.users"),
+        ...     Removal(name="is_anonymous", kind=SymbolKind.ATTRIBUTE, since="2.0.0", class_name="ApiUser", module_path="octoprint.access.users"),
+        ... ]
+        >>> filter_subclass_duplicates(removals, hierarchy)
+        [Removal(name='is_anonymous', kind=<SymbolKind.ATTRIBUTE: 'attribute'>, since='2.0.0', class_name='User', module_path='octoprint.access.users')]
+    """
+    result = []
+
+    # Group items
+    groups = {}
+    for item in items:
+        key = tuple(getattr(item, field.name) for field in fields(item) if field.name != "class_name")
+        groups.setdefault(key, []).append(item)
+
+    # Process groups
+    for group in groups.values():
+        # Single item - no duplicate to filter
+        if len(group) == 1:
+            result.append(group[0])
+            continue
+
+        # Find "covered" classes: those that inherit from another in the group
+        class_names = {item.class_name for item in group if item.class_name}
+        covered = {
+            class_name
+            for class_name in class_names
+            if any(other != class_name and is_subclass_of(class_name, other, hierarchy) for other in class_names)
+        }
+
+        # Keep only items for base classes (not covered by another)
+        result.extend(item for item in group if item.class_name not in covered)
+
+    return result
 
 
 # ---------------------------------------------------------------------------

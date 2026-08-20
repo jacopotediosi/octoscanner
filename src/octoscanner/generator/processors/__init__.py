@@ -6,6 +6,7 @@ rule definitions.
 """
 
 from .base import Processor
+from .ignored_refs import IgnoredRefsProcessor
 from .python_deprecation import PythonDeprecationProcessor
 from .python_normalization import PythonNormalizationProcessor
 from .python_removal import PythonRemovalProcessor
@@ -17,6 +18,7 @@ PROCESSORS: list[Processor] = [
     PythonRemovalProcessor(),
     PythonSignatureChangeProcessor(),
     PythonSettingsRemovalProcessor(),
+    IgnoredRefsProcessor(),
     PythonNormalizationProcessor(),
 ]
 """Ordered list of pipeline processors, executed sequentially."""

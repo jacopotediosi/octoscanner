@@ -273,8 +273,6 @@ def _promote_stale_settings_deprecations(
             methods_kind="all",
             target_file=removal_file,
         )
-        if rule is None:
-            continue
         updated_removal_rules.append(rule)
         promoted_pairs.append((ref, rule_id))
         next_id += 1

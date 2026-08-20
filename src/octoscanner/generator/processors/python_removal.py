@@ -12,7 +12,7 @@ import griffe
 
 from ..models import PipelineState, Removal, RuleFile, SymbolKind
 from ..python_receivers import format_plugin_self_hint, get_receivers_map
-from ..python_utils import ancestry_depth, griffe_mod_path, griffe_to_symbolkind, is_subclass_of
+from ..python_utils import ancestry_depth, filter_subclass_duplicates, griffe_mod_path, griffe_to_symbolkind
 from ..rules import (
     build_fqn,
     build_python_symbol_rule,
@@ -21,69 +21,6 @@ from ..rules import (
     ref_earliest_since_map,
 )
 from .base import Processor, format_summary
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-
-def _filter_subclass_duplicates(
-    removals: list[Removal],
-    hierarchy: dict[str, list[str]],
-) -> list[Removal]:
-    """Filter removals where the same member is removed from both base and subclass.
-
-    If a member is removed from class A and class B, and B is a subclass of A,
-    keep only the removal for A (the base).
-
-    Args:
-        removals (list[Removal]): List of removals to filter.
-        hierarchy (dict[str, list[str]]): Class -> base-names mapping.
-
-    Returns:
-        list[Removal]: Filtered list with subclass duplicates removed.
-
-    Examples:
-        >>> hierarchy = {"ApiUser": ["User"]}
-        >>> removals = [
-        ...     Removal(name="is_anonymous", kind=SymbolKind.ATTRIBUTE, since="2.0.0", class_name="User", module_path="octoprint.access.users"),
-        ...     Removal(name="is_anonymous", kind=SymbolKind.ATTRIBUTE, since="2.0.0", class_name="ApiUser", module_path="octoprint.access.users"),
-        ... ]
-        >>> filtered = _filter_subclass_duplicates(removals, hierarchy)
-        >>> filtered
-        [Removal(name='is_anonymous', kind=<SymbolKind.ATTRIBUTE: 'attribute'>, since='2.0.0', class_name='User', module_path='octoprint.access.users')]
-    """
-    result = []
-
-    # Group removals by (module_path, name, kind)
-    removal_groups = {}
-    for rem in removals:
-        key = (rem.module_path, rem.name, rem.kind)
-        removal_groups.setdefault(key, []).append(rem)
-
-    # Process removal groups
-    for removal_group in removal_groups.values():
-        # Single removal - no filtering needed
-        if len(removal_group) == 1:
-            result.append(removal_group[0])
-            continue
-
-        # Find "covered" classes: those that inherit from another in the set
-        covered = set()
-        class_names = {r.class_name for r in removal_group if r.class_name}
-        for class_name in class_names:
-            for other in class_names:
-                if class_name != other and is_subclass_of(class_name, other, hierarchy):
-                    covered.add(class_name)
-                    break
-
-        # Keep only removals for base classes (not covered by another)
-        for rem in removal_group:
-            if rem.class_name not in covered:
-                result.append(rem)
-
-    return result
-
 
 # ---------------------------------------------------------------------------
 # Find removals
@@ -545,7 +482,7 @@ def _generate_rules(
     # Filter out duplicate removals where the same member is removed from both
     # a base class and its subclass (e.g. User.is_anonymous and ApiUser.is_anonymous),
     # keeping only the base class removal.
-    filtered_removals = _filter_subclass_duplicates(removals, class_hierarchy)
+    filtered_removals = filter_subclass_duplicates(removals, class_hierarchy)
 
     # Sort removals so base classes come before subclasses. When multiple
     # removals produce the same Semgrep pattern (e.g. User.is_admin and
