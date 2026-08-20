@@ -18,6 +18,20 @@ class SymbolKind(StrEnum):
     MODULE = "module"
 
 
+class SignatureChangeKind(StrEnum):
+    """Kinds of signature-level breaking change.
+
+    - ``PARAMETER_REMOVED``: a callable lost a parameter that callers could
+      pass by name, so ``member(kw=...)`` no longer works.
+    - ``CALL_FORM_REMOVED``: a property stopped returning a callable
+      compatibility shim, so ``member()`` no longer works while ``member``
+      still does.
+    """
+
+    PARAMETER_REMOVED = "parameter_removed"
+    CALL_FORM_REMOVED = "call_form_removed"
+
+
 @dataclass(frozen=True)
 class RuleFileSpec:
     """Metadata describing a Semgrep rule file.
@@ -116,6 +130,10 @@ class PythonAnalysisResult:
         compat_settings_paths (dict[tuple[str, ...], str]): Settings paths covered
             by a deprecated compatibility overlay. Maps the path (or wildcard prefix
             ending in ``"*"``) to the deprecation message declared on the overlay.
+        callable_property_shims (set[tuple[str, str, str]]): Properties returning a
+            callable compatibility shim, as ``(module_path, class_name, name)``
+            triples. These keep the ``member()`` call form working alongside the
+            plain ``member`` attribute access.
     """
 
     deprecations: list[Deprecation]
@@ -123,6 +141,7 @@ class PythonAnalysisResult:
     griffe_module: griffe.Module
     settings_paths: set[tuple[str, ...]]
     compat_settings_paths: dict[tuple[str, ...], str]
+    callable_property_shims: set[tuple[str, str, str]]
 
 
 @dataclass
@@ -201,28 +220,40 @@ class Removal:
 
 @dataclass(frozen=True)
 class SignatureChange:
-    """A function/method whose signature lost a keyword parameter.
+    """A callable whose signature broke between two OctoPrint versions.
 
     Attributes:
         name (str): Callable name (e.g. ``"add_file"``).
-        since (str): OctoPrint version where the parameter was removed (e.g. ``"1.8.0"``).
+        kind (SignatureChangeKind): How the signature broke - see
+            :class:`SignatureChangeKind` for values.
+        since (str): OctoPrint version where the signature changed (e.g. ``"1.8.0"``).
         class_name (str | None): Enclosing class name, or ``None`` for
             module-level functions.
         module_path (str): Dotted module path (e.g. ``"octoprint.filemanager"``).
-        removed_param (str): Name of the removed keyword parameter.
+        removed_param (str | None): Name of the removed keyword parameter, or
+            ``None`` for kinds that do not remove a parameter.
 
     Examples:
         >>> sc = SignatureChange(
         ...     name="add_file",
+        ...     kind=SignatureChangeKind.PARAMETER_REMOVED,
         ...     since="1.10.0",
         ...     class_name="FileManager",
         ...     module_path="octoprint.filemanager",
         ...     removed_param="destination",
         ... )
+        >>> sc = SignatureChange(
+        ...     name="is_anonymous",
+        ...     kind=SignatureChangeKind.CALL_FORM_REMOVED,
+        ...     since="2.0.0",
+        ...     class_name="User",
+        ...     module_path="octoprint.access.users",
+        ... )
     """
 
     name: str
+    kind: SignatureChangeKind
     since: str
     class_name: str | None
     module_path: str
-    removed_param: str
+    removed_param: str | None = None

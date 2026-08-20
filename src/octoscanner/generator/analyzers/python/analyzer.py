@@ -9,6 +9,7 @@ import griffe
 
 from ...models import PythonAnalysisResult
 from ..base import Analyzer
+from .callable_shim_extension import GriffeCallableShimExtension
 from .deprecation_extension import GriffeDeprecationExtension
 from .griffe_walker import walk_griffe
 from .settings_extractor import extract_compat_settings_paths, extract_settings_paths
@@ -45,10 +46,13 @@ def _python_analyze(source_dir: Path, version: str) -> PythonAnalysisResult:
     class_hierarchy = {}
 
     griffe_deprecation_extension = GriffeDeprecationExtension()
+    griffe_callable_shim_extension = GriffeCallableShimExtension()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", SyntaxWarning)
         griffe_module = griffe.load(
-            "octoprint", search_paths=[source_dir / "src"], extensions=griffe.Extensions(griffe_deprecation_extension)
+            "octoprint",
+            search_paths=[source_dir / "src"],
+            extensions=griffe.Extensions(griffe_deprecation_extension, griffe_callable_shim_extension),
         )
 
     # Populate deprecations and class_hierarchy
@@ -65,12 +69,14 @@ def _python_analyze(source_dir: Path, version: str) -> PythonAnalysisResult:
     settings_paths = extract_settings_paths(griffe_module)
     compat_settings_paths = extract_compat_settings_paths(source_dir)
 
+    # Populate callable property shims
     return PythonAnalysisResult(
         deprecations=deprecations,
         class_hierarchy=class_hierarchy,
         griffe_module=griffe_module,
         settings_paths=settings_paths,
         compat_settings_paths=compat_settings_paths,
+        callable_property_shims=griffe_callable_shim_extension.shims,
     )
 
 
@@ -104,10 +110,12 @@ class PythonAnalyzer(Analyzer):
             dep_count = len(result.deprecations)
             class_count = len(result.class_hierarchy)
             settings_paths_count = len(result.settings_paths)
-            compat_count = len(result.compat_settings_paths)
+            compat_settings_paths_count = len(result.compat_settings_paths)
+            callable_shim_count = len(result.callable_property_shims)
             output_lines.append(
                 f"  {version}: {class_count} classes, {dep_count} deprecations, "
-                f"{settings_paths_count} settings paths, {compat_count} compat settings paths"
+                f"{settings_paths_count} settings paths, {compat_settings_paths_count} compat settings paths, "
+                f"{callable_shim_count} callable property shims"
             )
 
         return output_lines

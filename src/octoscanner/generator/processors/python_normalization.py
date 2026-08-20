@@ -13,10 +13,13 @@ The following cleanup passes are applied in order:
 4. **Stale signature changes**: remove signature change rules whose removed
    keyword parameter is present again in the latest OctoPrint version.
    This handles cases where a parameter was removed and later reintroduced.
-5. **Promoted settings deprecations**: when the compat overlay that kept a
+5. **Restored call forms**: remove signature change rules for properties that
+   are backed by a callable shim again in the latest OctoPrint version, and
+   are therefore callable once more.
+6. **Promoted settings deprecations**: when the compat overlay that kept a
    deprecated settings path reachable disappears in a later OctoPrint
    version, promote the deprecation rule to a removal rule.
-6. **Superseded settings**: remove settings removal rules whose path is
+7. **Superseded settings**: remove settings removal rules whose path is
    covered by a more general ancestor rule (e.g. ``serial.capabilities.foo``
    is redundant if ``serial`` is already covered).
 """
@@ -26,7 +29,7 @@ from __future__ import annotations
 import griffe
 
 from ..models import Deprecation, PipelineState, RuleFile
-from ..rules import next_rule_id, ref_earliest_since_map, ref_from_rule
+from ..rules import build_fqn, next_rule_id, ref_earliest_since_map, ref_from_rule
 from .base import Processor
 from .python_settings import is_covered_by_compat, make_rule
 
@@ -215,6 +218,41 @@ def _clean_stale_signature_changes(
     return kept_rules, removed_ids
 
 
+def _clean_restored_call_forms(
+    signature_change_rules: list[dict],
+    latest_callable_property_shims: set[tuple[str, str, str]],
+) -> tuple[list[dict], list[str]]:
+    """Remove signature change rules for properties that became callable again.
+
+    A property regains its call form when a later OctoPrint version brings back
+    the callable shim it returns, which makes the rule a false positive.
+
+    Args:
+        signature_change_rules (list[dict]): List of signature change rule dicts.
+        latest_callable_property_shims (set[tuple[str, str, str]]): Shim-backed
+            properties of the latest OctoPrint version, as
+            ``(module_path, class_name, name)`` triples.
+
+    Returns:
+        tuple[list[dict], list[str]]: A ``(kept_rules, removed_ids)`` tuple
+        where ``kept_rules`` is the filtered list and ``removed_ids`` the IDs
+        of the rules dropped as stale.
+    """
+    kept_rules, removed_ids = [], []
+
+    restored_refs = {
+        build_fqn(name, class_name, module_path) for module_path, class_name, name in latest_callable_property_shims
+    }
+
+    for signature_change_rule in signature_change_rules:
+        if ref_from_rule(signature_change_rule) in restored_refs:
+            removed_ids.append(signature_change_rule.get("id"))
+        else:
+            kept_rules.append(signature_change_rule)
+
+    return kept_rules, removed_ids
+
+
 def _promote_stale_settings_deprecations(
     settings_deprecation_rules: list[dict],
     settings_removal_rules: list[dict],
@@ -384,6 +422,14 @@ class PythonNormalizationProcessor(Processor):
             output_lines,
             f"Stale signature changes ({len(stale_sig_ids)} rules whose removed params are back in {latest_version}):",
             list(stale_sig_ids),
+        )
+
+        # Restored call forms (properties are callable again in the latest version)
+        cleaned_sig, restored_sig_ids = _clean_restored_call_forms(cleaned_sig, latest_results.callable_property_shims)
+        emit_section(
+            output_lines,
+            f"Restored call forms ({len(restored_sig_ids)} rules whose property is callable again in {latest_version}):",
+            list(restored_sig_ids),
         )
 
         state.rules[RuleFile.python_signature_change] = cleaned_sig

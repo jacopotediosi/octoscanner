@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-08-20T08:43:52+00:00'
+  generated_at: '2026-08-20T20:50:34+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -6886,7 +6886,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.User.is_admin`.
     _ref: octoprint.access.users.User.is_admin
-- id: REM-0520
+- id: REM-0522
   message: '`octoprint.access.users.User.is_user` was deprecated since 1.4.0 and has
     been removed.'
   languages:
@@ -6900,7 +6900,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.User.is_user`.
     _ref: octoprint.access.users.User.is_user
-- id: REM-0521
+- id: REM-0523
   message: '`octoprint.access.users.User.roles` was deprecated since 1.4.0 and has
     been removed.'
   languages:
@@ -6914,7 +6914,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.User.roles`.
     _ref: octoprint.access.users.User.roles
-- id: REM-0522
+- id: REM-0524
   message: '`octoprint.access.users.UserManager.addRolesToUser` (commonly accessed
     by plugins as `self._user_manager.addRolesToUser`) was deprecated since 1.4.0
     and has been removed.'
@@ -6931,7 +6931,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.addRolesToUser`
       (commonly accessed by plugins as `self._user_manager.addRolesToUser`).
     _ref: octoprint.access.users.UserManager.addRolesToUser
-- id: REM-0523
+- id: REM-0525
   message: '`octoprint.access.users.UserManager.addUser` (commonly accessed by plugins
     as `self._user_manager.addUser`) was deprecated since 1.4.0 and has been removed.'
   languages:
@@ -6947,7 +6947,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.addUser` (commonly
       accessed by plugins as `self._user_manager.addUser`).
     _ref: octoprint.access.users.UserManager.addUser
-- id: REM-0524
+- id: REM-0526
   message: '`octoprint.access.users.UserManager.changeUserActivation` (commonly accessed
     by plugins as `self._user_manager.changeUserActivation`) was deprecated since
     1.4.0 and has been removed.'
@@ -6964,7 +6964,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserActivation`
       (commonly accessed by plugins as `self._user_manager.changeUserActivation`).
     _ref: octoprint.access.users.UserManager.changeUserActivation
-- id: REM-0525
+- id: REM-0527
   message: '`octoprint.access.users.UserManager.changeUserPassword` (commonly accessed
     by plugins as `self._user_manager.changeUserPassword`) was deprecated since 1.4.0
     and has been removed.'
@@ -6981,7 +6981,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserPassword`
       (commonly accessed by plugins as `self._user_manager.changeUserPassword`).
     _ref: octoprint.access.users.UserManager.changeUserPassword
-- id: REM-0526
+- id: REM-0528
   message: '`octoprint.access.users.UserManager.changeUserRoles` (commonly accessed
     by plugins as `self._user_manager.changeUserRoles`) was deprecated since 1.4.0
     and has been removed.'
@@ -6998,7 +6998,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserRoles`
       (commonly accessed by plugins as `self._user_manager.changeUserRoles`).
     _ref: octoprint.access.users.UserManager.changeUserRoles
-- id: REM-0527
+- id: REM-0529
   message: '`octoprint.access.users.UserManager.changeUserSetting` (commonly accessed
     by plugins as `self._user_manager.changeUserSetting`) was deprecated since 1.4.0
     and has been removed.'
@@ -7015,7 +7015,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSetting`
       (commonly accessed by plugins as `self._user_manager.changeUserSetting`).
     _ref: octoprint.access.users.UserManager.changeUserSetting
-- id: REM-0528
+- id: REM-0530
   message: '`octoprint.access.users.UserManager.changeUserSettings` (commonly accessed
     by plugins as `self._user_manager.changeUserSettings`) was deprecated since 1.4.0
     and has been removed.'
@@ -7032,7 +7032,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.changeUserSettings`
       (commonly accessed by plugins as `self._user_manager.changeUserSettings`).
     _ref: octoprint.access.users.UserManager.changeUserSettings
-- id: REM-0529
+- id: REM-0531
   message: '`octoprint.access.users.UserManager.checkPassword` (commonly accessed
     by plugins as `self._user_manager.checkPassword`) was deprecated since 1.4.0 and
     has been removed.'
@@ -7049,7 +7049,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.checkPassword`
       (commonly accessed by plugins as `self._user_manager.checkPassword`).
     _ref: octoprint.access.users.UserManager.checkPassword
-- id: REM-0530
+- id: REM-0532
   message: '`octoprint.access.users.UserManager.findUser` (commonly accessed by plugins
     as `self._user_manager.findUser`) was deprecated since 1.4.0 and has been removed.'
   languages:
@@ -7065,7 +7065,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.findUser` (commonly
       accessed by plugins as `self._user_manager.findUser`).
     _ref: octoprint.access.users.UserManager.findUser
-- id: REM-0531
+- id: REM-0533
   message: '`octoprint.access.users.UserManager.getAllUserSettings` (commonly accessed
     by plugins as `self._user_manager.getAllUserSettings`) was deprecated since 1.4.0
     and has been removed.'
@@ -7082,7 +7082,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUserSettings`
       (commonly accessed by plugins as `self._user_manager.getAllUserSettings`).
     _ref: octoprint.access.users.UserManager.getAllUserSettings
-- id: REM-0532
+- id: REM-0534
   message: '`octoprint.access.users.UserManager.getAllUsers` (commonly accessed by
     plugins as `self._user_manager.getAllUsers`) was deprecated since 1.4.0 and has
     been removed.'
@@ -7099,7 +7099,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.getAllUsers` (commonly
       accessed by plugins as `self._user_manager.getAllUsers`).
     _ref: octoprint.access.users.UserManager.getAllUsers
-- id: REM-0533
+- id: REM-0535
   message: '`octoprint.access.users.UserManager.getUserSetting` (commonly accessed
     by plugins as `self._user_manager.getUserSetting`) was deprecated since 1.4.0
     and has been removed.'
@@ -7116,7 +7116,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.getUserSetting`
       (commonly accessed by plugins as `self._user_manager.getUserSetting`).
     _ref: octoprint.access.users.UserManager.getUserSetting
-- id: REM-0534
+- id: REM-0536
   message: '`octoprint.access.users.UserManager.hasBeenCustomized` (commonly accessed
     by plugins as `self._user_manager.hasBeenCustomized`) was deprecated since 1.4.0
     and has been removed.'
@@ -7133,7 +7133,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.hasBeenCustomized`
       (commonly accessed by plugins as `self._user_manager.hasBeenCustomized`).
     _ref: octoprint.access.users.UserManager.hasBeenCustomized
-- id: REM-0535
+- id: REM-0537
   message: '`octoprint.access.users.UserManager.removeRolesFromUser` (commonly accessed
     by plugins as `self._user_manager.removeRolesFromUser`) was deprecated since 1.4.0
     and has been removed.'
@@ -7150,7 +7150,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.removeRolesFromUser`
       (commonly accessed by plugins as `self._user_manager.removeRolesFromUser`).
     _ref: octoprint.access.users.UserManager.removeRolesFromUser
-- id: REM-0536
+- id: REM-0538
   message: '`octoprint.access.users.UserManager.removeUser` (commonly accessed by
     plugins as `self._user_manager.removeUser`) was deprecated since 1.4.0 and has
     been removed.'
@@ -7167,7 +7167,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.removeUser` (commonly
       accessed by plugins as `self._user_manager.removeUser`).
     _ref: octoprint.access.users.UserManager.removeUser
-- id: REM-0537
+- id: REM-0539
   message: '`octoprint.filemanager.storage.LocalFileStorage._add_links` has been removed.'
   languages:
   - python
@@ -7178,7 +7178,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.LocalFileStorage._add_links`.
     _ref: octoprint.filemanager.storage.LocalFileStorage._add_links
-- id: REM-0538
+- id: REM-0540
   message: '`octoprint.filemanager.storage.LocalFileStorage._create_hash` has been
     removed.'
   languages:
@@ -7190,7 +7190,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.LocalFileStorage._create_hash`.
     _ref: octoprint.filemanager.storage.LocalFileStorage._create_hash
-- id: REM-0539
+- id: REM-0541
   message: '`octoprint.filemanager.storage.LocalFileStorage._get_links` has been removed.'
   languages:
   - python
@@ -7201,7 +7201,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.LocalFileStorage._get_links`.
     _ref: octoprint.filemanager.storage.LocalFileStorage._get_links
-- id: REM-0540
+- id: REM-0542
   message: '`octoprint.filemanager.storage.LocalFileStorage._remove_links` has been
     removed.'
   languages:
@@ -7213,7 +7213,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.LocalFileStorage._remove_links`.
     _ref: octoprint.filemanager.storage.LocalFileStorage._remove_links
-- id: REM-0541
+- id: REM-0543
   message: '`octoprint.filemanager.storage.LocalFileStorage.get_link` has been removed.'
   languages:
   - python
@@ -7224,7 +7224,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.filemanager.storage.LocalFileStorage.get_link`.
     _ref: octoprint.filemanager.storage.LocalFileStorage.get_link
-- id: REM-0542
+- id: REM-0544
   message: '`octoprint.access.users.FilebasedUserManager._migrate_roles_to_groups`
     has been removed.'
   languages:
@@ -7239,7 +7239,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.FilebasedUserManager._migrate_roles_to_groups`.
     _ref: octoprint.access.users.FilebasedUserManager._migrate_roles_to_groups
-- id: REM-0543
+- id: REM-0545
   message: '`octoprint.access.users.FilebasedUserManager.deleteApiKey` was deprecated
     since 1.4.0 and has been removed.'
   languages:
@@ -7254,7 +7254,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.FilebasedUserManager.deleteApiKey`.
     _ref: octoprint.access.users.FilebasedUserManager.deleteApiKey
-- id: REM-0544
+- id: REM-0546
   message: '`octoprint.access.users.FilebasedUserManager.generateApiKey` was deprecated
     since 1.4.0 and has been removed.'
   languages:
@@ -7269,7 +7269,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.access.users.FilebasedUserManager.generateApiKey`.
     _ref: octoprint.access.users.FilebasedUserManager.generateApiKey
-- id: REM-0545
+- id: REM-0547
   message: '`octoprint.printer.standard.Printer._addLog` (commonly accessed by plugins
     as `self._printer._addLog`) has been removed.'
   languages:
@@ -7288,7 +7288,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._addLog` (commonly
       accessed by plugins as `self._printer._addLog`).
     _ref: octoprint.printer.standard.Printer._addLog
-- id: REM-0546
+- id: REM-0548
   message: '`octoprint.printer.standard.Printer._addMessage` (commonly accessed by
     plugins as `self._printer._addMessage`) has been removed.'
   languages:
@@ -7307,7 +7307,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._addMessage` (commonly
       accessed by plugins as `self._printer._addMessage`).
     _ref: octoprint.printer.standard.Printer._addMessage
-- id: REM-0547
+- id: REM-0549
   message: '`octoprint.printer.standard.Printer._addTemperatureData` (commonly accessed
     by plugins as `self._printer._addTemperatureData`) has been removed.'
   languages:
@@ -7326,7 +7326,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._addTemperatureData`
       (commonly accessed by plugins as `self._printer._addTemperatureData`).
     _ref: octoprint.printer.standard.Printer._addTemperatureData
-- id: REM-0548
+- id: REM-0550
   message: '`octoprint.printer.standard.Printer._add_sd_file` (commonly accessed by
     plugins as `self._printer._add_sd_file`) has been removed.'
   languages:
@@ -7345,7 +7345,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._add_sd_file`
       (commonly accessed by plugins as `self._printer._add_sd_file`).
     _ref: octoprint.printer.standard.Printer._add_sd_file
-- id: REM-0549
+- id: REM-0551
   message: '`octoprint.printer.standard.Printer._analysisQueue` (commonly accessed
     by plugins as `self._printer._analysisQueue`) has been removed.'
   languages:
@@ -7364,7 +7364,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._analysisQueue`
       (commonly accessed by plugins as `self._printer._analysisQueue`).
     _ref: octoprint.printer.standard.Printer._analysisQueue
-- id: REM-0550
+- id: REM-0552
   message: '`octoprint.printer.standard.Printer._blacklisted_data_hooks` (commonly
     accessed by plugins as `self._printer._blacklisted_data_hooks`) has been removed.'
   languages:
@@ -7383,7 +7383,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._blacklisted_data_hooks`
       (commonly accessed by plugins as `self._printer._blacklisted_data_hooks`).
     _ref: octoprint.printer.standard.Printer._blacklisted_data_hooks
-- id: REM-0551
+- id: REM-0553
   message: '`octoprint.printer.standard.Printer._currentZ` (commonly accessed by plugins
     as `self._printer._currentZ`) has been removed.'
   languages:
@@ -7402,7 +7402,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._currentZ` (commonly
       accessed by plugins as `self._printer._currentZ`).
     _ref: octoprint.printer.standard.Printer._currentZ
-- id: REM-0552
+- id: REM-0554
   message: '`octoprint.printer.standard.Printer._error_info` (commonly accessed by
     plugins as `self._printer._error_info`) has been removed.'
   languages:
@@ -7421,7 +7421,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._error_info` (commonly
       accessed by plugins as `self._printer._error_info`).
     _ref: octoprint.printer.standard.Printer._error_info
-- id: REM-0553
+- id: REM-0555
   message: '`octoprint.printer.standard.Printer._fileManager` (commonly accessed by
     plugins as `self._printer._fileManager`) has been removed.'
   languages:
@@ -7440,7 +7440,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._fileManager`
       (commonly accessed by plugins as `self._printer._fileManager`).
     _ref: octoprint.printer.standard.Printer._fileManager
-- id: REM-0554
+- id: REM-0556
   message: '`octoprint.printer.standard.Printer._firmware_info` (commonly accessed
     by plugins as `self._printer._firmware_info`) has been removed.'
   languages:
@@ -7459,7 +7459,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._firmware_info`
       (commonly accessed by plugins as `self._printer._firmware_info`).
     _ref: octoprint.printer.standard.Printer._firmware_info
-- id: REM-0555
+- id: REM-0557
   message: '`octoprint.printer.standard.Printer._getStateFlags` (commonly accessed
     by plugins as `self._printer._getStateFlags`) has been removed.'
   languages:
@@ -7478,7 +7478,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._getStateFlags`
       (commonly accessed by plugins as `self._printer._getStateFlags`).
     _ref: octoprint.printer.standard.Printer._getStateFlags
-- id: REM-0556
+- id: REM-0558
   message: '`octoprint.printer.standard.Printer._get_free_remote_name` (commonly accessed
     by plugins as `self._printer._get_free_remote_name`) has been removed.'
   languages:
@@ -7497,7 +7497,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._get_free_remote_name`
       (commonly accessed by plugins as `self._printer._get_free_remote_name`).
     _ref: octoprint.printer.standard.Printer._get_free_remote_name
-- id: REM-0557
+- id: REM-0559
   message: '`octoprint.printer.standard.Printer._posAfterSelect` (commonly accessed
     by plugins as `self._printer._posAfterSelect`) has been removed.'
   languages:
@@ -7516,7 +7516,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._posAfterSelect`
       (commonly accessed by plugins as `self._printer._posAfterSelect`).
     _ref: octoprint.printer.standard.Printer._posAfterSelect
-- id: REM-0558
+- id: REM-0560
   message: '`octoprint.printer.standard.Printer._printAfterSelect` (commonly accessed
     by plugins as `self._printer._printAfterSelect`) has been removed.'
   languages:
@@ -7535,7 +7535,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._printAfterSelect`
       (commonly accessed by plugins as `self._printer._printAfterSelect`).
     _ref: octoprint.printer.standard.Printer._printAfterSelect
-- id: REM-0559
+- id: REM-0561
   message: '`octoprint.printer.standard.Printer._printerProfileManager` (commonly
     accessed by plugins as `self._printer._printerProfileManager`) has been removed.'
   languages:
@@ -7554,7 +7554,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._printerProfileManager`
       (commonly accessed by plugins as `self._printer._printerProfileManager`).
     _ref: octoprint.printer.standard.Printer._printerProfileManager
-- id: REM-0560
+- id: REM-0562
   message: '`octoprint.printer.standard.Printer._reportPrintProgressToPlugins` (commonly
     accessed by plugins as `self._printer._reportPrintProgressToPlugins`) has been
     removed.'
@@ -7574,7 +7574,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._reportPrintProgressToPlugins`
       (commonly accessed by plugins as `self._printer._reportPrintProgressToPlugins`).
     _ref: octoprint.printer.standard.Printer._reportPrintProgressToPlugins
-- id: REM-0561
+- id: REM-0563
   message: '`octoprint.printer.standard.Printer._selectedFileMutex` (commonly accessed
     by plugins as `self._printer._selectedFileMutex`) has been removed.'
   languages:
@@ -7593,7 +7593,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._selectedFileMutex`
       (commonly accessed by plugins as `self._printer._selectedFileMutex`).
     _ref: octoprint.printer.standard.Printer._selectedFileMutex
-- id: REM-0562
+- id: REM-0564
   message: '`octoprint.printer.standard.Printer._sendAddLogCallbacks` (commonly accessed
     by plugins as `self._printer._sendAddLogCallbacks`) has been removed.'
   languages:
@@ -7612,7 +7612,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddLogCallbacks`
       (commonly accessed by plugins as `self._printer._sendAddLogCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddLogCallbacks
-- id: REM-0563
+- id: REM-0565
   message: '`octoprint.printer.standard.Printer._sendAddMessageCallbacks` (commonly
     accessed by plugins as `self._printer._sendAddMessageCallbacks`) has been removed.'
   languages:
@@ -7631,7 +7631,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddMessageCallbacks`
       (commonly accessed by plugins as `self._printer._sendAddMessageCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddMessageCallbacks
-- id: REM-0564
+- id: REM-0566
   message: '`octoprint.printer.standard.Printer._sendAddTemperatureCallbacks` (commonly
     accessed by plugins as `self._printer._sendAddTemperatureCallbacks`) has been
     removed.'
@@ -7651,7 +7651,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._sendAddTemperatureCallbacks`
       (commonly accessed by plugins as `self._printer._sendAddTemperatureCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendAddTemperatureCallbacks
-- id: REM-0565
+- id: REM-0567
   message: '`octoprint.printer.standard.Printer._sendCurrentDataCallbacks` (commonly
     accessed by plugins as `self._printer._sendCurrentDataCallbacks`) has been removed.'
   languages:
@@ -7670,7 +7670,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._sendCurrentDataCallbacks`
       (commonly accessed by plugins as `self._printer._sendCurrentDataCallbacks`).
     _ref: octoprint.printer.standard.Printer._sendCurrentDataCallbacks
-- id: REM-0566
+- id: REM-0568
   message: '`octoprint.printer.standard.Printer._sendInitialStateUpdate` (commonly
     accessed by plugins as `self._printer._sendInitialStateUpdate`) has been removed.'
   languages:
@@ -7689,7 +7689,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._sendInitialStateUpdate`
       (commonly accessed by plugins as `self._printer._sendInitialStateUpdate`).
     _ref: octoprint.printer.standard.Printer._sendInitialStateUpdate
-- id: REM-0567
+- id: REM-0569
   message: '`octoprint.printer.standard.Printer._setCurrentZ` (commonly accessed by
     plugins as `self._printer._setCurrentZ`) has been removed.'
   languages:
@@ -7708,7 +7708,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._setCurrentZ`
       (commonly accessed by plugins as `self._printer._setCurrentZ`).
     _ref: octoprint.printer.standard.Printer._setCurrentZ
-- id: REM-0568
+- id: REM-0570
   message: '`octoprint.printer.standard.Printer._setJobData` (commonly accessed by
     plugins as `self._printer._setJobData`) has been removed.'
   languages:
@@ -7727,7 +7727,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._setJobData` (commonly
       accessed by plugins as `self._printer._setJobData`).
     _ref: octoprint.printer.standard.Printer._setJobData
-- id: REM-0569
+- id: REM-0571
   message: '`octoprint.printer.standard.Printer._setOffsets` (commonly accessed by
     plugins as `self._printer._setOffsets`) has been removed.'
   languages:
@@ -7746,7 +7746,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._setOffsets` (commonly
       accessed by plugins as `self._printer._setOffsets`).
     _ref: octoprint.printer.standard.Printer._setOffsets
-- id: REM-0570
+- id: REM-0572
   message: '`octoprint.printer.standard.Printer._setState` (commonly accessed by plugins
     as `self._printer._setState`) has been removed.'
   languages:
@@ -7765,7 +7765,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._setState` (commonly
       accessed by plugins as `self._printer._setState`).
     _ref: octoprint.printer.standard.Printer._setState
-- id: REM-0571
+- id: REM-0573
   message: '`octoprint.printer.standard.Printer._updateJobUser` (commonly accessed
     by plugins as `self._printer._updateJobUser`) has been removed.'
   languages:
@@ -7784,7 +7784,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._updateJobUser`
       (commonly accessed by plugins as `self._printer._updateJobUser`).
     _ref: octoprint.printer.standard.Printer._updateJobUser
-- id: REM-0572
+- id: REM-0574
   message: '`octoprint.printer.standard.Printer._updateProgressData` (commonly accessed
     by plugins as `self._printer._updateProgressData`) has been removed.'
   languages:
@@ -7803,7 +7803,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressData`
       (commonly accessed by plugins as `self._printer._updateProgressData`).
     _ref: octoprint.printer.standard.Printer._updateProgressData
-- id: REM-0573
+- id: REM-0575
   message: '`octoprint.printer.standard.Printer._updateProgressDataCallback` (commonly
     accessed by plugins as `self._printer._updateProgressDataCallback`) has been removed.'
   languages:
@@ -7822,7 +7822,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._updateProgressDataCallback`
       (commonly accessed by plugins as `self._printer._updateProgressDataCallback`).
     _ref: octoprint.printer.standard.Printer._updateProgressDataCallback
-- id: REM-0574
+- id: REM-0576
   message: '`octoprint.printer.standard.Printer._updateResendDataCallback` (commonly
     accessed by plugins as `self._printer._updateResendDataCallback`) has been removed.'
   languages:
@@ -7841,7 +7841,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._updateResendDataCallback`
       (commonly accessed by plugins as `self._printer._updateResendDataCallback`).
     _ref: octoprint.printer.standard.Printer._updateResendDataCallback
-- id: REM-0575
+- id: REM-0577
   message: '`octoprint.printer.standard.Printer._validateJob` (commonly accessed by
     plugins as `self._printer._validateJob`) has been removed.'
   languages:
@@ -7860,7 +7860,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer._validateJob`
       (commonly accessed by plugins as `self._printer._validateJob`).
     _ref: octoprint.printer.standard.Printer._validateJob
-- id: REM-0576
+- id: REM-0578
   message: '`octoprint.printer.standard.Printer.getTransport` (commonly accessed by
     plugins as `self._printer.getTransport`) has been removed.'
   languages:
@@ -7879,7 +7879,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.getTransport`
       (commonly accessed by plugins as `self._printer.getTransport`).
     _ref: octoprint.printer.standard.Printer.getTransport
-- id: REM-0577
+- id: REM-0579
   message: '`octoprint.printer.standard.Printer.on_comm_error` (commonly accessed
     by plugins as `self._printer.on_comm_error`) has been removed.'
   languages:
@@ -7898,7 +7898,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_error`
       (commonly accessed by plugins as `self._printer.on_comm_error`).
     _ref: octoprint.printer.standard.Printer.on_comm_error
-- id: REM-0578
+- id: REM-0580
   message: '`octoprint.printer.standard.Printer.on_comm_file_selected` (commonly accessed
     by plugins as `self._printer.on_comm_file_selected`) has been removed.'
   languages:
@@ -7917,7 +7917,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_selected`
       (commonly accessed by plugins as `self._printer.on_comm_file_selected`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_selected
-- id: REM-0579
+- id: REM-0581
   message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_done` (commonly
     accessed by plugins as `self._printer.on_comm_file_transfer_done`) has been removed.'
   languages:
@@ -7936,7 +7936,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_done`
       (commonly accessed by plugins as `self._printer.on_comm_file_transfer_done`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_done
-- id: REM-0580
+- id: REM-0582
   message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_failed` (commonly
     accessed by plugins as `self._printer.on_comm_file_transfer_failed`) has been
     removed.'
@@ -7956,7 +7956,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_failed`
       (commonly accessed by plugins as `self._printer.on_comm_file_transfer_failed`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_failed
-- id: REM-0581
+- id: REM-0583
   message: '`octoprint.printer.standard.Printer.on_comm_file_transfer_started` (commonly
     accessed by plugins as `self._printer.on_comm_file_transfer_started`) has been
     removed.'
@@ -7976,7 +7976,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_file_transfer_started`
       (commonly accessed by plugins as `self._printer.on_comm_file_transfer_started`).
     _ref: octoprint.printer.standard.Printer.on_comm_file_transfer_started
-- id: REM-0582
+- id: REM-0584
   message: '`octoprint.printer.standard.Printer.on_comm_firmware_info` (commonly accessed
     by plugins as `self._printer.on_comm_firmware_info`) has been removed.'
   languages:
@@ -7995,7 +7995,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_firmware_info`
       (commonly accessed by plugins as `self._printer.on_comm_firmware_info`).
     _ref: octoprint.printer.standard.Printer.on_comm_firmware_info
-- id: REM-0583
+- id: REM-0585
   message: '`octoprint.printer.standard.Printer.on_comm_force_disconnect` (commonly
     accessed by plugins as `self._printer.on_comm_force_disconnect`) has been removed.'
   languages:
@@ -8014,7 +8014,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_force_disconnect`
       (commonly accessed by plugins as `self._printer.on_comm_force_disconnect`).
     _ref: octoprint.printer.standard.Printer.on_comm_force_disconnect
-- id: REM-0584
+- id: REM-0586
   message: '`octoprint.printer.standard.Printer.on_comm_log` (commonly accessed by
     plugins as `self._printer.on_comm_log`) has been removed.'
   languages:
@@ -8033,7 +8033,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_log` (commonly
       accessed by plugins as `self._printer.on_comm_log`).
     _ref: octoprint.printer.standard.Printer.on_comm_log
-- id: REM-0585
+- id: REM-0587
   message: '`octoprint.printer.standard.Printer.on_comm_message` (commonly accessed
     by plugins as `self._printer.on_comm_message`) has been removed.'
   languages:
@@ -8052,7 +8052,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_message`
       (commonly accessed by plugins as `self._printer.on_comm_message`).
     _ref: octoprint.printer.standard.Printer.on_comm_message
-- id: REM-0586
+- id: REM-0588
   message: '`octoprint.printer.standard.Printer.on_comm_position_update` (commonly
     accessed by plugins as `self._printer.on_comm_position_update`) has been removed.'
   languages:
@@ -8071,7 +8071,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_position_update`
       (commonly accessed by plugins as `self._printer.on_comm_position_update`).
     _ref: octoprint.printer.standard.Printer.on_comm_position_update
-- id: REM-0587
+- id: REM-0589
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelled` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_cancelled`) has been removed.'
   languages:
@@ -8090,7 +8090,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelled`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_cancelled`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_cancelled
-- id: REM-0588
+- id: REM-0590
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_cancelling` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_cancelling`) has been
     removed.'
@@ -8110,7 +8110,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_cancelling`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_cancelling`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_cancelling
-- id: REM-0589
+- id: REM-0591
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_done` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_done`) has been removed.'
   languages:
@@ -8129,7 +8129,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_done`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_done`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_done
-- id: REM-0590
+- id: REM-0592
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_paused` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_paused`) has been removed.'
   languages:
@@ -8148,7 +8148,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_paused`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_paused`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_paused
-- id: REM-0591
+- id: REM-0593
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_resumed` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_resumed`) has been removed.'
   languages:
@@ -8167,7 +8167,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_resumed`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_resumed`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_resumed
-- id: REM-0592
+- id: REM-0594
   message: '`octoprint.printer.standard.Printer.on_comm_print_job_started` (commonly
     accessed by plugins as `self._printer.on_comm_print_job_started`) has been removed.'
   languages:
@@ -8186,7 +8186,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_print_job_started`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_started`).
     _ref: octoprint.printer.standard.Printer.on_comm_print_job_started
-- id: REM-0593
+- id: REM-0595
   message: '`octoprint.printer.standard.Printer.on_comm_progress` (commonly accessed
     by plugins as `self._printer.on_comm_progress`) has been removed.'
   languages:
@@ -8205,7 +8205,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_progress`
       (commonly accessed by plugins as `self._printer.on_comm_progress`).
     _ref: octoprint.printer.standard.Printer.on_comm_progress
-- id: REM-0594
+- id: REM-0596
   message: '`octoprint.printer.standard.Printer.on_comm_record_fileposition` (commonly
     accessed by plugins as `self._printer.on_comm_record_fileposition`) has been removed.'
   languages:
@@ -8224,7 +8224,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_record_fileposition`
       (commonly accessed by plugins as `self._printer.on_comm_record_fileposition`).
     _ref: octoprint.printer.standard.Printer.on_comm_record_fileposition
-- id: REM-0595
+- id: REM-0597
   message: '`octoprint.printer.standard.Printer.on_comm_sd_files` (commonly accessed
     by plugins as `self._printer.on_comm_sd_files`) has been removed.'
   languages:
@@ -8243,7 +8243,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_files`
       (commonly accessed by plugins as `self._printer.on_comm_sd_files`).
     _ref: octoprint.printer.standard.Printer.on_comm_sd_files
-- id: REM-0596
+- id: REM-0598
   message: '`octoprint.printer.standard.Printer.on_comm_sd_state_change` (commonly
     accessed by plugins as `self._printer.on_comm_sd_state_change`) has been removed.'
   languages:
@@ -8262,7 +8262,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_sd_state_change`
       (commonly accessed by plugins as `self._printer.on_comm_sd_state_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_sd_state_change
-- id: REM-0597
+- id: REM-0599
   message: '`octoprint.printer.standard.Printer.on_comm_state_change` (commonly accessed
     by plugins as `self._printer.on_comm_state_change`) has been removed.'
   languages:
@@ -8281,7 +8281,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_state_change`
       (commonly accessed by plugins as `self._printer.on_comm_state_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_state_change
-- id: REM-0598
+- id: REM-0600
   message: '`octoprint.printer.standard.Printer.on_comm_temperature_update` (commonly
     accessed by plugins as `self._printer.on_comm_temperature_update`) has been removed.'
   languages:
@@ -8300,7 +8300,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_temperature_update`
       (commonly accessed by plugins as `self._printer.on_comm_temperature_update`).
     _ref: octoprint.printer.standard.Printer.on_comm_temperature_update
-- id: REM-0599
+- id: REM-0601
   message: '`octoprint.printer.standard.Printer.on_comm_z_change` (commonly accessed
     by plugins as `self._printer.on_comm_z_change`) has been removed.'
   languages:
@@ -8319,7 +8319,7 @@ rules:
     suggestion: Remove usage of `octoprint.printer.standard.Printer.on_comm_z_change`
       (commonly accessed by plugins as `self._printer.on_comm_z_change`).
     _ref: octoprint.printer.standard.Printer.on_comm_z_change
-- id: REM-0600
+- id: REM-0602
   message: '`octoprint.schema.config.Config.serial` has been removed.'
   languages:
   - python
@@ -8330,7 +8330,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.schema.config.Config.serial`.
     _ref: octoprint.schema.config.Config.serial
-- id: REM-0601
+- id: REM-0603
   message: '`octoprint.schema.config.access_control.AccessControlConfig.trustRemoteUser`
     has been removed.'
   languages:
@@ -8342,7 +8342,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.schema.config.access_control.AccessControlConfig.trustRemoteUser`.
     _ref: octoprint.schema.config.access_control.AccessControlConfig.trustRemoteUser
-- id: REM-0602
+- id: REM-0604
   message: '`octoprint.schema.config.feature.FeatureConfig.autoUppercaseBlacklist`
     has been removed.'
   languages:
@@ -8354,7 +8354,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.schema.config.feature.FeatureConfig.autoUppercaseBlacklist`.
     _ref: octoprint.schema.config.feature.FeatureConfig.autoUppercaseBlacklist
-- id: REM-0603
+- id: REM-0605
   message: '`octoprint.schema.config.server.ServerConfig.pluginBlacklist` has been
     removed.'
   languages:
@@ -8366,7 +8366,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.schema.config.server.ServerConfig.pluginBlacklist`.
     _ref: octoprint.schema.config.server.ServerConfig.pluginBlacklist
-- id: REM-0604
+- id: REM-0606
   message: '`octoprint.util.comm.Printer.on_comm_print_job_failed` (commonly accessed
     by plugins as `self._printer.on_comm_print_job_failed`) has been removed.'
   languages:
@@ -8385,7 +8385,7 @@ rules:
     suggestion: Remove usage of `octoprint.util.comm.Printer.on_comm_print_job_failed`
       (commonly accessed by plugins as `self._printer.on_comm_print_job_failed`).
     _ref: octoprint.util.comm.Printer.on_comm_print_job_failed
-- id: REM-0605
+- id: REM-0607
   message: '`octoprint.util.comm.StreamingGcodeFileInformation._localFilename` has
     been removed.'
   languages:
@@ -8397,7 +8397,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.util.comm.StreamingGcodeFileInformation._localFilename`.
     _ref: octoprint.util.comm.StreamingGcodeFileInformation._localFilename
-- id: REM-0606
+- id: REM-0608
   message: '`octoprint.util.comm.StreamingGcodeFileInformation._remoteFilename` has
     been removed.'
   languages:
@@ -8409,7 +8409,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.util.comm.StreamingGcodeFileInformation._remoteFilename`.
     _ref: octoprint.util.comm.StreamingGcodeFileInformation._remoteFilename
-- id: REM-0607
+- id: REM-0609
   message: '`octoprint.util.comm.StreamingGcodeFileInformation.getLocalFilename` has
     been removed.'
   languages:
@@ -8421,7 +8421,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.util.comm.StreamingGcodeFileInformation.getLocalFilename`.
     _ref: octoprint.util.comm.StreamingGcodeFileInformation.getLocalFilename
-- id: REM-0608
+- id: REM-0610
   message: '`octoprint.util.comm.StreamingGcodeFileInformation.getRemoteFilename`
     has been removed.'
   languages:
@@ -8433,7 +8433,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.util.comm.StreamingGcodeFileInformation.getRemoteFilename`.
     _ref: octoprint.util.comm.StreamingGcodeFileInformation.getRemoteFilename
-- id: REM-0609
+- id: REM-0611
   message: '`octoprint.plugins.eventmanager.EventManagerPlugin.get_additional_permissions`
     has been removed.'
   languages:
@@ -8445,7 +8445,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.plugins.eventmanager.EventManagerPlugin.get_additional_permissions`.
     _ref: octoprint.plugins.eventmanager.EventManagerPlugin.get_additional_permissions
-- id: REM-0610
+- id: REM-0612
   message: '`octoprint.plugins.tracking.TrackingPlugin._printer_connection_parameters`
     has been removed.'
   languages:
@@ -8457,7 +8457,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.plugins.tracking.TrackingPlugin._printer_connection_parameters`.
     _ref: octoprint.plugins.tracking.TrackingPlugin._printer_connection_parameters
-- id: REM-0611
+- id: REM-0613
   message: '`octoprint.plugins.tracking.TrackingPlugin._record_next_firmware_info`
     has been removed.'
   languages:
@@ -8469,7 +8469,7 @@ rules:
     since: 2.0.0
     suggestion: Remove usage of `octoprint.plugins.tracking.TrackingPlugin._record_next_firmware_info`.
     _ref: octoprint.plugins.tracking.TrackingPlugin._record_next_firmware_info
-- id: REM-0612
+- id: REM-0614
   message: Class `octoprint.access.users.ApiUser` has been removed.
   languages:
   - python
@@ -8482,7 +8482,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.access.users.ApiUser`.
     _ref: octoprint.access.users.ApiUser
-- id: REM-0613
+- id: REM-0615
   message: '`octoprint.access.users.LIBPASS` has been removed.'
   languages:
   - python
@@ -8495,7 +8495,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.access.users.LIBPASS`.
     _ref: octoprint.access.users.LIBPASS
-- id: REM-0614
+- id: REM-0616
   message: Class `octoprint.plugins.health_check.checks.global_api_key.GlobalApiKeyCheck`
     has been removed.
   languages:
@@ -8509,7 +8509,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.plugins.health_check.checks.global_api_key.GlobalApiKeyCheck`.
     _ref: octoprint.plugins.health_check.checks.global_api_key.GlobalApiKeyCheck
-- id: REM-0615
+- id: REM-0617
   message: Module `octoprint.plugins.health_check.checks.global_api_key` has been
     removed.
   languages:
@@ -8524,7 +8524,7 @@ rules:
     since: 2.1.0
     suggestion: Remove imports of `octoprint.plugins.health_check.checks.global_api_key`.
     _ref: octoprint.plugins.health_check.checks.global_api_key.octoprint.plugins.health_check.checks.global_api_key
-- id: REM-0616
+- id: REM-0618
   message: '`octoprint.server.api.settings.deleteApiKey` has been removed.'
   languages:
   - python
@@ -8537,7 +8537,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.server.api.settings.deleteApiKey`.
     _ref: octoprint.server.api.settings.deleteApiKey
-- id: REM-0617
+- id: REM-0619
   message: '`octoprint.server.api.settings.generateApiKey` has been removed.'
   languages:
   - python
@@ -8550,7 +8550,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.server.api.settings.generateApiKey`.
     _ref: octoprint.server.api.settings.generateApiKey
-- id: REM-0618
+- id: REM-0620
   message: '`octoprint.settings.Settings.deleteApiKey` has been removed.'
   languages:
   - python
@@ -8561,7 +8561,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.settings.Settings.deleteApiKey`.
     _ref: octoprint.settings.Settings.deleteApiKey
-- id: REM-0619
+- id: REM-0621
   message: '`octoprint.settings.Settings.generateApiKey` has been removed.'
   languages:
   - python
@@ -8572,7 +8572,7 @@ rules:
     since: 2.1.0
     suggestion: Remove usage of `octoprint.settings.Settings.generateApiKey`.
     _ref: octoprint.settings.Settings.generateApiKey
-- id: REM-0620
+- id: REM-0622
   message: '`octoprint.access.users.UserManager.api_user_factory` (commonly accessed
     by plugins as `self._user_manager.api_user_factory`) has been removed.'
   languages:
@@ -8588,7 +8588,7 @@ rules:
     suggestion: Remove usage of `octoprint.access.users.UserManager.api_user_factory`
       (commonly accessed by plugins as `self._user_manager.api_user_factory`).
     _ref: octoprint.access.users.UserManager.api_user_factory
-- id: REM-0621
+- id: REM-0623
   message: '`octoprint.schema.config.api.ApiConfig.key` has been removed.'
   languages:
   - python

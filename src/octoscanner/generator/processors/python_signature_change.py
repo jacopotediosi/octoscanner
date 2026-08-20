@@ -1,16 +1,25 @@
-"""Generate Semgrep rules for Python callables whose signatures lost keyword parameters.
+"""Generate Semgrep rules for Python callables whose signature broke between versions.
 
-Uses ``griffe.find_breaking_changes`` to detect ``PARAMETER_REMOVED`` breakages
-between consecutive OctoPrint versions and emits one Semgrep rule per
-removed keyword parameter.
+Two breakages are detected between consecutive OctoPrint versions:
+
+- Detects dropped keyword parameters via ``_find_removed_parameters``, which
+  keeps the ``PARAMETER_REMOVED`` breakages reported by
+  ``griffe.find_breaking_changes``.
+- Detects properties that stopped returning a callable shim via
+  ``_find_removed_call_forms``, which diffs the shims found during analysis:
+  the property's own signature is unchanged, yet the ``member()`` call form
+  stops working while ``member`` keeps working.
+
+One Semgrep rule is emitted per breakage.
 """
 
 from __future__ import annotations
 
 import griffe
 
-from ..models import PipelineState, RuleFile, SignatureChange
+from ..models import PipelineState, RuleFile, SignatureChange, SignatureChangeKind
 from ..python_receivers import format_plugin_self_hint, get_receivers_map
+from ..python_utils import ancestry_depth, filter_subclass_duplicates
 from ..rules import (
     build_fqn,
     build_rule,
@@ -24,7 +33,7 @@ from .base import Processor, format_summary
 # ---------------------------------------------------------------------------
 
 
-def _find_signature_changes(v_new: str, old_mod: griffe.Module, new_mod: griffe.Module) -> list[SignatureChange]:
+def _find_removed_parameters(v_new: str, old_mod: griffe.Module, new_mod: griffe.Module) -> list[SignatureChange]:
     """Detect keyword parameters removed from callables between OctoPrint versions.
 
     Emits one :class:`SignatureChange` per removed keyword parameter.
@@ -64,6 +73,7 @@ def _find_signature_changes(v_new: str, old_mod: griffe.Module, new_mod: griffe.
         changes.append(
             SignatureChange(
                 name=callable_obj.name,
+                kind=SignatureChangeKind.PARAMETER_REMOVED,
                 since=v_new,
                 class_name=class_name,
                 module_path=callable_obj.module.path,
@@ -74,13 +84,44 @@ def _find_signature_changes(v_new: str, old_mod: griffe.Module, new_mod: griffe.
     return changes
 
 
+def _find_removed_call_forms(
+    v_new: str,
+    old_shims: set[tuple[str, str, str]],
+    new_shims: set[tuple[str, str, str]],
+) -> list[SignatureChange]:
+    """Detect properties that stopped being callable between OctoPrint versions.
+
+    Emits one :class:`SignatureChange` per property whose callable shim is gone.
+
+    Args:
+        v_new (str): The newer OctoPrint version string.
+        old_shims (set[tuple[str, str, str]]): Shim-backed properties of the
+            older version, as ``(module_path, class_name, name)`` triples.
+        new_shims (set[tuple[str, str, str]]): Shim-backed properties of the
+            newer version, in the same form.
+
+    Returns:
+        list[SignatureChange]: One ``SignatureChange`` entry per dropped shim.
+    """
+    return [
+        SignatureChange(
+            name=name,
+            kind=SignatureChangeKind.CALL_FORM_REMOVED,
+            since=v_new,
+            class_name=class_name,
+            module_path=module_path,
+        )
+        for module_path, class_name, name in old_shims - new_shims
+    ]
+
+
 # ---------------------------------------------------------------------------
 # Rule generation
 # ---------------------------------------------------------------------------
 
 
 def _generate_patterns(change: SignatureChange, receivers_map: dict[str, list[str]]) -> list[dict]:
-    """Build Semgrep kwarg-match patterns for a signature change.
+    """Build Semgrep call-match patterns for a signature change.
 
     Args:
         change (SignatureChange): The signature change to convert into patterns.
@@ -92,8 +133,10 @@ def _generate_patterns(change: SignatureChange, receivers_map: dict[str, list[st
     """
     patterns = []
 
+    call_args = f"..., {change.removed_param}=$V, ..." if change.removed_param else ""
+
     def _add(call_prefix: str) -> None:
-        patterns.append({"pattern": f"{call_prefix}(..., {change.removed_param}=$V, ...)"})
+        patterns.append({"pattern": f"{call_prefix}({call_args})"})
 
     if change.class_name and change.name == "__init__":
         # Constructor: emit the class instantiation form ``Receiver(..., kw=$V, ...)``
@@ -135,6 +178,7 @@ def _make_rule(
     Examples:
         >>> change = SignatureChange(
         ...     name="add_file",
+        ...     kind=SignatureChangeKind.PARAMETER_REMOVED,
         ...     since="1.11.0",
         ...     class_name="FileManager",
         ...     module_path="octoprint.filemanager",
@@ -175,22 +219,32 @@ def _make_rule(
         target = build_fqn(change.name, change.class_name, change.module_path)
         self_hint = format_plugin_self_hint(change.class_name, change.name)
         self_hint = f" {self_hint}" if self_hint else ""
-        message = f"`{target}`{self_hint} no longer accepts the keyword argument `{change.removed_param}`."
-        suggestion = f"Update the call to `{target}`{self_hint} to match its new signature."
+        if change.kind == SignatureChangeKind.CALL_FORM_REMOVED:
+            message = (
+                f"`{target}`{self_hint} is no longer callable: it now returns a plain value, "
+                f"so `{change.name}()` raises `TypeError`."
+            )
+            suggestion = f"Read `{change.name}` as an attribute instead of calling `{change.name}()`."
+        else:
+            message = f"`{target}`{self_hint} no longer accepts the keyword argument `{change.removed_param}`."
+            suggestion = f"Update the call to `{target}`{self_hint} to match its new signature."
 
     pattern_body = patterns[0] if len(patterns) == 1 else {"pattern-either": patterns}
+
+    metadata = {
+        "type": "removal",
+        "since": change.since,
+        "suggestion": suggestion,
+    }
+    if change.removed_param:
+        metadata["_removed_param"] = change.removed_param
 
     return build_rule(
         rule_id=rule_id,
         ref=target,
         message=message,
         pattern_body=pattern_body,
-        metadata={
-            "type": "removal",
-            "since": change.since,
-            "suggestion": suggestion,
-            "_removed_param": change.removed_param,
-        },
+        metadata=metadata,
         severity=RuleFile.python_signature_change.value.severity,
     )
 
@@ -218,7 +272,9 @@ def _generate_rules(
     Examples:
         >>> changes = [
         ...     SignatureChange(
-        ...         name="add_file", since="1.11.0",
+        ...         name="add_file",
+        ...         kind=SignatureChangeKind.PARAMETER_REMOVED,
+        ...         since="1.11.0",
         ...         class_name="FileManager",
         ...         module_path="octoprint.filemanager",
         ...         removed_param="links",
@@ -237,7 +293,22 @@ def _generate_rules(
     next_id = next_rule_id(existing_rules, RuleFile.python_signature_change.value.id_prefix)
     generated_patterns = set()
 
-    sorted_changes = sorted(changes, key=lambda c: (build_fqn(c.name, c.class_name, c.module_path), c.removed_param))
+    # Filter out duplicate changes affecting the same member on both
+    # a base class and its subclass, keeping only the base class change.
+    filtered_changes = filter_subclass_duplicates(changes, class_hierarchy)
+
+    # Sort changes so base classes come before subclasses. When multiple
+    # changes produce the same Semgrep pattern, the first one wins the dedup.
+    # Preferring base classes yields better messages.
+    sorted_changes = sorted(
+        filtered_changes,
+        key=lambda c: (
+            # Fewer ancestors = base class, preferred in dedup for clearer messages
+            ancestry_depth(c.class_name, class_hierarchy) if c.class_name else 0,
+            build_fqn(c.name, c.class_name, c.module_path),
+            c.removed_param or "",
+        ),
+    )
 
     for change in sorted_changes:
         rule = _make_rule(change, f"{RuleFile.python_signature_change.value.id_prefix}-{next_id:04d}", receivers_map)
@@ -270,10 +341,12 @@ class PythonSignatureChangeProcessor(Processor):
 
         total_new = 0
         for v_old, v_new in zip(state.versions, state.versions[1:]):
-            changes = _find_signature_changes(
-                v_new,
-                state.python_analysis_results[v_old].griffe_module,
-                state.python_analysis_results[v_new].griffe_module,
+            old_results = state.python_analysis_results[v_old]
+            new_results = state.python_analysis_results[v_new]
+
+            changes = _find_removed_parameters(v_new, old_results.griffe_module, new_results.griffe_module)
+            changes += _find_removed_call_forms(
+                v_new, old_results.callable_property_shims, new_results.callable_property_shims
             )
 
             if not changes:
@@ -283,7 +356,7 @@ class PythonSignatureChangeProcessor(Processor):
             new_rules, already = _generate_rules(
                 changes=changes,
                 existing_rules=signature_change_rules,
-                class_hierarchy=state.python_analysis_results[v_new].class_hierarchy,
+                class_hierarchy=new_results.class_hierarchy,
             )
             if new_rules:
                 signature_change_rules.extend(new_rules)
