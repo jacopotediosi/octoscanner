@@ -149,20 +149,21 @@ class _DeprecationASTVisitor(ast.NodeVisitor):
 
     def visit_Expr(self, node: ast.Expr) -> None:
         # Module-level warnings.warn("...", DeprecationWarning)
-        if self._current_class is None and not self._in_function:
-            if (
-                isinstance(node.value, ast.Call)
-                and ast.unparse(node.value.func) in ("warn", "warnings.warn")
-                and len(node.value.args) >= 2
-                and ast.unparse(node.value.args[1]) == "DeprecationWarning"
-            ):
-                msg = node.value.args[0]
-                if isinstance(msg, ast.Constant) and isinstance(msg.value, str):
-                    self.deprecations.append(
-                        Deprecation(
-                            self.module_path, SymbolKind.MODULE, msg.value, None, None, self.module_path, node.lineno
-                        )
+        if (
+            self._current_class is None
+            and not self._in_function
+            and isinstance(node.value, ast.Call)
+            and ast.unparse(node.value.func) in ("warn", "warnings.warn")
+            and len(node.value.args) >= 2
+            and ast.unparse(node.value.args[1]) == "DeprecationWarning"
+        ):
+            msg = node.value.args[0]
+            if isinstance(msg, ast.Constant) and isinstance(msg.value, str):
+                self.deprecations.append(
+                    Deprecation(
+                        self.module_path, SymbolKind.MODULE, msg.value, None, None, self.module_path, node.lineno
                     )
+                )
 
     def visit_Assign(self, node: ast.Assign) -> None:
         if len(node.targets) != 1:

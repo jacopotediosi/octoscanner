@@ -196,9 +196,8 @@ def _custom_octoprint_breaking_changes(
         def walk(obj: griffe.Object) -> None:
             for member in obj.members.values():
                 try:
-                    if member.is_class:
-                        if member.name not in index:
-                            index[member.name] = member
+                    if member.is_class and member.name not in index:
+                        index[member.name] = member
                     if member.is_module and not member.is_alias:
                         walk(member)
                 except (griffe.AliasResolutionError, Exception):

@@ -52,9 +52,7 @@ def walk_griffe(
         for dec in member.decorators:
             path = dec.callable_path
             if path and (
-                path.endswith(".deprecated")
-                or path.endswith(".variable_deprecated")
-                or path in ("deprecated", "variable_deprecated")
+                path.endswith((".deprecated", ".variable_deprecated")) or path in ("deprecated", "variable_deprecated")
             ):
                 message, since = "", None
                 try:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import sys
-from datetime import date
+from datetime import datetime
 from pathlib import Path
 
 from .. import PLUGINS_SRC_DIR
@@ -60,7 +60,10 @@ def main(argv: list[str] | None = None) -> None:
         "--subfolder",
         default=None,
         metavar="NAME",
-        help=f"Optional subfolder name under {PLUGINS_SRC_DIR} to store the downloads (e.g. '{date.today().isoformat()}')",
+        help=(
+            f"Optional subfolder name under {PLUGINS_SRC_DIR} to store the downloads "
+            f"(e.g. '{datetime.now().astimezone().date().isoformat()}')"
+        ),
     )
     download_plugins.add_argument(
         "--workers",

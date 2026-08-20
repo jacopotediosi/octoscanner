@@ -17,7 +17,7 @@ from .. import RULES_DIR
 from ..models import RuleFileMetadata
 from .models import Deprecation, Removal, RuleFile, SymbolKind
 
-DeprecationOrRemovalType = TypeVar("T", Deprecation, Removal)
+DeprecationOrRemovalType = TypeVar("DeprecationOrRemovalType", Deprecation, Removal)
 
 
 # ---------------------------------------------------------------------------
@@ -159,9 +159,7 @@ def ref_earliest_since_map(items: Iterable[DeprecationOrRemovalType]) -> dict[st
     for item in items:
         ref = build_fqn(item.name, item.class_name, item.module_path)
         existing = refs.get(ref)
-        if existing is None:
-            refs[ref] = item.since
-        elif item.since is not None and Version(item.since) < Version(existing):
+        if existing is None or (item.since is not None and Version(item.since) < Version(existing)):
             refs[ref] = item.since
     return refs
 

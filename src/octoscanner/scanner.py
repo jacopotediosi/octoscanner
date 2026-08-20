@@ -68,9 +68,11 @@ def _run_semgrep(
 
     # Bypass octoscanner's own .gitignore when scanning PLUGINS_SRC_DIR
     plugins_src_root = PLUGINS_SRC_DIR.resolve()
-    if any(plugins_src_root in target.resolve().parents or target.resolve() == plugins_src_root for target in targets):
-        if "--no-git-ignore" not in extra_args:
-            extra_args.append("--no-git-ignore")
+    targets_plugins_src = any(
+        plugins_src_root in target.resolve().parents or target.resolve() == plugins_src_root for target in targets
+    )
+    if targets_plugins_src and "--no-git-ignore" not in extra_args:
+        extra_args.append("--no-git-ignore")
 
     if use_opengrep:
         cmd = [
@@ -96,7 +98,7 @@ def _run_semgrep(
             *targets_str,
         ]
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     if result.returncode not in (0, 1):
         print(result.stderr, file=sys.stderr)
         return []
