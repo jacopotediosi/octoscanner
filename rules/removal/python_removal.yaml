@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-06-17T17:09:32+00:00'
+  generated_at: '2026-08-20T08:43:52+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -12,7 +12,7 @@ _octoscanner:
   - 1.9.0
   - 1.10.0
   - 1.11.0
-  - 1.11.7
+  - 1.11.8
   - 2.0.0 (next branch)
   - 2.1.0 (dev branch)
 
@@ -5324,7 +5324,7 @@ rules:
   pattern: CommandTrigger._executeGcodeCommand
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.events.CommandTrigger._executeGcodeCommand`.
     _ref: octoprint.events.CommandTrigger._executeGcodeCommand
 - id: REM-0399
@@ -5335,7 +5335,7 @@ rules:
   pattern: CommandTrigger._executeSystemCommand
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.events.CommandTrigger._executeSystemCommand`.
     _ref: octoprint.events.CommandTrigger._executeSystemCommand
 - id: REM-0400
@@ -5346,7 +5346,7 @@ rules:
   pattern: CommandTrigger._initSubscriptions
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.events.CommandTrigger._initSubscriptions`.
     _ref: octoprint.events.CommandTrigger._initSubscriptions
 - id: REM-0401
@@ -5357,7 +5357,7 @@ rules:
   pattern: CommandTrigger._processCommand
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.events.CommandTrigger._processCommand`.
     _ref: octoprint.events.CommandTrigger._processCommand
 - id: REM-0402
@@ -5368,7 +5368,7 @@ rules:
   pattern: CommandTrigger.executeCommand
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.events.CommandTrigger.executeCommand`.
     _ref: octoprint.events.CommandTrigger.executeCommand
 - id: REM-0403
@@ -5380,7 +5380,7 @@ rules:
   pattern: AchievementsPlugin.get_api_commands
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.plugin.types.AchievementsPlugin.get_api_commands`.
     _ref: octoprint.plugin.types.AchievementsPlugin.get_api_commands
 - id: REM-0404
@@ -5392,7 +5392,7 @@ rules:
   pattern: AchievementsPlugin.is_api_adminonly
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.plugin.types.AchievementsPlugin.is_api_adminonly`.
     _ref: octoprint.plugin.types.AchievementsPlugin.is_api_adminonly
 - id: REM-0405
@@ -5403,7 +5403,7 @@ rules:
   pattern: AchievementsPlugin.on_api_command
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.plugin.types.AchievementsPlugin.on_api_command`.
     _ref: octoprint.plugin.types.AchievementsPlugin.on_api_command
 - id: REM-0406
@@ -5414,7 +5414,7 @@ rules:
   pattern: AchievementsPlugin.on_api_get
   metadata:
     type: removal
-    since: 1.11.7
+    since: 1.11.8
     suggestion: Remove usage of `octoprint.plugin.types.AchievementsPlugin.on_api_get`.
     _ref: octoprint.plugin.types.AchievementsPlugin.on_api_get
 - id: REM-0407
@@ -6185,7 +6185,7 @@ rules:
     suggestion: Remove usage of `octoprint.server.api.users.updateUser`.
     _ref: octoprint.server.api.users.updateUser
 - id: REM-0465
-  message: '`octoprint.server.util.flask.admin_validator` was deprecated since 1.11.7
+  message: '`octoprint.server.util.flask.admin_validator` was deprecated since 1.11.8
     and has been removed.'
   languages:
   - python
@@ -6199,7 +6199,7 @@ rules:
     suggestion: Remove usage of `octoprint.server.util.flask.admin_validator`.
     _ref: octoprint.server.util.flask.admin_validator
 - id: REM-0466
-  message: '`octoprint.server.util.flask.user_validator` was deprecated since 1.11.7
+  message: '`octoprint.server.util.flask.user_validator` was deprecated since 1.11.8
     and has been removed.'
   languages:
   - python
@@ -6290,7 +6290,7 @@ rules:
     suggestion: Remove usage of `octoprint.users.__license__`.
     _ref: octoprint.users.__license__
 - id: REM-0473
-  message: Module `octoprint.users` was deprecated since 1.11.7 and has been removed.
+  message: Module `octoprint.users` was deprecated since 1.11.8 and has been removed.
   languages:
   - python
   severity: CRITICAL
@@ -6318,7 +6318,7 @@ rules:
     suggestion: Remove usage of `octoprint.util.bom_aware_open`.
     _ref: octoprint.util.bom_aware_open
 - id: REM-0475
-  message: '`octoprint.util.dict_clean` was deprecated since 1.11.7 and has been removed.'
+  message: '`octoprint.util.dict_clean` was deprecated since 1.11.8 and has been removed.'
   languages:
   - python
   severity: CRITICAL

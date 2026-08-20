@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-06-17T17:09:32+00:00'
+  generated_at: '2026-08-20T08:43:52+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -12,7 +12,7 @@ _octoscanner:
   - 1.9.0
   - 1.10.0
   - 1.11.0
-  - 1.11.7
+  - 1.11.8
   - 2.0.0 (next branch)
   - 2.1.0 (dev branch)
 
