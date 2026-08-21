@@ -418,3 +418,387 @@ rules:
         rendered as plain text. If the value must contain HTML, escape any
         user-controllable substring via `_.escape(...)` before
         interpolating it into the markup.
+  - id: SEC-0013
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as `title`.
+      OctoPrint concatenates `title` into the dialog header markup and hands the
+      result to jQuery, so it is rendered as raw HTML and any attacker-controllable
+      data flowing into it results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., title: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., title: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., title: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., title: $X, ...})"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The helper offers no escaping option, so the value must already be safe when
+        it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
+        substring before interpolating it into markup.
+  - id: SEC-0014
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as `message`,
+      either as the `message` option or as the first positional argument. OctoPrint
+      concatenates it into the dialog body markup and hands the result to jQuery, so
+      it is rendered as raw HTML and any attacker-controllable data flowing into it
+      results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., message: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., message: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., message: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., message: $X, ...})"
+          - pattern: "showConfirmationDialog($X, ...)"
+          - pattern: "window.showConfirmationDialog($X, ...)"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude the options object itself, matched by the alternatives above.
+            - pattern-not: "{...}"
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The helper offers no escaping option, so the value must already be safe when
+        it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
+        substring before interpolating it into markup.
+  - id: SEC-0015
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as
+      `question`. OctoPrint concatenates `question` into the dialog body markup and
+      hands the result to jQuery, so it is rendered as raw HTML and any
+      attacker-controllable data flowing into it results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., question: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., question: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., question: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., question: $X, ...})"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The helper offers no escaping option, so the value must already be safe when
+        it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
+        substring before interpolating it into markup.
+  - id: SEC-0016
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as `html`.
+      The `html` option replaces the whole dialog body and is handed to jQuery as
+      raw markup, so any attacker-controllable data flowing into it results in DOM
+      XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., html: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., html: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., html: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., html: $X, ...})"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The `html` option is inserted as-is by design, so the markup must already be
+        safe when it is passed: wrap every user-controllable substring in
+        `_.escape(...)` before interpolating it.
+  - id: SEC-0017
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as `cancel`.
+      OctoPrint concatenates the cancel button label into the button markup and
+      hands the result to jQuery, so it is rendered as raw HTML and any
+      attacker-controllable data flowing into it results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., cancel: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., cancel: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., cancel: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., cancel: $X, ...})"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The helper offers no escaping option, so the value must already be safe when
+        it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
+        substring before interpolating it into markup.
+  - id: SEC-0018
+    message: >
+      `showConfirmationDialog()` invocation passing a non-literal value as `proceed`.
+      OctoPrint concatenates each proceed button label - the option holds either a
+      single label or a list of them - into the button markup and hands the result
+      to jQuery, so it is rendered as raw HTML and any attacker-controllable data
+      flowing into it results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      # Match both documented call forms, `showConfirmationDialog(options)` and
+      # `showConfirmationDialog(message, onacknowledge, options)`.
+      - pattern-either:
+          - pattern: "showConfirmationDialog({..., proceed: $X, ...})"
+          - pattern: "showConfirmationDialog($MSG, $ONACK, {..., proceed: $X, ...})"
+          - pattern: "window.showConfirmationDialog({..., proceed: $X, ...})"
+          - pattern: "window.showConfirmationDialog($MSG, $ONACK, {..., proceed: $X, ...})"
+      - metavariable-pattern:
+          metavariable: $X
+          patterns:
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, unknown call, translated concatenation, template literal
+            # interpolating an unescaped value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
+    metadata:
+      type: security
+      suggestion: >
+        The helper offers no escaping option, so the value must already be safe when
+        it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
+        substring before interpolating it into markup.
