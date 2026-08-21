@@ -307,39 +307,50 @@ rules:
     languages: [js]
     severity: WARNING
     patterns:
-      - pattern: new PNotify($OPTS)
+      - pattern: "new PNotify({..., text: $X, ...})"
+      - pattern-not: "new PNotify({..., text_escape: true, ...})"
       - metavariable-pattern:
-          metavariable: $OPTS
+          metavariable: $X
           patterns:
-            - pattern: "{..., text: $X, ...}"
-            - pattern-not: "{..., text_escape: true, ...}"
-            - metavariable-pattern:
-                metavariable: $X
-                patterns:
-                  # Exclude string literals, taking advantage of Semgrep's AST
-                  # constant propagation.
-                  - pattern-not: '"..."'
-                  - pattern-not: "'...'"
-                  # Exclude expressions made entirely of string literals and/or
-                  # safe-wrapper calls (escape/sanitize/gettext/_), optionally
-                  # joined by `+`. The expression must consist exclusively of
-                  # such atoms; anything else (bare identifier, property access,
-                  # unknown call, template literal with `${...}`, ...) trips it.
-                  - pattern-not-regex: |-
-                      (?x)
-                      \A \s*
-                      (?<atom>
-                          " (?: [^"\\] | \\. )* "                                              # "..." with \-escape support
-                        | ' (?: [^'\\] | \\. )* '                                              # '...' with \-escape support
-                        | ` (?: [^`$] | \$ (?!\{) | \$\{ \s* (?&safe_call) \s* \}? )* `?       # `...` with optional ${SAFE_CALL} interpolations
-                        | (?<safe_call>
-                              [\w.]*                                                            # optional obj. prefix
-                              (?: escape | sanitize | gettext | _ )                             # safe call names
-                              (?<paren> \( (?: [^()] | (?&paren) )* \) )                        # balanced parentheses, any depth
-                          )
-                      )
-                      (?: \s* \+ \s* (?&atom) )*
-                      \s* \z
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string
+            # literals, escaping/sanitizing calls, translation calls whose own
+            # arguments are safe, and arrays of those. Anything else (bare
+            # identifier, property access, unknown call, translated
+            # concatenation, template literal interpolating an unescaped
+            # value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
     metadata:
       type: security
       suggestion: >
@@ -356,39 +367,50 @@ rules:
     languages: [js]
     severity: WARNING
     patterns:
-      - pattern: new PNotify($OPTS)
+      - pattern: "new PNotify({..., title: $X, ...})"
+      - pattern-not: "new PNotify({..., title_escape: true, ...})"
       - metavariable-pattern:
-          metavariable: $OPTS
+          metavariable: $X
           patterns:
-            - pattern: "{..., title: $X, ...}"
-            - pattern-not: "{..., title_escape: true, ...}"
-            - metavariable-pattern:
-                metavariable: $X
-                patterns:
-                  # Exclude string literals, taking advantage of Semgrep's AST
-                  # constant propagation.
-                  - pattern-not: '"..."'
-                  - pattern-not: "'...'"
-                  # Exclude expressions made entirely of string literals and/or
-                  # safe-wrapper calls (escape/sanitize/gettext/_), optionally
-                  # joined by `+`. The expression must consist exclusively of
-                  # such atoms; anything else (bare identifier, property access,
-                  # unknown call, template literal with `${...}`, ...) trips it.
-                  - pattern-not-regex: |-
-                      (?x)
-                      \A \s*
-                      (?<atom>
-                          " (?: [^"\\] | \\. )* "                                              # "..." with \-escape support
-                        | ' (?: [^'\\] | \\. )* '                                              # '...' with \-escape support
-                        | ` (?: [^`$] | \$ (?!\{) | \$\{ \s* (?&safe_call) \s* \}? )* `?       # `...` with optional ${SAFE_CALL} interpolations
-                        | (?<safe_call>
-                              [\w.]*                                                            # optional obj. prefix
-                              (?: escape | sanitize | gettext | _ )                             # safe call names
-                              (?<paren> \( (?: [^()] | (?&paren) )* \) )                        # balanced parentheses, any depth
-                          )
-                      )
-                      (?: \s* \+ \s* (?&atom) )*
-                      \s* \z
+            # Exclude string literals, taking advantage of Semgrep's AST
+            # constant propagation.
+            - pattern-not: '"..."'
+            - pattern-not: "'...'"
+            # Exclude expressions made exclusively of safe atoms: string
+            # literals, escaping/sanitizing calls, translation calls whose own
+            # arguments are safe, and arrays of those. Anything else (bare
+            # identifier, property access, unknown call, translated
+            # concatenation, template literal interpolating an unescaped
+            # value, ...) trips it.
+            - pattern-not-regex: |-
+                (?x)
+                \A \s* (?&expr) \s* \z
+                (?(DEFINE)
+                  # A safe expression: safe atoms joined by `+`
+                  (?<expr>       (?&atom) (?: \s* \+ \s* (?&atom) )* )
+                  (?<atom>       (?&str) | (?&escaper) | (?&translator) | (?&formatter) | (?&array)
+                               | \( \s* (?&expr) \s* \) )
+                  # String literals. Semgrep truncates a template literal right after its first
+                  # interpolation, hence the optional trailing `}` and backtick.
+                  (?<str>        " (?: [^"\\] | \\. )* "
+                               | ' (?: [^'\\] | \\. )* '
+                               | ` (?: [^`\\$] | \\. | \$ (?!\{) | \$\{ \s* (?&expr) \s* \}? )* `? )
+                  # Escaping/sanitizing calls, safe whatever their arguments are
+                  (?<escaper>    (?: [\w$]+ \s* \. \s* )* (?: escape | sanitize ) \w* \s* (?&args) )
+                  # Translation calls, safe only as long as their arguments are safe too
+                  (?<translator> (?: [\w$]+ \s* \. \s* )* (?: n?gettext | _ ) \s*
+                                 \( \s* (?&expr) (?: \s* , \s* (?: (?&expr) | [\w$.]+ ) )* \s* ,? \s* \) )
+                  # `sprintf` calls, safe as long as the format and every substituted value are
+                  (?<formatter>  (?: [\w$]+ \s* \. \s* )* v?sprintf \s* \(
+                                 \s* (?&expr) (?: \s* , \s* (?&farg) )* \s* ,? \s* \) )
+                  (?<farg>       (?&expr) | (?&obj) )
+                  (?<obj>        \{ \s* (?: (?&pair) (?: \s* , \s* (?&pair) )* \s* ,? )? \s* \} )
+                  (?<pair>       (?: [\w$]+ | (?&str) ) \s* : \s* (?&farg) )
+                  # Arrays whose items are all safe expressions
+                  (?<array>      \[ \s* (?: (?&expr) (?: \s* , \s* (?&expr) )* \s* ,? )? \s* \] )
+                  # Balanced parentheses, any depth, with strings left alone
+                  (?<args>       \( (?: [^()"'`] | (?&str) | (?&args) )* \) )
+                )
     metadata:
       type: security
       suggestion: >
