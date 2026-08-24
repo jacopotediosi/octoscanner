@@ -628,3 +628,169 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
+  - id: SEC-0019
+    message: >
+      Knockout `popover:` binding enabling `html` and binding `content` to a
+      non-literal value. Bootstrap fills the popover body with `.html()` instead of
+      `.text()` as soon as `html` is on, so any attacker-controllable data flowing
+      into `content` results in DOM XSS.
+    languages: [generic]
+    severity: WARNING
+    paths:
+      include:
+        - "*.jinja2"
+        - "*.html"
+    patterns:
+      # Match the whole `popover: {...}` options object, but only when it enables
+      # `html`, and capture the value bound to `content` so that the
+      # `metavariable-pattern` below can inspect it on its own.
+      - pattern-regex: |-
+          (?x)
+          # Atomic skips: a quoted string consumed one character at a time blows up the scan.
+          (?<! [-\w$.] ) popover \s* : \s* \{
+          (?= (?> (?&str) | \{ [^{}]* \} | [^{}] )*? (?<! [-\w$] ) ['"]? html ['"]? \s* : \s* true \b )
+          (?> (?&str) | \{ [^{}]* \} | [^{}] )*? (?<! [-\w$] ) ['"]? content ['"]? \s* : \s*
+          (?<VALUE> (?> (?&str) | (?&paren) | (?&brack) | [^,{}] )+ )
+          (?> (?&str) | \{ [^{}]* \} | [^{}] )*? \}
+          (?(DEFINE)
+            # Kept single-line, so that they cannot swallow the object's closing brace
+            (?<str>   " (?: [^"\\\n] | \\. )* " | ' (?: [^'\\\n] | \\. )* ' )
+            (?<paren> \( (?: [^()"'] | (?&str) | (?&paren) )* \) )
+            (?<brack> \[ (?: [^\[\]"'] | (?&str) | (?&brack) )* \] )
+          )
+      - metavariable-pattern:
+          metavariable: $VALUE
+          language: generic
+          patterns:
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, observable, unknown call, ...) trips it.
+            - pattern-not-regex: *safe_expression
+    metadata:
+      type: security
+      suggestion: >
+        Drop `html: true` so Bootstrap renders the popover body as plain text. If the
+        body must contain markup, escape every user-controllable substring via
+        `_.escape(...)` before interpolating it into the markup.
+  - id: SEC-0020
+    message: >
+      Knockout `popover:` binding enabling `html` and binding `title` to a
+      non-literal value. Bootstrap fills the popover header with `.html()` instead of
+      `.text()` as soon as `html` is on, so any attacker-controllable data flowing
+      into `title` results in DOM XSS.
+    languages: [generic]
+    severity: WARNING
+    paths:
+      include:
+        - "*.jinja2"
+        - "*.html"
+    patterns:
+      # Match the whole `popover: {...}` options object, but only when it enables
+      # `html`, and capture the value bound to `title` so that the
+      # `metavariable-pattern` below can inspect it on its own.
+      - pattern-regex: |-
+          (?x)
+          # Atomic skips: a quoted string consumed one character at a time blows up the scan.
+          (?<! [-\w$.] ) popover \s* : \s* \{
+          (?= (?> (?&str) | \{ [^{}]* \} | [^{}] )*? (?<! [-\w$] ) ['"]? html ['"]? \s* : \s* true \b )
+          (?> (?&str) | \{ [^{}]* \} | [^{}] )*? (?<! [-\w$] ) ['"]? title ['"]? \s* : \s*
+          (?<VALUE> (?> (?&str) | (?&paren) | (?&brack) | [^,{}] )+ )
+          (?> (?&str) | \{ [^{}]* \} | [^{}] )*? \}
+          (?(DEFINE)
+            # Kept single-line, so that they cannot swallow the object's closing brace
+            (?<str>   " (?: [^"\\\n] | \\. )* " | ' (?: [^'\\\n] | \\. )* ' )
+            (?<paren> \( (?: [^()"'] | (?&str) | (?&paren) )* \) )
+            (?<brack> \[ (?: [^\[\]"'] | (?&str) | (?&brack) )* \] )
+          )
+      - metavariable-pattern:
+          metavariable: $VALUE
+          language: generic
+          patterns:
+            # Exclude expressions made exclusively of safe atoms: string literals,
+            # escaping/sanitizing calls, translation calls whose own arguments are
+            # safe, and arrays of those. Anything else (bare identifier, property
+            # access, observable, unknown call, ...) trips it.
+            - pattern-not-regex: *safe_expression
+    metadata:
+      type: security
+      suggestion: >
+        Drop `html: true` so Bootstrap renders the popover header as plain text. If
+        the header must contain markup, escape every user-controllable substring via
+        `_.escape(...)` before interpolating it into the markup.
+  - id: SEC-0021
+    message: >
+      Bootstrap `popover()` initialization enabling `html` and passing a non-literal
+      value as `content`. Bootstrap fills the popover body with `.html()` instead of
+      `.text()` as soon as `html` is on, so any attacker-controllable data flowing
+      into `content` results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      - pattern: "$EL.popover({..., html: true, ...})"
+      - pattern-either:
+          - patterns:
+              - pattern: "$EL.popover({..., content: $X, ...})"
+              - metavariable-pattern:
+                  metavariable: $X
+                  patterns:
+                    # Exclude string literals, taking advantage of Semgrep's AST
+                    # constant propagation.
+                    - pattern-not: '"..."'
+                    - pattern-not: "'...'"
+                    # Exclude expressions made exclusively of safe atoms: string
+                    # literals, escaping/sanitizing calls, translation calls whose
+                    # own arguments are safe, and arrays of those. Anything else
+                    # (bare identifier, property access, unknown call, translated
+                    # concatenation, template literal interpolating an unescaped
+                    # value, ...) trips it.
+                    - pattern-not-regex: *safe_expression
+          # Bootstrap invokes a function-valued `content` to build the body, so it is
+          # dynamic by construction. A metavariable never binds a function
+          # expression, hence the dedicated alternatives.
+          - pattern: "$EL.popover({..., content: function(...) {...}, ...})"
+          - pattern: "$EL.popover({..., content: (...) => ..., ...})"
+    metadata:
+      type: security
+      suggestion: >
+        Drop `html: true` so Bootstrap renders the popover body as plain text. If the
+        body must contain markup, escape every user-controllable substring via
+        `_.escape(...)` before interpolating it into the markup.
+  - id: SEC-0022
+    message: >
+      Bootstrap `popover()` initialization enabling `html` and passing a non-literal
+      value as `title`. Bootstrap fills the popover header with `.html()` instead of
+      `.text()` as soon as `html` is on, so any attacker-controllable data flowing
+      into `title` results in DOM XSS.
+    languages: [js]
+    severity: WARNING
+    patterns:
+      - pattern: "$EL.popover({..., html: true, ...})"
+      - pattern-either:
+          - patterns:
+              - pattern: "$EL.popover({..., title: $X, ...})"
+              - metavariable-pattern:
+                  metavariable: $X
+                  patterns:
+                    # Exclude string literals, taking advantage of Semgrep's AST
+                    # constant propagation.
+                    - pattern-not: '"..."'
+                    - pattern-not: "'...'"
+                    # Exclude expressions made exclusively of safe atoms: string
+                    # literals, escaping/sanitizing calls, translation calls whose
+                    # own arguments are safe, and arrays of those. Anything else
+                    # (bare identifier, property access, unknown call, translated
+                    # concatenation, template literal interpolating an unescaped
+                    # value, ...) trips it.
+                    - pattern-not-regex: *safe_expression
+          # Bootstrap invokes a function-valued `title` to build the header, so it is
+          # dynamic by construction. A metavariable never binds a function
+          # expression, hence the dedicated alternatives.
+          - pattern: "$EL.popover({..., title: function(...) {...}, ...})"
+          - pattern: "$EL.popover({..., title: (...) => ..., ...})"
+    metadata:
+      type: security
+      suggestion: >
+        Drop `html: true` so Bootstrap renders the popover header as plain text. If
+        the header must contain markup, escape every user-controllable substring via
+        `_.escape(...)` before interpolating it into the markup.
