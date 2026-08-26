@@ -112,7 +112,7 @@ def main(argv: list[str] | None = None) -> None:
         metavar="PATH",
         help=(
             "Scan only with these rules. Accepts subdirectories or YAML files under the rules directory "
-            "(e.g. -r removal -r deprecation/python_deprecation.yaml)"
+            "(e.g. -r breaking -r deprecation/python_deprecation.yaml)"
         ),
     )
     scan_parser.add_argument(

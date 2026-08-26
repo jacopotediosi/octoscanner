@@ -3,11 +3,11 @@
 A static analysis tool for OctoPrint plugins. A static analysis tool for OctoPrint plugins. Detects usage of features deprecated or removed between OctoPrint versions, security issues, and common bad practices.
 
 > [!WARNING]
-> Please note that this tool is still a very early version and false positives are possible, as well as false negatives (the tool does not yet detect all deprecations/removals, especially not frontend related things).
+> Please note that this tool is still a very early version and false positives are possible, as well as false negatives (the tool does not yet detect all deprecations/breaking changes, especially not frontend related things).
 
 ## Features
 
-- **Automatic rule generation** - Analyzes multiple OctoPrint versions to generate [Semgrep](https://semgrep.dev) rules for deprecations and removals
+- **Automatic rule generation** - Analyzes multiple OctoPrint versions to generate [Semgrep](https://semgrep.dev) rules for deprecations and breaking changes
 - **Hand-written rules** - Includes additional rules for security issues and code quality problems commonly found in plugins
 - **Built-in downloader** - Fetches sources of multiple OctoPrint versions and plugins with a single command
 - **Integrated scanner** - Scans one or more plugins at once with clear, actionable output
@@ -20,7 +20,7 @@ The generator runs a two-phase pipeline:
 
 1. **Analyzers** (`generator/analyzers/`) - Parse OctoPrint source code to extract useful information (e.g., class hierarchies and deprecation markers).
 
-2. **Processors** (`generator/processors/`) - Consume analyzer results to build Semgrep rules (e.g., deprecation and removal rules).
+2. **Processors** (`generator/processors/`) - Consume analyzer results to build Semgrep rules (e.g., deprecation and breaking change rules).
 
 ## Installation
 
@@ -53,7 +53,7 @@ octoscanner scan /path/to/my_plugin
 octoscanner scan /path/to/plugin1 /path/to/plugin2
 
 # Filter by rule category or specific rule file
-octoscanner scan /path/to/my_plugin -r deprecation -r removal/python_removal.yaml
+octoscanner scan /path/to/my_plugin -r deprecation -r breaking/python_removal.yaml
 ```
 
 #### Ignore false positives

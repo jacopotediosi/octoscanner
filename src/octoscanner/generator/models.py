@@ -41,7 +41,7 @@ class RuleFileSpec:
             (e.g. ``"deprecation/python_deprecation.yaml"``).
         title (str): Human-readable header title written as the first comment
             line of the generated YAML file.
-        rules_type (str): Rules type (e.g. ``"deprecation"``, ``"removal"``).
+        rules_type (str): Rules type (e.g. ``"deprecation"``, ``"breaking"``).
         id_prefix (str): Rule ID prefix used when generating new rules
             (e.g. ``"DEP"``, ``"STG-REM"``).
         severity (str): Default Semgrep severity for rules in this file
@@ -87,16 +87,16 @@ class RuleFile(Enum):
         severity="MEDIUM",
     )
     python_removal = RuleFileSpec(
-        path="removal/python_removal.yaml",
+        path="breaking/python_removal.yaml",
         title="OctoPrint Python removal rules",
-        rules_type="removal",
+        rules_type="breaking",
         id_prefix="REM",
         severity="CRITICAL",
     )
     python_signature_change = RuleFileSpec(
-        path="removal/python_signature_change.yaml",
+        path="breaking/python_signature_change.yaml",
         title="OctoPrint Python signature change rules",
-        rules_type="removal",
+        rules_type="breaking",
         id_prefix="SIG",
         severity="HIGH",
     )
@@ -108,9 +108,9 @@ class RuleFile(Enum):
         severity="MEDIUM",
     )
     python_settings_removal = RuleFileSpec(
-        path="removal/python_settings_removal.yaml",
+        path="breaking/python_settings_removal.yaml",
         title="OctoPrint Python settings removal rules",
-        rules_type="removal",
+        rules_type="breaking",
         id_prefix="STG-REM",
         severity="CRITICAL",
     )

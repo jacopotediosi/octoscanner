@@ -38,8 +38,8 @@ def _is_ignored_ref(ref: str, rule_file: RuleFile) -> bool:
     """Check if a ref matches any ignored pattern for the given rule file.
 
     Patterns are keyed by a path relative to the rules directory: a directory
-    key (e.g. ``removal``) covers every rule file below it, a file key
-    (e.g. ``removal/python_removal.yaml``) covers that file alone.
+    key (e.g. ``breaking``) covers every rule file below it, a file key
+    (e.g. ``breaking/python_removal.yaml``) covers that file alone.
 
     Supports wildcards:
       - ``*`` matches any single path component

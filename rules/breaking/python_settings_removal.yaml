@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-08-20T20:50:34+00:00'
+  generated_at: '2026-08-26T21:18:29+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -44,7 +44,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Remove usage of settings paths under `accessControl.enabled`.
     _ref: accessControl.enabled
@@ -75,7 +75,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Remove usage of settings paths under `devel.virtualPrinter`.
     _ref: devel.virtualPrinter
@@ -103,7 +103,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Remove usage of settings paths under `gcodeViewer`.
     _ref: gcodeViewer
@@ -139,7 +139,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.8.0
     suggestion: Remove usage of settings paths under `printerParameters.defaultExtrusionLength`.
     _ref: printerParameters.defaultExtrusionLength
@@ -169,7 +169,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.cacheBuster`.
     _ref: webcam.cacheBuster
@@ -197,7 +197,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.flipH`.
     _ref: webcam.flipH
@@ -225,7 +225,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.flipV`.
     _ref: webcam.flipV
@@ -253,7 +253,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.rotate90`.
     _ref: webcam.rotate90
@@ -282,7 +282,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshot`.
     _ref: webcam.snapshot
@@ -318,7 +318,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshotSslValidation`.
     _ref: webcam.snapshotSslValidation
@@ -352,7 +352,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.snapshotTimeout`.
     _ref: webcam.snapshotTimeout
@@ -381,7 +381,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.stream`.
     _ref: webcam.stream
@@ -411,7 +411,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamRatio`.
     _ref: webcam.streamRatio
@@ -443,7 +443,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamTimeout`.
     _ref: webcam.streamTimeout
@@ -479,7 +479,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Remove usage of settings paths under `webcam.streamWebrtcIceServers`.
     _ref: webcam.streamWebrtcIceServers
@@ -512,7 +512,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Remove usage of settings paths under `server.incompleteStartup`.
     _ref: server.incompleteStartup
@@ -548,7 +548,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.0
     suggestion: Remove usage of settings paths under `server.reverseProxy.trustedDownstream`.
     _ref: server.reverseProxy.trustedDownstream
@@ -583,7 +583,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Remove usage of settings paths under `accessControl.trustRemoteUser`.
     _ref: accessControl.trustRemoteUser
@@ -619,7 +619,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Remove usage of settings paths under `feature.autoUppercaseBlacklist`.
     _ref: feature.autoUppercaseBlacklist
@@ -648,7 +648,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Remove usage of settings paths under `serial`.
     _ref: serial
@@ -682,7 +682,7 @@ rules:
         metavariable: $METHOD
         regex: ^(remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Remove usage of settings paths under `server.pluginBlacklist`.
     _ref: server.pluginBlacklist
@@ -710,7 +710,7 @@ rules:
         metavariable: $METHOD
         regex: ^(get|getBoolean|getFloat|getInt|get_boolean|get_float|get_int|has|remove|set|setBoolean|setFloat|setInt|set_boolean|set_float|set_int)$
   metadata:
-    type: removal
+    type: breaking
     since: 2.1.0
     suggestion: Remove usage of settings paths under `api.key`.
     _ref: api.key

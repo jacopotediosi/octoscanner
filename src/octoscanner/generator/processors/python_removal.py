@@ -381,7 +381,7 @@ def _make_rule(
          'pattern-either': [{'pattern': 'User.getApiKey'},
                             {'pattern': '$X._user.getApiKey'},
                             {'pattern': 'user.getApiKey'}],
-         'metadata': {'type': 'removal',
+         'metadata': {'type': 'breaking',
                       'since': '1.8.0',
                       'suggestion': 'Remove usage of `octoprint.access.User.getApiKey`.',
                       '_ref': 'User.getApiKey'}}
@@ -425,7 +425,11 @@ def _make_rule(
         rem.module_path,
         receivers_map,
         message,
-        metadata={"type": "removal", "since": rem.since, "suggestion": suggestion},
+        metadata={
+            "type": RuleFile.python_removal.value.rules_type,
+            "since": rem.since,
+            "suggestion": suggestion,
+        },
         severity=RuleFile.python_removal.value.severity,
     )
 

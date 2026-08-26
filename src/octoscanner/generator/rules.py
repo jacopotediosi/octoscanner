@@ -304,7 +304,7 @@ def build_rule(
         ...         {"pattern": "User.getApiKey"},
         ...         {"pattern": "$X._user.getApiKey"},
         ...     ]},
-        ...     metadata={"type": "removal", "since": "2.0.0"},
+        ...     metadata={"type": "breaking", "since": "2.0.0"},
         ...     severity="CRITICAL",
         ... )
         {'id': 'REM-0007',
@@ -313,7 +313,7 @@ def build_rule(
          'severity': 'CRITICAL',
          'pattern-either': [{'pattern': 'User.getApiKey'},
                             {'pattern': '$X._user.getApiKey'}],
-         'metadata': {'type': 'removal',
+         'metadata': {'type': 'breaking',
                       'since': '2.0.0',
                       '_ref': 'octoprint.access.User.getApiKey'}}
     """

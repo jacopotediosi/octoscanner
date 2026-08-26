@@ -109,9 +109,9 @@ def cmd_scan(args: argparse.Namespace) -> None:
 def _resolve_rules(rules: list[str] | None) -> list[Path]:
     """Resolve rule selectors to YAML file or directory paths inside `RULES_DIR`.
 
-    Each selector can be either a subdirectory name (e.g. ``"removal"``) or a
+    Each selector can be either a subdirectory name (e.g. ``"breaking"``) or a
     relative path to a subdirectory or YAML file under `RULES_DIR` (e.g.
-    ``"removal/python_removal.yaml"``).
+    ``"breaking/python_removal.yaml"``).
 
     Args:
         rules: List of rule selectors, or ``None`` to load all rules.
@@ -127,14 +127,14 @@ def _resolve_rules(rules: list[str] | None) -> list[Path]:
         >>> _resolve_rules(None)  # all rules
         [Path('rules')]
 
-        >>> _resolve_rules(["removal"])  # rules/removal/ directory
-        [Path('rules/removal')]
+        >>> _resolve_rules(["breaking"])  # rules/breaking/ directory
+        [Path('rules/breaking')]
 
-        >>> _resolve_rules(["removal/python_removal.yaml"])  # single file
-        [Path('rules/removal/python_removal.yaml')]
+        >>> _resolve_rules(["breaking/python_removal.yaml"])  # single file
+        [Path('rules/breaking/python_removal.yaml')]
 
-        >>> _resolve_rules(["removal", "deprecation/python_deprecation.yaml"])  # mixed
-        [Path('rules/removal'), Path('rules/deprecation/python_deprecation.yaml')]
+        >>> _resolve_rules(["breaking", "deprecation/python_deprecation.yaml"])  # mixed
+        [Path('rules/breaking'), Path('rules/deprecation/python_deprecation.yaml')]
     """
     if not RULES_DIR.is_dir():
         raise FileNotFoundError(f"Rules directory not found: {RULES_DIR}")

@@ -3,12 +3,12 @@
 The following cleanup passes are applied in order:
 
 1. **Superseded deprecations**: remove deprecation rules for symbols that
-   were later fully removed (a removal rule replaces the deprecation).
+   were later fully removed (a breaking rule replaces the deprecation).
 2. **Stale deprecations**: remove deprecation rules for symbols that exist
    in the latest OctoPrint version but are no longer marked as deprecated.
    This handles cases where deprecations were reverted in a later version.
 3. **Superseded signature changes**: remove signature change rules for
-   callables that were later fully removed (a removal rule already covers
+   callables that were later fully removed (a breaking rule already covers
    any call to them).
 4. **Stale signature changes**: remove signature change rules whose removed
    keyword parameter is present again in the latest OctoPrint version.
@@ -18,7 +18,7 @@ The following cleanup passes are applied in order:
    are therefore callable once more.
 6. **Promoted settings deprecations**: when the compat overlay that kept a
    deprecated settings path reachable disappears in a later OctoPrint
-   version, promote the deprecation rule to a removal rule.
+   version, promote the deprecation rule to a breaking rule.
 7. **Superseded settings**: remove settings removal rules whose path is
    covered by a more general ancestor rule (e.g. ``serial.capabilities.foo``
    is redundant if ``serial`` is already covered).

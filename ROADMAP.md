@@ -22,10 +22,10 @@
     - [ ] Access to deprecated setting paths (paths removed which still have a compatibility overlay)
         - [x] Python
             - [x] Access to removed global setting paths which still have a compatibility overlay (e.g. `global_get(["serial", ...])`, etc)
-            - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
+            - [x] Move rules from deprecation to breaking when deprecated things get removed in later versions
         - [ ] JS
             - [ ] Access to removed global setting paths which still have a compatibility overlay
-            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+            - [ ] Move rules from deprecation to breaking when deprecated things get removed in later versions
     - [ ] Access to removed setting paths, e.g. `["serial", ...]`
         - [ ] Python
             - [x] Access to removed global setting paths (e.g. `global_set(["serial", ...])`, etc)
@@ -35,9 +35,9 @@
 - [ ] HTTP APIs
     - [ ] Call to deprecated HTTP APIs, e.g. `POST /api/system`
         - [ ] Python
-            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+            - [ ] Move rules from deprecation to breaking when deprecated things get removed in later versions
         - [ ] JS
-            - [ ] Move rules from deprecation to removal when deprecated things get removed in later versions
+            - [ ] Move rules from deprecation to breaking when deprecated things get removed in later versions
     - [ ] Call to removed HTTP APIs, e.g. `/api/logs/*`, `/api/users/*`, `/api/plugin/pluginmanager`
         - [ ] Python
         - [ ] JS
@@ -73,7 +73,7 @@
 - [x] Python changes
     - [x] Python deprecations
         - [x] Usage of any deprecated function (notice that there are many different ways to deprecated things in OctoPrint)
-        - [x] Move rules from deprecation to removal when deprecated things get removed in later versions
+        - [x] Move rules from deprecation to breaking when deprecated things get removed in later versions
     - [x] Python breaking changes
         - [x] Import classes/modules path changes
         - [x] Class/method/attribute renames (both private and non-private)

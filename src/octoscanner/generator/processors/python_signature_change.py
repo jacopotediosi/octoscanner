@@ -195,7 +195,7 @@ def _make_rule(
          'severity': 'HIGH',
          'pattern-either': [{'pattern': 'FileManager.add_file(..., links=$V, ...)'},
                             {'pattern': '$X._file_manager.add_file(..., links=$V, ...)'}],
-         'metadata': {'type': 'removal',
+         'metadata': {'type': 'breaking',
                       'since': '1.11.0',
                       'suggestion': 'Update the call to '
                                     '`octoprint.filemanager.FileManager.add_file` '
@@ -232,7 +232,7 @@ def _make_rule(
     pattern_body = patterns[0] if len(patterns) == 1 else {"pattern-either": patterns}
 
     metadata = {
-        "type": "removal",
+        "type": RuleFile.python_signature_change.value.rules_type,
         "since": change.since,
         "suggestion": suggestion,
     }

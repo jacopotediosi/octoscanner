@@ -23,14 +23,14 @@ from ..models import Finding, RuleFileMetadata, ScanResult
 
 FINDING_SECTIONS = (
     # (header title, ScanResult attr, style keys)
-    ("Removal", "removal", ("error", "header")),
+    ("Breaking", "breaking", ("error", "header")),
     ("Security", "security", ("error", "header")),
     ("Deprecation", "deprecation", ("warning", "header")),
     ("Packaging", "packaging", ("warning", "header")),
 )
 
 SINCE_LABELS = {
-    "removal": "Removed in",
+    "breaking": "Breaking since",
     "deprecation": "Deprecated since",
 }
 
@@ -200,7 +200,7 @@ def format_scan_results_text(
             list[Text | str]: List of ``Text`` or plain strings representing the finding.
 
         Examples:
-            >>> lines = format_finding(finding, since_label="Removed in")
+            >>> lines = format_finding(finding, since_label="Breaking since")
         """
         lines = []
 

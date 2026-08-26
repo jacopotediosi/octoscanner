@@ -8,7 +8,7 @@ from packaging.version import Version
 
 class RuleType(Enum):
     DEPRECATION = "deprecation"
-    REMOVAL = "removal"
+    BREAKING = "breaking"
     SECURITY = "security"
     PACKAGING = "packaging"
 
@@ -44,8 +44,8 @@ class ScanResult:
     findings: list[Finding] = field(default_factory=list)
 
     @property
-    def removal(self) -> list[Finding]:
-        return [f for f in self.findings if f.rule.type == RuleType.REMOVAL]
+    def breaking(self) -> list[Finding]:
+        return [f for f in self.findings if f.rule.type == RuleType.BREAKING]
 
     @property
     def deprecation(self) -> list[Finding]:

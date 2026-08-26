@@ -18,7 +18,7 @@ reads keep working (with a deprecation warning) but writes are silently
 dropped. In that case the processor emits two rules instead of one:
 
 - A ``deprecation`` rule on the path's read methods.
-- A ``removal`` rule on the path's write methods.
+- A ``breaking`` rule on the path's write methods.
 """
 
 from __future__ import annotations
@@ -333,8 +333,8 @@ def _generate_rules(
 
     For each removed path:
     - If covered by a compat overlay in the new version, emits a deprecation
-      rule on the `get` methods plus a removal rule on the `set` methods.
-    - Otherwise, emits a single removal rule covering all methods.
+      rule on the `get` methods plus a breaking rule on the `set` methods.
+    - Otherwise, emits a single breaking rule covering all methods.
 
     Args:
         removed_paths (set[tuple[str, ...]]): Removed settings paths to process.

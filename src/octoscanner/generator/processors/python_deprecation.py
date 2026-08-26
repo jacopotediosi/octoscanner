@@ -158,7 +158,7 @@ def _make_rule(dep: Deprecation, rule_id: str, receivers_map: dict[str, list[str
         receivers_map,
         message,
         metadata={
-            "type": "deprecation",
+            "type": RuleFile.python_deprecation.value.rules_type,
             "since": dep.since,
             "suggestion": _create_suggestion(dep.message, dep.name, dep.class_name, dep.module_path),
         },

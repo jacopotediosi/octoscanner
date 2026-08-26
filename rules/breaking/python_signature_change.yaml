@@ -2,7 +2,7 @@
 
 _octoscanner:
   octoscanner_version: 0.1.0
-  generated_at: '2026-08-20T20:50:34+00:00'
+  generated_at: '2026-08-26T21:18:29+00:00'
   octoprint_versions:
   - 1.4.0
   - 1.5.0
@@ -26,7 +26,7 @@ rules:
   pattern: octoprint.server.util.flask.collect_core_assets(..., enable_gcodeviewer=$V,
     ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Update the call to `octoprint.server.util.flask.collect_core_assets`
       to match its new signature.
@@ -41,7 +41,7 @@ rules:
   pattern: octoprint.server.util.flask.collect_plugin_assets(..., enable_gcodeviewer=$V,
     ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Update the call to `octoprint.server.util.flask.collect_plugin_assets`
       to match its new signature.
@@ -60,7 +60,7 @@ rules:
   - pattern: pluginManager.is_plugin_marked(..., key=$V, ...)
   - pattern: plugin_manager().is_plugin_marked(..., key=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Update the call to `octoprint.plugin.core.PluginManager.is_plugin_marked`
       (commonly accessed by plugins as `self._plugin_manager.is_plugin_marked`) to
@@ -75,7 +75,7 @@ rules:
   severity: HIGH
   pattern: StatsCollector(..., io_loop=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.5.0
     suggestion: Update the call to `octoprint.vendor.sockjs.tornado.stats.StatsCollector(...)`
       to match its new signature.
@@ -89,7 +89,7 @@ rules:
   severity: HIGH
   pattern: octoprint.util.version.get_octoprint_version(..., base=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.6.0
     suggestion: Update the call to `octoprint.util.version.get_octoprint_version`
       to match its new signature.
@@ -103,7 +103,7 @@ rules:
   severity: HIGH
   pattern: settings().getBaseFolder(..., log_error=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.7.0
     suggestion: Update the call to `octoprint.settings.Settings.getBaseFolder` to
       match its new signature.
@@ -117,7 +117,7 @@ rules:
   severity: HIGH
   pattern: octoprint.util.version.is_prerelease(..., version_string=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.8.0
     suggestion: Update the call to `octoprint.util.version.is_prerelease` to match
       its new signature.
@@ -133,7 +133,7 @@ rules:
   - pattern: current_user.check_password(..., passwordHash=$V, ...)
   - pattern: user.check_password(..., passwordHash=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.9.0
     suggestion: Update the call to `octoprint.access.users.User.check_password` to
       match its new signature.
@@ -151,7 +151,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].add_file(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.add_file` (commonly
       accessed by plugins as `self._file_manager.add_file`) to match its new signature.
@@ -169,7 +169,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].add_folder(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.add_folder`
       (commonly accessed by plugins as `self._file_manager.add_folder`) to match its
@@ -188,7 +188,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].add_link(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.add_link` (commonly
       accessed by plugins as `self._file_manager.add_link`) to match its new signature.
@@ -207,7 +207,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].canonicalize(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.canonicalize`
       (commonly accessed by plugins as `self._file_manager.canonicalize`) to match
@@ -225,7 +225,7 @@ rules:
   - pattern: $X._file_manager.copy_file(..., dst=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].copy_file(..., dst=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.copy_file` (commonly
       accessed by plugins as `self._file_manager.copy_file`) to match its new signature.
@@ -243,7 +243,7 @@ rules:
   - pattern: $X._file_manager.copy_folder(..., dst=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].copy_folder(..., dst=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.copy_folder`
       (commonly accessed by plugins as `self._file_manager.copy_folder`) to match
@@ -263,7 +263,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].get_additional_metadata(...,
       destination=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.get_additional_metadata`
       (commonly accessed by plugins as `self._file_manager.get_additional_metadata`)
@@ -283,7 +283,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].get_metadata(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.get_metadata`
       (commonly accessed by plugins as `self._file_manager.get_metadata`) to match
@@ -303,7 +303,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].has_analysis(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.has_analysis`
       (commonly accessed by plugins as `self._file_manager.has_analysis`) to match
@@ -322,7 +322,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].join_path(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.join_path` (commonly
       accessed by plugins as `self._file_manager.join_path`) to match its new signature.
@@ -341,7 +341,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].last_modified(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.last_modified`
       (commonly accessed by plugins as `self._file_manager.last_modified`) to match
@@ -360,7 +360,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].list_files(..., destinations=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.list_files`
       (commonly accessed by plugins as `self._file_manager.list_files`) to match its
@@ -379,7 +379,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].log_print(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.log_print` (commonly
       accessed by plugins as `self._file_manager.log_print`) to match its new signature.
@@ -396,7 +396,7 @@ rules:
   - pattern: $X._file_manager.move_file(..., dst=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].move_file(..., dst=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.move_file` (commonly
       accessed by plugins as `self._file_manager.move_file`) to match its new signature.
@@ -414,7 +414,7 @@ rules:
   - pattern: $X._file_manager.move_folder(..., dst=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].move_folder(..., dst=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.move_folder`
       (commonly accessed by plugins as `self._file_manager.move_folder`) to match
@@ -434,7 +434,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].path_in_storage(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.path_in_storage`
       (commonly accessed by plugins as `self._file_manager.path_in_storage`) to match
@@ -454,7 +454,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].path_on_disk(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.path_on_disk`
       (commonly accessed by plugins as `self._file_manager.path_on_disk`) to match
@@ -474,7 +474,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_additional_metadata(...,
       destination=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_additional_metadata`
       (commonly accessed by plugins as `self._file_manager.remove_additional_metadata`)
@@ -494,7 +494,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_file(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_file`
       (commonly accessed by plugins as `self._file_manager.remove_file`) to match
@@ -514,7 +514,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_folder(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_folder`
       (commonly accessed by plugins as `self._file_manager.remove_folder`) to match
@@ -534,7 +534,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_link(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_link`
       (commonly accessed by plugins as `self._file_manager.remove_link`) to match
@@ -553,7 +553,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].sanitize(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize` (commonly
       accessed by plugins as `self._file_manager.sanitize`) to match its new signature.
@@ -572,7 +572,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].sanitize_name(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize_name`
       (commonly accessed by plugins as `self._file_manager.sanitize_name`) to match
@@ -592,7 +592,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].sanitize_path(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.sanitize_path`
       (commonly accessed by plugins as `self._file_manager.sanitize_path`) to match
@@ -612,7 +612,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].save_recovery_data(..., origin=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.save_recovery_data`
       (commonly accessed by plugins as `self._file_manager.save_recovery_data`) to
@@ -632,7 +632,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].set_additional_metadata(...,
       destination=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.set_additional_metadata`
       (commonly accessed by plugins as `self._file_manager.set_additional_metadata`)
@@ -651,7 +651,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].split_path(..., destination=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.10.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.split_path`
       (commonly accessed by plugins as `self._file_manager.split_path`) to match its
@@ -666,7 +666,7 @@ rules:
   severity: HIGH
   pattern: octoprint.vendor.sockjs.tornado.util.bytes_to_str(..., s=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.0
     suggestion: Update the call to `octoprint.vendor.sockjs.tornado.util.bytes_to_str`
       to match its new signature.
@@ -680,7 +680,7 @@ rules:
   severity: HIGH
   pattern: InvalidYaml(..., column=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.0
     suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
       its new signature.
@@ -694,7 +694,7 @@ rules:
   severity: HIGH
   pattern: InvalidYaml(..., details=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.0
     suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
       its new signature.
@@ -708,7 +708,7 @@ rules:
   severity: HIGH
   pattern: InvalidYaml(..., line=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.0
     suggestion: Update the call to `octoprint.settings.InvalidYaml(...)` to match
       its new signature.
@@ -722,7 +722,7 @@ rules:
   severity: HIGH
   pattern: octoprint.util.parse_mime_type(..., mime=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 1.11.8
     suggestion: Update the call to `octoprint.util.parse_mime_type` to match its new
       signature.
@@ -736,7 +736,7 @@ rules:
   severity: HIGH
   pattern: octoprint.cli.server.run_server(..., ignore_blacklist=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.cli.server.run_server` to match its
       new signature.
@@ -754,7 +754,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].add_folder(..., location=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.add_folder`
       (commonly accessed by plugins as `self._file_manager.add_folder`) to match its
@@ -772,7 +772,7 @@ rules:
   - pattern: $X._file_manager.copy_file(..., location=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].copy_file(..., location=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.copy_file` (commonly
       accessed by plugins as `self._file_manager.copy_file`) to match its new signature.
@@ -791,7 +791,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].copy_folder(..., location=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.copy_folder`
       (commonly accessed by plugins as `self._file_manager.copy_folder`) to match
@@ -809,7 +809,7 @@ rules:
   - pattern: $X._file_manager.move_file(..., location=$V, ...)
   - pattern: $X._file_manager._storage_managers[...].move_file(..., location=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.move_file` (commonly
       accessed by plugins as `self._file_manager.move_file`) to match its new signature.
@@ -828,7 +828,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].move_folder(..., location=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.move_folder`
       (commonly accessed by plugins as `self._file_manager.move_folder`) to match
@@ -848,7 +848,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_folder(..., location=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_folder`
       (commonly accessed by plugins as `self._file_manager.remove_folder`) to match
@@ -868,7 +868,7 @@ rules:
   - pattern: $X._file_manager._storage_managers[...].remove_storage(..., type=$V,
       ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.filemanager.FileManager.remove_storage`
       (commonly accessed by plugins as `self._file_manager.remove_storage`) to match
@@ -882,7 +882,7 @@ rules:
   severity: HIGH
   pattern: octoprint.init_platform(..., ignore_blacklist=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.init_platform` to match its new signature.
     _removed_param: ignore_blacklist
@@ -894,7 +894,7 @@ rules:
   severity: HIGH
   pattern: octoprint.init_pluginsystem(..., ignore_blacklist=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.init_pluginsystem` to match its new
       signature.
@@ -912,7 +912,7 @@ rules:
   - pattern: pluginManager(..., plugin_blacklist=$V, ...)
   - pattern: plugin_manager()(..., plugin_blacklist=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.plugin.core.PluginManager(...)` to match
       its new signature.
@@ -926,7 +926,7 @@ rules:
   severity: HIGH
   pattern: octoprint.plugin.plugin_manager(..., plugin_blacklist=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.plugin.plugin_manager` to match its
       new signature.
@@ -940,7 +940,7 @@ rules:
   severity: HIGH
   pattern: StateMonitor(..., on_get_resends=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.printer.standard.StateMonitor(...)`
       to match its new signature.
@@ -954,7 +954,7 @@ rules:
   severity: HIGH
   pattern: octoprint.server.api.files.gcodeFileCommand(..., filename=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.server.api.files.gcodeFileCommand` to
       match its new signature.
@@ -968,7 +968,7 @@ rules:
   severity: HIGH
   pattern: octoprint.server.api.files.gcodeFileCommand(..., target=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.server.api.files.gcodeFileCommand` to
       match its new signature.
@@ -981,7 +981,7 @@ rules:
   severity: HIGH
   pattern: octoprint.server.load_user(..., id=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.server.load_user` to match its new signature.
     _removed_param: id
@@ -994,7 +994,7 @@ rules:
   severity: HIGH
   pattern: octoprint.util.files.get_dos_filename(..., whitelisted_extensions=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.util.files.get_dos_filename` to match
       its new signature.
@@ -1007,7 +1007,7 @@ rules:
   severity: HIGH
   pattern: octoprint.util.get_bom(..., filename=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.util.get_bom` to match its new signature.
     _removed_param: filename
@@ -1022,7 +1022,7 @@ rules:
   - pattern: current_user.is_active()
   - pattern: user.is_active()
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Read `is_active` as an attribute instead of calling `is_active()`.
     _ref: octoprint.access.users.User.is_active
@@ -1036,7 +1036,7 @@ rules:
   - pattern: current_user.is_anonymous()
   - pattern: user.is_anonymous()
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Read `is_anonymous` as an attribute instead of calling `is_anonymous()`.
     _ref: octoprint.access.users.User.is_anonymous
@@ -1050,7 +1050,7 @@ rules:
   - pattern: current_user.is_authenticated()
   - pattern: user.is_authenticated()
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Read `is_authenticated` as an attribute instead of calling `is_authenticated()`.
     _ref: octoprint.access.users.User.is_authenticated
@@ -1068,7 +1068,7 @@ rules:
   - pattern: printer(..., analysisQueue=$V, ...)
   - pattern: _printer._comm._callback(..., analysisQueue=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
       its new signature.
@@ -1088,7 +1088,7 @@ rules:
   - pattern: printer(..., fileManager=$V, ...)
   - pattern: _printer._comm._callback(..., fileManager=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
       its new signature.
@@ -1108,7 +1108,7 @@ rules:
   - pattern: printer(..., printerProfileManager=$V, ...)
   - pattern: _printer._comm._callback(..., printerProfileManager=$V, ...)
   metadata:
-    type: removal
+    type: breaking
     since: 2.0.0
     suggestion: Update the call to `octoprint.printer.standard.Printer(...)` to match
       its new signature.
