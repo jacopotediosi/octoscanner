@@ -1,4 +1,4 @@
-# OctoPrint security rules
+# OctoPrint XSS security rules
 
 # Shared by every XSS rule below. Matches the values that are provably safe.
 _safe_expression: &safe_expression |-
@@ -32,165 +32,7 @@ _safe_expression: &safe_expression |-
   )
 
 rules:
-  - id: SEC-0001
-    message: >
-      Plugin implements `SimpleApiPlugin` but does not override `is_api_protected()`.
-      Until OctoPrint 2.1.0, the default implementation returns `False`, allowing
-      unauthenticated access to `SimpleApi` endpoints.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      - pattern-either:
-          - pattern: |
-              class $CLASS(..., octoprint.plugin.SimpleApiPlugin, ...):
-                  ...
-          - pattern: |
-              class $CLASS(..., SimpleApiPlugin, ...):
-                  ...
-      - pattern-not: |
-          class $CLASS(...):
-              ...
-              def is_api_protected(self, ...):
-                  ...
-              ...
-    metadata:
-      type: security
-      since: 1.11.2
-      suggestion: >
-        Override `is_api_protected()` to explicitly return `True`. Note that this only
-        controls authentication; you should also verify permissions explicitly in
-        each API handler (e.g. `Permissions.PLUGIN_MYPLUGIN_ACCESS`).
-  - id: SEC-0002
-    message: >
-      Plugin implements `is_api_protected()` but explicitly returns `False`, leaving
-      `SimpleApi` endpoints accessible without authentication.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      - pattern-either:
-          - pattern: |
-              class $CLASS(..., octoprint.plugin.SimpleApiPlugin, ...):
-                  ...
-                  def is_api_protected(self, ...):
-                      ...
-                      return False
-                  ...
-          - pattern: |
-              class $CLASS(..., SimpleApiPlugin, ...):
-                  ...
-                  def is_api_protected(self, ...):
-                      ...
-                      return False
-                  ...
-    metadata:
-      type: security
-      since: 1.11.2
-      suggestion: >
-        Ensure this is intentional. Consider returning `True` and adding explicit
-        permission checks in each API handler.
-  - id: SEC-0003
-    message: >
-      Plugin implements `is_blueprint_protected()` but explicitly returns `False`,
-      leaving the blueprint's dynamic endpoints accessible without authentication.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      - pattern-either:
-          - pattern: |
-              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
-                  ...
-                  def is_blueprint_protected(self, ...):
-                      ...
-                      return False
-                  ...
-          - pattern: |
-              class $CLASS(..., BlueprintPlugin, ...):
-                  ...
-                  def is_blueprint_protected(self, ...):
-                      ...
-                      return False
-                  ...
-    metadata:
-      type: security
-      since: 1.2.0
-      suggestion: >
-        Ensure this is intentional. Consider returning `True` and adding explicit
-        permission checks in each endpoint handler (e.g. `Permissions.PLUGIN_MYPLUGIN_ACCESS`).
-  - id: SEC-0004
-    message: >
-      Plugin implements `BlueprintPlugin` but does not override
-      `is_blueprint_csrf_protected()`. Until OctoPrint 2.0.0, the default
-      implementation returns `False`, leaving the blueprint's endpoints
-      exposed to CSRF attacks.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      - pattern-either:
-          - pattern: |
-              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
-                  ...
-          - pattern: |
-              class $CLASS(..., BlueprintPlugin, ...):
-                  ...
-      - pattern-not: |
-          class $CLASS(...):
-              ...
-              def is_blueprint_csrf_protected(self, ...):
-                  ...
-              ...
-    metadata:
-      type: security
-      since: 1.8.3
-      suggestion: >
-        Override `is_blueprint_csrf_protected()` to return `True` and exempt only
-        the endpoints that must not use CSRF protection via the
-        `@octoprint.plugin.BlueprintPlugin.csrf_exempt()` decorator.
-  - id: SEC-0005
-    message: >
-      Plugin implements `is_blueprint_csrf_protected()` but explicitly returns
-      `False`, leaving the blueprint's endpoints exposed to CSRF attacks.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      - pattern-either:
-          - pattern: |
-              class $CLASS(..., octoprint.plugin.BlueprintPlugin, ...):
-                  ...
-                  def is_blueprint_csrf_protected(self, ...):
-                      ...
-                      return False
-                  ...
-          - pattern: |
-              class $CLASS(..., BlueprintPlugin, ...):
-                  ...
-                  def is_blueprint_csrf_protected(self, ...):
-                      ...
-                      return False
-                  ...
-    metadata:
-      type: security
-      since: 1.8.3
-      suggestion: >
-        Return `True` and exempt only the endpoints that genuinely cannot use CSRF
-        protection via the `@octoprint.plugin.BlueprintPlugin.csrf_exempt()` decorator.
-  - id: SEC-0006
-    message: >
-      Endpoint exempted from CSRF protection via `BlueprintPlugin.csrf_exempt()`.
-      Ensure that the exemption is necessary and that the endpoint uses an
-      alternative anti-CSRF mechanism (e.g. token in header).
-    languages: [python]
-    severity: CRITICAL
-    pattern-either:
-      - pattern: "@octoprint.plugin.BlueprintPlugin.csrf_exempt()"
-      - pattern: "@BlueprintPlugin.csrf_exempt()"
-    metadata:
-      type: security
-      since: 1.8.3
-      suggestion: >
-        Remove the decorator if not strictly required. Otherwise, document why
-        the endpoint cannot use CSRF protection and ensure another anti-CSRF
-        mechanism is in place.
-  - id: SEC-0007
+  - id: SEC-XSS-0001
     message: >
       Plugin implements `TemplatePlugin` but does not override
       `is_template_autoescaped()`. Until OctoPrint 2.1.0, the default
@@ -219,7 +61,7 @@ rules:
         Override `is_template_autoescaped()` to return `True` and use the `safe`
         Jinja filter only for variables that legitimately need to render HTML.
         See https://faq.octoprint.org/plugin-autoescape.
-  - id: SEC-0008
+  - id: SEC-XSS-0002
     message: >
       Plugin implements `is_template_autoescaped()` but explicitly returns
       `False`, exposing the templates to XSS via unescaped variables.
@@ -247,7 +89,7 @@ rules:
       suggestion: >
         Return `True` and use the `safe` Jinja filter only for variables that
         legitimately need to render HTML. See https://faq.octoprint.org/plugin-autoescape.
-  - id: SEC-0009
+  - id: SEC-XSS-0003
     message: >
       Knockout `html:` binding bound to a non-literal value in a Jinja/HTML
       template. The bound expression is rendered as raw HTML, so any
@@ -303,51 +145,7 @@ rules:
         text and is safe by default. Use `html:` only when raw HTML output is
         strictly required, and only with values that are either fully static
         or that have been properly sanitized.
-  - id: SEC-0010
-    message: >
-      HTTP route registered with an OctoPrint-shipped handler that supports an
-      `access_validation` kwarg, but no `access_validation` is passed. Routes
-      registered this way (e.g. via the `octoprint.server.http.routes` hook)
-      have no authentication and no CSRF protection by default, so any client
-      - including unauthenticated remote attackers - can reach the handler.
-    languages: [python]
-    severity: CRITICAL
-    patterns:
-      # Anchor on a route tuple `(path, HandlerClass, kwargs)` whose handler is
-      # one of the OctoPrint-shipped handlers that natively support an
-      # `access_validation` kwarg (see `octoprint.server.util.tornado`).
-      - pattern-either:
-          - pattern: ($P, LargeResponseHandler, $K)
-          - pattern: ($P, UrlProxyHandler, $K)
-          - pattern: ($P, UrlForwardHandler, $K)
-          - pattern: ($P, StaticDataHandler, $K)
-          - pattern: ($P, GeneratingDataHandler, $K)
-          - pattern: ($P, WebcamSnapshotHandler, $K)
-          - pattern: ($P, DeprecatedEndpointHandler, $K)
-          - pattern: ($P, StaticZipBundleHandler, $K)
-          - pattern: ($P, DynamicZipBundleHandler, $K)
-          - pattern: ($P, SystemInfoBundleHandler, $K)
-      # Exclude routes that already pass an `access_validation` handler kwarg,
-      # in either dict-literal or `dict(...)` form.
-      - metavariable-pattern:
-          metavariable: $K
-          patterns:
-            - pattern-not: |
-                {..., "access_validation": ..., ...}
-            - pattern-not: |
-                dict(..., access_validation=..., ...)
-    metadata:
-      type: security
-      since: 1.2.0
-      suggestion: >
-        Pass an `access_validation` callable in the handler kwargs, typically
-        built via `octoprint.server.util.tornado.access_validation_factory(app,
-        validator, *permissions)` with a validator from
-        `octoprint.server.util.flask` (e.g. `permission_validator` or
-        `permission_and_fresh_credentials_validator`). If the route is
-        intentionally public (e.g. serving static plugin assets), document the
-        decision explicitly.
-  - id: SEC-0011
+  - id: SEC-XSS-0004
     message: >
       `PNotify` invocation passing a non-literal value as `text` without
       `text_escape: true`. PNotify v2 (the version shipped with OctoPrint)
@@ -380,7 +178,7 @@ rules:
         as plain text. If the value must contain HTML, escape any
         user-controllable substring via `_.escape(...)` before
         interpolating it into the markup.
-  - id: SEC-0012
+  - id: SEC-XSS-0005
     message: >
       `PNotify` invocation passing a non-literal value as `title` without
       `title_escape: true`. PNotify v2 (the version shipped with OctoPrint)
@@ -412,7 +210,7 @@ rules:
         rendered as plain text. If the value must contain HTML, escape any
         user-controllable substring via `_.escape(...)` before
         interpolating it into the markup.
-  - id: SEC-0013
+  - id: SEC-XSS-0006
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as `title`.
       OctoPrint concatenates `title` into the dialog header markup and hands the
@@ -447,7 +245,7 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
-  - id: SEC-0014
+  - id: SEC-XSS-0007
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as `message`,
       either as the `message` option or as the first positional argument. OctoPrint
@@ -487,7 +285,7 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
-  - id: SEC-0015
+  - id: SEC-XSS-0008
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as
       `question`. OctoPrint concatenates `question` into the dialog body markup and
@@ -522,7 +320,7 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
-  - id: SEC-0016
+  - id: SEC-XSS-0009
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as `html`.
       The `html` option replaces the whole dialog body and is handed to jQuery as
@@ -557,7 +355,7 @@ rules:
         The `html` option is inserted as-is by design, so the markup must already be
         safe when it is passed: wrap every user-controllable substring in
         `_.escape(...)` before interpolating it.
-  - id: SEC-0017
+  - id: SEC-XSS-0010
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as `cancel`.
       OctoPrint concatenates the cancel button label into the button markup and
@@ -592,7 +390,7 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
-  - id: SEC-0018
+  - id: SEC-XSS-0011
     message: >
       `showConfirmationDialog()` invocation passing a non-literal value as `proceed`.
       OctoPrint concatenates each proceed button label - the option holds either a
@@ -628,7 +426,7 @@ rules:
         The helper offers no escaping option, so the value must already be safe when
         it is passed: wrap it in `_.escape(...)`, and escape every user-controllable
         substring before interpolating it into markup.
-  - id: SEC-0019
+  - id: SEC-XSS-0012
     message: >
       Knockout `popover:` binding enabling `html` and binding `content` to a
       non-literal value. Bootstrap fills the popover body with `.html()` instead of
@@ -673,7 +471,7 @@ rules:
         Drop `html: true` so Bootstrap renders the popover body as plain text. If the
         body must contain markup, escape every user-controllable substring via
         `_.escape(...)` before interpolating it into the markup.
-  - id: SEC-0020
+  - id: SEC-XSS-0013
     message: >
       Knockout `popover:` binding enabling `html` and binding `title` to a
       non-literal value. Bootstrap fills the popover header with `.html()` instead of
@@ -718,7 +516,7 @@ rules:
         Drop `html: true` so Bootstrap renders the popover header as plain text. If
         the header must contain markup, escape every user-controllable substring via
         `_.escape(...)` before interpolating it into the markup.
-  - id: SEC-0021
+  - id: SEC-XSS-0014
     message: >
       Bootstrap `popover()` initialization enabling `html` and passing a non-literal
       value as `content`. Bootstrap fills the popover body with `.html()` instead of
@@ -756,7 +554,7 @@ rules:
         Drop `html: true` so Bootstrap renders the popover body as plain text. If the
         body must contain markup, escape every user-controllable substring via
         `_.escape(...)` before interpolating it into the markup.
-  - id: SEC-0022
+  - id: SEC-XSS-0015
     message: >
       Bootstrap `popover()` initialization enabling `html` and passing a non-literal
       value as `title`. Bootstrap fills the popover header with `.html()` instead of
